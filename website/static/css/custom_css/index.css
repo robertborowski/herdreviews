@@ -71,8 +71,8 @@
   text-decoration: underline;
 }
 .custom-a-white-none, .custom-a-white-none:visited, .custom-a-white-none-none:hover {
-  color: white;
-  text-decoration: none;
+  color: white !important;
+  text-decoration: none !important;
 }
 .custom-a-black-none, .custom-a-black-none:visited, .custom-a-black-none:hover {
   color: black;
