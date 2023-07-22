@@ -44,12 +44,12 @@ redis_connection = redis_connect_to_database_function()
 # ------------------------ connect to redis end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_interior.route('/polling/dashboard', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/dashboard/', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/dashboard/<url_show_id>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/dashboard/<url_show_id>/', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/dashboard/<url_show_id>/<url_redirect_code>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/dashboard/<url_show_id>/<url_redirect_code>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/dashboard', methods=['GET', 'POST'])
+@polling_views_interior.route('/dashboard/', methods=['GET', 'POST'])
+@polling_views_interior.route('/dashboard/<url_show_id>', methods=['GET', 'POST'])
+@polling_views_interior.route('/dashboard/<url_show_id>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/dashboard/<url_show_id>/<url_redirect_code>', methods=['GET', 'POST'])
+@polling_views_interior.route('/dashboard/<url_show_id>/<url_redirect_code>/', methods=['GET', 'POST'])
 @login_required
 def polling_dashboard_function(url_redirect_code=None, url_show_id=None):
   # ------------------------ product login check start ------------------------
@@ -160,9 +160,9 @@ def polling_dashboard_function(url_redirect_code=None, url_show_id=None):
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_interior.route('/polling/verify/success/<url_verification_code>')
-@polling_views_interior.route('/polling/verify/success/<url_verification_code>/<url_redirect_code>')
-@polling_views_interior.route('/polling/verify/success/<url_verification_code>/<url_redirect_code>/')
+@polling_views_interior.route('/verify/success/<url_verification_code>')
+@polling_views_interior.route('/verify/success/<url_verification_code>/<url_redirect_code>')
+@polling_views_interior.route('/verify/success/<url_verification_code>/<url_redirect_code>/')
 @login_required
 def verification_code_clicked_function(url_redirect_code=None, url_verification_code=None):
   # ------------------------ page dict start ------------------------
@@ -187,9 +187,9 @@ def verification_code_clicked_function(url_redirect_code=None, url_verification_
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_interior.route('/polling/verify', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/verify/<url_redirect_code>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/verify/<url_redirect_code>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/verify', methods=['GET', 'POST'])
+@polling_views_interior.route('/verify/<url_redirect_code>', methods=['GET', 'POST'])
+@polling_views_interior.route('/verify/<url_redirect_code>/', methods=['GET', 'POST'])
 @login_required
 def verify_email_function(url_redirect_code=None):
   # ------------------------ page dict start ------------------------
@@ -224,7 +224,7 @@ def verify_email_function(url_redirect_code=None):
       if server_env == 'true':
         output_body = f"<p>Hi {guessed_name},</p>\
                         <p>Please click the link below to verify your email address.</p>\
-                        <p>Verify email link: http://127.0.0.1:80/polling/verify/success/{verification_code}</p>\
+                        <p>Verify email link: http://127.0.0.1:80/verify/success/{verification_code}</p>\
                         <p style='margin:0;'>Best,</p>\
                         <p style='margin:0;'>Triviafy Support Team</p>"
       # ------------------------ localhost end ------------------------
@@ -232,7 +232,7 @@ def verify_email_function(url_redirect_code=None):
       else:
         output_body = f"<p>Hi {guessed_name},</p>\
                         <p>Please click the link below to verify your email address.</p>\
-                        <p>Verify email link: https://triviafy.com/polling/verify/success/{verification_code}</p>\
+                        <p>Verify email link: https://triviafy.com/verify/success/{verification_code}</p>\
                         <p style='margin:0;'>Best,</p>\
                         <p style='margin:0;'>Triviafy Support Team</p>"
       # ------------------------ production end ------------------------
@@ -285,7 +285,7 @@ def verify_email_function(url_redirect_code=None):
       if server_env == 'true':
         output_body = f"<p>Hi {guessed_name},</p>\
                       <p>Please click the link below to verify your email address.</p>\
-                      <p>Verify email link: http://127.0.0.1:80/polling/verify/success/{new_verification_code}</p>\
+                      <p>Verify email link: http://127.0.0.1:80/verify/success/{new_verification_code}</p>\
                       <p style='margin:0;'>Best,</p>\
                       <p style='margin:0;'>Triviafy Support Team</p>"
       # ------------------------ localhost end ------------------------
@@ -293,7 +293,7 @@ def verify_email_function(url_redirect_code=None):
       else:
         output_body = f"<p>Hi {guessed_name},</p>\
                         <p>Please click the link below to verify your email address.</p>\
-                        <p>Verify email link: https://triviafy.com/polling/verify/success/{new_verification_code}</p>\
+                        <p>Verify email link: https://triviafy.com/verify/success/{new_verification_code}</p>\
                         <p style='margin:0;'>Best,</p>\
                         <p style='margin:0;'>Triviafy Support Team</p>"
       # ------------------------ production end ------------------------
@@ -334,9 +334,9 @@ def verify_email_function(url_redirect_code=None):
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_interior.route('/polling/feedback/<url_feedback_code>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/feedback/<url_feedback_code>/', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/feedback/<url_feedback_code>/<url_redirect_code>', methods=['GET', 'POST'])
+@polling_views_interior.route('/feedback/<url_feedback_code>', methods=['GET', 'POST'])
+@polling_views_interior.route('/feedback/<url_feedback_code>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/feedback/<url_feedback_code>/<url_redirect_code>', methods=['GET', 'POST'])
 @login_required
 def polling_feedback_function(url_redirect_code=None, url_feedback_code=None):
   # ------------------------ page dict start ------------------------
@@ -507,7 +507,7 @@ def polling_feedback_function(url_redirect_code=None, url_feedback_code=None):
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_interior.route('/polling/loading/<url_platform_reference_id>')
+@polling_views_interior.route('/loading/<url_platform_reference_id>')
 @login_required
 def polling_loading_function(url_platform_reference_id=None):
   # ------------------------ check url start ------------------------
@@ -536,16 +536,16 @@ def polling_loading_function(url_platform_reference_id=None):
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_interior.route('/polling/show/add', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/add/', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/add/<url_step_code>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/add/<url_step_code>/', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/add/<url_step_code>/<url_platform_id>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/add/<url_step_code>/<url_platform_id>/', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/add/<url_step_code>/<url_platform_id>/<url_redis_key>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/add/<url_step_code>/<url_platform_id>/<url_redis_key>/', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/add/<url_step_code>/<url_platform_id>/<url_redis_key>/<url_redirect_code>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/add/<url_step_code>/<url_platform_id>/<url_redis_key>/<url_redirect_code>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/add', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/add/', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/add/<url_step_code>', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/add/<url_step_code>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/add/<url_step_code>/<url_platform_id>', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/add/<url_step_code>/<url_platform_id>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/add/<url_step_code>/<url_platform_id>/<url_redis_key>', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/add/<url_step_code>/<url_platform_id>/<url_redis_key>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/add/<url_step_code>/<url_platform_id>/<url_redis_key>/<url_redirect_code>', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/add/<url_step_code>/<url_platform_id>/<url_redis_key>/<url_redirect_code>/', methods=['GET', 'POST'])
 # @login_required
 def polling_add_show_function(url_redirect_code=None, url_step_code='1', url_platform_id=None, url_redis_key=None):
   # ------------------------ page dict start ------------------------
@@ -593,9 +593,9 @@ def polling_add_show_function(url_redirect_code=None, url_step_code='1', url_pla
   # ------------------------ redirect steps check end ------------------------
   # ------------------------ set back button string start ------------------------
   if url_step_code == '2':
-    page_dict['url_back_str'] = f"/polling/dashboard"
+    page_dict['url_back_str'] = f"/dashboard"
   elif url_step_code == '3':
-    page_dict['url_back_str'] = f"/polling/show/add/{page_dict['url_previous_step_code']}/{url_platform_id}?wip_key={url_redis_key}"
+    page_dict['url_back_str'] = f"/show/add/{page_dict['url_previous_step_code']}/{url_platform_id}?wip_key={url_redis_key}"
   # ------------------------ set back button string end ------------------------
   # ------------------------ get all sources following start ------------------------
   if current_user.is_anonymous == True:
@@ -723,8 +723,8 @@ def polling_add_show_function(url_redirect_code=None, url_step_code='1', url_pla
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_interior.route('/polling/show/follow/<url_platform_id>/<url_show_id>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/follow/<url_platform_id>/<url_show_id>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/follow/<url_platform_id>/<url_show_id>', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/follow/<url_platform_id>/<url_show_id>/', methods=['GET', 'POST'])
 @login_required
 def polling_follow_show_function(url_platform_id=None, url_show_id=None):
   # ------------------------ check inputs start ------------------------
@@ -747,12 +747,12 @@ def polling_follow_show_function(url_platform_id=None, url_show_id=None):
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_interior.route('/polling/show/<url_show_id>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/<url_show_id>/', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/<url_show_id>/<url_poll_id>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/<url_show_id>/<url_poll_id>/', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/<url_show_id>/<url_poll_id>/<url_redirect_code>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/show/<url_show_id>/<url_poll_id>/<url_redirect_code>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/<url_show_id>', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/<url_show_id>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/<url_show_id>/<url_poll_id>', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/<url_show_id>/<url_poll_id>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/<url_show_id>/<url_poll_id>/<url_redirect_code>', methods=['GET', 'POST'])
+@polling_views_interior.route('/show/<url_show_id>/<url_poll_id>/<url_redirect_code>/', methods=['GET', 'POST'])
 # @login_required
 def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=None):
   # ------------------------ page dict start ------------------------
@@ -944,10 +944,10 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_interior.route('/polling/create/<url_show_id>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/create/<url_show_id>/', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/create/<url_show_id>/<url_redirect_code>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/create/<url_show_id>/<url_redirect_code>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/create/<url_show_id>', methods=['GET', 'POST'])
+@polling_views_interior.route('/create/<url_show_id>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/create/<url_show_id>/<url_redirect_code>', methods=['GET', 'POST'])
+@polling_views_interior.route('/create/<url_show_id>/<url_redirect_code>/', methods=['GET', 'POST'])
 @login_required
 def polling_create_poll_function(url_redirect_code=None, url_show_id=None):
   # ------------------------ page dict start ------------------------
@@ -1048,10 +1048,10 @@ def polling_create_poll_function(url_redirect_code=None, url_show_id=None):
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_interior.route('/polling/create/all', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/create/all/', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/create/all/<url_redirect_code>', methods=['GET', 'POST'])
-@polling_views_interior.route('/polling/create/all/<url_redirect_code>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/create/all', methods=['GET', 'POST'])
+@polling_views_interior.route('/create/all/', methods=['GET', 'POST'])
+@polling_views_interior.route('/create/all/<url_redirect_code>', methods=['GET', 'POST'])
+@polling_views_interior.route('/create/all/<url_redirect_code>/', methods=['GET', 'POST'])
 @login_required
 def polling_view_all_created_polls_function(url_redirect_code=None):
   # ------------------------ page dict start ------------------------

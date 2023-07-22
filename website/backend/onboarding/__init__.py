@@ -1,16 +1,16 @@
 # ------------------------ imports start ------------------------
 from backend.utils.localhost_print_utils.localhost_print import localhost_print_function
-from website.models import UserSignupFeedbackObj, UserAttributesObj
+from website.models import UserAttributesObj
 # ------------------------ imports end ------------------------
 
-# ------------------------ individual function start ------------------------
-def search_feedback_function(current_user, input_feedback):
-  feedback_obj = UserSignupFeedbackObj.query.filter_by(fk_user_id=current_user.id,question=input_feedback).first()
-  if feedback_obj == None or feedback_obj == []:
-    return input_feedback
-  else:
-    return True
-# ------------------------ individual function end ------------------------
+# # ------------------------ individual function start ------------------------
+# def search_feedback_function(current_user, input_feedback):
+#   feedback_obj = UserSignupFeedbackObj.query.filter_by(fk_user_id=current_user.id,question=input_feedback).first()
+#   if feedback_obj == None or feedback_obj == []:
+#     return input_feedback
+#   else:
+#     return True
+# # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
 def onboarding_checks_v2_function(current_user):

@@ -39,8 +39,7 @@ redis_connection = redis_connect_to_database_function()
 # ------------------------ connect to redis end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_exterior.route('/polling')
-@polling_views_exterior.route('/polling/')
+@polling_views_exterior.route('/')
 def polling_landing_details_function():
   # ------------------------ set variables start ------------------------
   page_dict = {}
@@ -59,8 +58,8 @@ def polling_landing_details_function():
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_exterior.route('/polling/reset', methods=['GET', 'POST'])
-@polling_views_exterior.route('/polling/reset/<url_redirect_code>', methods=['GET', 'POST'])
+@polling_views_exterior.route('/reset', methods=['GET', 'POST'])
+@polling_views_exterior.route('/reset/<url_redirect_code>', methods=['GET', 'POST'])
 def polling_forgot_password_function(url_redirect_code=None):
   # ------------------------ page dict start ------------------------
   alert_message_dict = alert_message_default_function_v2(url_redirect_code)
@@ -85,7 +84,7 @@ def polling_forgot_password_function(url_redirect_code=None):
       serializer_token_obj = UserObj.get_reset_token_function(self=user_exists)
       output_email = ui_email
       output_subject_line = 'Password Reset - Triviafy'
-      output_message_content = f"To reset your password, visit the following link: https://triviafy.com/polling/reset/{serializer_token_obj}/ \
+      output_message_content = f"To reset your password, visit the following link: https://triviafy.com/reset/{serializer_token_obj}/ \
                                 This link will expire after 30 minutes.\nIf you did not make this request then simply ignore this email and no changes will be made."
       send_email_template_function(output_email, output_subject_line, output_message_content)
       # ------------------------ send email with token url end ------------------------
@@ -101,10 +100,10 @@ def polling_forgot_password_function(url_redirect_code=None):
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_exterior.route('/polling/reset/<token>', methods=['GET', 'POST'])
-@polling_views_exterior.route('/polling/reset/<token>/', methods=['GET', 'POST'])
-@polling_views_exterior.route('/polling/reset/<token>/<url_redirect_code>', methods=['GET', 'POST'])
-@polling_views_exterior.route('/polling/reset/<token>/<url_redirect_code>/', methods=['GET', 'POST'])
+@polling_views_exterior.route('/reset/<token>', methods=['GET', 'POST'])
+@polling_views_exterior.route('/reset/<token>/', methods=['GET', 'POST'])
+@polling_views_exterior.route('/reset/<token>/<url_redirect_code>', methods=['GET', 'POST'])
+@polling_views_exterior.route('/reset/<token>/<url_redirect_code>/', methods=['GET', 'POST'])
 def polling_reset_forgot_password_function(token, url_redirect_code=None):
   # ------------------------ page dict start ------------------------
   alert_message_dict = alert_message_default_function_v2(url_redirect_code)
@@ -142,8 +141,8 @@ def polling_reset_forgot_password_function(token, url_redirect_code=None):
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_exterior.route('/polling/blog')
-@polling_views_exterior.route('/polling/blog/')
+@polling_views_exterior.route('/blog')
+@polling_views_exterior.route('/blog/')
 def polling_all_blogs_function():
   # ------------------------ page dict start ------------------------
   page_dict = {}
@@ -163,8 +162,8 @@ def polling_all_blogs_function():
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_exterior.route('/polling/blog/<i_blog_post_title>')
-@polling_views_exterior.route('/polling/blog/<i_blog_post_title>/')
+@polling_views_exterior.route('/blog/<i_blog_post_title>')
+@polling_views_exterior.route('/blog/<i_blog_post_title>/')
 def polling_i_blog_page_function(i_blog_post_title=None):
   # ------------------------ page dict start ------------------------
   page_dict = {}
@@ -188,29 +187,29 @@ def polling_i_blog_page_function(i_blog_post_title=None):
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_exterior.route('/polling/privacy')
-@polling_views_exterior.route('/polling/privacy/')
+@polling_views_exterior.route('/privacy')
+@polling_views_exterior.route('/privacy/')
 def polling_privacy_function():
   return render_template('polling/exterior/privacy/index.html')
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_exterior.route('/polling/terms')
-@polling_views_exterior.route('/polling/terms/')
+@polling_views_exterior.route('/terms')
+@polling_views_exterior.route('/terms/')
 def polling_terms_function():
   return render_template('polling/exterior/tos/index.html')
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_exterior.route('/polling/about')
-@polling_views_exterior.route('/polling/about/')
+@polling_views_exterior.route('/about')
+@polling_views_exterior.route('/about/')
 def polling_about_function():
   return render_template('polling/exterior/about/index.html')
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_exterior.route('/polling/faq')
-@polling_views_exterior.route('/polling/faq/')
+@polling_views_exterior.route('/faq')
+@polling_views_exterior.route('/faq/')
 def polling_faq_function():
   return render_template('polling/exterior/faq/index.html')
 # ------------------------ individual route end ------------------------

@@ -38,8 +38,8 @@
         <div class="text-center">
           <button type="submit" class="custom-width-100 btn btn-success btn-lg">Continue <i class="fa-solid fa-check"></i></button>
           <div class="custom-mt-25">
-            <p class="custom-m-0"><a href="/polling/signup" class="custom-a-2 custom-opacity-50">Create account</a></p>
-            <p class="custom-m-0 custom-mt-10"><a href="/polling/reset" class="custom-a-2 custom-opacity-50">Forgot password</a></p>
+            <p class="custom-m-0"><a href="/signup" class="custom-a-2 custom-opacity-50">Create account</a></p>
+            <p class="custom-m-0 custom-mt-10"><a href="/reset" class="custom-a-2 custom-opacity-50">Forgot password</a></p>
           </div>
         </div>
       </form>
@@ -57,7 +57,7 @@
 <div id="container-horizontal-scroll-1">
   <div class="photobanner-horizontal-scroll-1">
     {% for i_dict in page_dict_to_html['shows_arr_of_dicts'] %}
-      <a href="/polling/show/{{ i_dict['id'] }}"><img src="{{ i_dict['platform_image_medium'] }}" alt="{{ i_dict['name'] }} podcast logo" class="custom-br-15 custom-m-25 custom-img-size-100 border shadow custom-opacity-50 custom-hover-pointer-opacity-1"></a>
+      <a href="/show/{{ i_dict['id'] }}"><img src="{{ i_dict['platform_image_medium'] }}" alt="{{ i_dict['name'] }} podcast logo" class="custom-br-15 custom-m-25 custom-img-size-100 border shadow custom-opacity-50 custom-hover-pointer-opacity-1"></a>
     {% endfor %}
   </div>
 </div>

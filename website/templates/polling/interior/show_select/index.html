@@ -137,7 +137,7 @@
 <div id="container-horizontal-scroll-1">
   <div class="photobanner-horizontal-scroll-1">
     {% for i_dict in page_dict_to_html['shows_arr_of_dicts'] %}
-      <a href="/polling/show/{{ i_dict['id'] }}"><img src="{{ i_dict['platform_image_medium'] }}" alt="{{ i_dict['name'] }} podcast logo" class="custom-br-15 custom-m-25 custom-img-size-100 border shadow custom-opacity-50 custom-hover-pointer-opacity-1"></a>
+      <a href="/show/{{ i_dict['id'] }}"><img src="{{ i_dict['platform_image_medium'] }}" alt="{{ i_dict['name'] }} podcast logo" class="custom-br-15 custom-m-25 custom-img-size-100 border shadow custom-opacity-50 custom-hover-pointer-opacity-1"></a>
     {% endfor %}
   </div>
 </div>

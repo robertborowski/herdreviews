@@ -17,7 +17,7 @@ import stripe
 # Result: No SQL is needed to create, maintain, and query the db! ORM: Object Relational Mapping 
 # and you can connect it directly to Postgres
 db = SQLAlchemy()
-DB_NAME = os.environ.get('HEROKU_POSTGRESQL_PURPLE_URL')
+DB_NAME = os.environ.get('HR_DB_URI')
 # ------------------------ define/initialize a new db sql_alchemy function end ------------------------
 
 secret_key_ref = os.urandom(64)
@@ -35,9 +35,7 @@ def create_app_function():
   app = Flask(__name__)
   # To use a session, there has to be a secret key. The string should be something difficult to guess
   app.secret_key = secret_key_ref
-  # use sqlalchemy to point to the correct db (postgres)
-  # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('HEROKU_POSTGRESQL_PURPLE_URL')
-  app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('HEROKU_POSTGRESQL_PURPLE_URL').replace("postgres://", "postgresql://", 1) # This .replace was added because of an issue when pushing to heroku. Link: https://stackoverflow.com/questions/66690321/flask-and-heroku-sqlalchemy-exc-nosuchmoduleerror-cant-load-plugin-sqlalchemy 
+  app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('HR_DB_URI').replace("postgres://", "postgresql://", 1) # This .replace was added because of an issue when pushing to heroku. Link: https://stackoverflow.com/questions/66690321/flask-and-heroku-sqlalchemy-exc-nosuchmoduleerror-cant-load-plugin-sqlalchemy 
   db.init_app(app)
   # ------------------------ create flask app end ------------------------
   # ------------------------ additional flask app configurations start ------------------------
@@ -45,37 +43,26 @@ def create_app_function():
   app.permanent_session_lifetime = datetime.timedelta(days=30)
   # For removing cache from images for quiz questions. The URL was auto caching and not updating
   app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-  # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
   app.config['UPLOAD_FOLDER'] = './website/backend/candidates/user_inputs/'
   app.config['MAX_CONTENT_PATH'] = 16 * 1024 * 1024
   # ------------------------ additional flask app configurations end ------------------------
   # ------------------------ Handleing Error Messages START ------------------------
   @app.errorhandler(404) # inbuilt function which takes error as parameter
   def not_found(e):
-    return render_template("employees/exterior/error_404/index.html")
+    return render_template("polling/exterior/error_404/index.html")
   # ------------------------ Handleing Error Messages END ------------------------
   # ------------------------ stripe api environment start ------------------------
   stripe.api_key = os.environ.get('STRIPE_API_KEY')  # PRODUCTION
   # stripe.api_key = os.environ.get('STRIPE_TEST_API_KEY')  # TESTING
   # ------------------------ stripe api environment end ------------------------
   # ------------------------ views/auths/routes imports start ------------------------
-  from .admin_views_interior import admin_views_interior
-
-  from .employees_auth import employees_auth
-  from .employees_views_exterior import employees_views_exterior
-  from .employees_views_interior import employees_views_interior
-  
+  # from .admin_views_interior import admin_views_interior
   from .polling_auth import polling_auth
   from .polling_views_exterior import polling_views_exterior
   from .polling_views_interior import polling_views_interior
   # ------------------------ views/auths/routes imports end ------------------------
   # ------------------------ views/auths/routes register blueprints start ------------------------
-  app.register_blueprint(admin_views_interior, url_prefix='/')
-  
-  app.register_blueprint(employees_auth, url_prefix='/')
-  app.register_blueprint(employees_views_exterior, url_prefix='/')
-  app.register_blueprint(employees_views_interior, url_prefix='/')
-
+  # app.register_blueprint(admin_views_interior, url_prefix='/')
   app.register_blueprint(polling_auth, url_prefix='/')
   app.register_blueprint(polling_views_exterior, url_prefix='/')
   app.register_blueprint(polling_views_interior, url_prefix='/')
@@ -86,7 +73,6 @@ def create_app_function():
   # ------------------------ import models before creating db for first time end ------------------------
   # ------------------------ login manager start ------------------------
   login_manager = LoginManager()
-  # login_manager.login_view = 'employees_auth.employees_signup_function'   # where does the person go if they are not logged in -> auth.login route
   login_manager.login_view = 'polling_auth.polling_login_function'   # where does the person go if they are not logged in -> auth.login route
   login_manager.init_app(app)
   # ------------------------ function start ------------------------

@@ -32,9 +32,9 @@ redis_connection = redis_connect_to_database_function()
 # ------------------------ connect to redis end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_auth.route('/polling/signup', methods=['GET', 'POST'])
-@polling_auth.route('/polling/signup/', methods=['GET', 'POST'])
-@polling_auth.route('/polling/signup/<url_redirect_code>', methods=['GET', 'POST'])
+@polling_auth.route('/signup', methods=['GET', 'POST'])
+@polling_auth.route('/signup/', methods=['GET', 'POST'])
+@polling_auth.route('/signup/<url_redirect_code>', methods=['GET', 'POST'])
 def polling_signup_function(url_redirect_code=None):
   # ------------------------ page dict start ------------------------
   alert_message_dict = alert_message_default_function_v2(url_redirect_code)
@@ -99,9 +99,9 @@ def polling_signup_function(url_redirect_code=None):
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_auth.route('/polling/login', methods=['GET', 'POST'])
-@polling_auth.route('/polling/login/', methods=['GET', 'POST'])
-@polling_auth.route('/polling/login/<url_redirect_code>', methods=['GET', 'POST'])
+@polling_auth.route('/login', methods=['GET', 'POST'])
+@polling_auth.route('/login/', methods=['GET', 'POST'])
+@polling_auth.route('/login/<url_redirect_code>', methods=['GET', 'POST'])
 def polling_login_function(url_redirect_code=None):
   # ------------------------ page dict start ------------------------
   alert_message_dict = alert_message_default_function_v2(url_redirect_code)
@@ -176,8 +176,8 @@ def polling_login_function(url_redirect_code=None):
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_auth.route('/polling/logout')
-@polling_auth.route('/polling/logout/')
+@polling_auth.route('/logout')
+@polling_auth.route('/logout/')
 @login_required
 def polling_logout_function():
   logout_user()

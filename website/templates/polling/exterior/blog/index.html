@@ -10,7 +10,7 @@
 <!-- ----------------------------------- start ----------------------------------- -->
 <div class="container-fluid text-center custom-pt-25 custom-pb-6">
   <h1 class="custom-header-7">Blog</h1>
-  <h2><a href="/polling/signup" class="custom-header-5 fw-bold custom-a-2">Get started <i class="fa-solid fa-angle-right"></i></a></h2>
+  <h2><a href="/signup" class="custom-header-5 fw-bold custom-a-2">Get started <i class="fa-solid fa-angle-right"></i></a></h2>
 </div>
 <!-- ----------------------------------- end ----------------------------------- -->
 <!-- ----------------------------------- start ----------------------------------- -->
@@ -18,11 +18,11 @@
   {% for i_dict in page_dict_to_html['master_arr_of_dicts'] %}
     <!-- ------------------------------------- individual blog post start ------------------------------------- -->
     <div class="card custom-m-2" style="width: 18rem;">
-      <a href="/polling/blog/{{ i_dict['title_url'] }}/" class="custom-a-2"><img src="{{ i_dict['aws_image_url'] }}" class="card-img-top custom-p-10 custom-br-1" alt="blog post picture"></a>
+      <a href="/blog/{{ i_dict['title_url'] }}/" class="custom-a-2"><img src="{{ i_dict['aws_image_url'] }}" class="card-img-top custom-p-10 custom-br-1" alt="blog post picture"></a>
       <div class="card-body">
-        <h5 class="card-title"><a href="/polling/blog/{{ i_dict['title_url'] }}/" class="custom-a-2">{{ i_dict['title'] }}</a></h5>
-        <p class="card-text"><a href="/polling/blog/{{ i_dict['title_url'] }}/" class="custom-a-2">{{ i_dict['details'] }}</a></p>
-        <a href="/polling/blog/{{ i_dict['title_url'] }}/" class="custom-width-100 btn btn-warning">Read post</a>
+        <h5 class="card-title"><a href="/blog/{{ i_dict['title_url'] }}/" class="custom-a-2">{{ i_dict['title'] }}</a></h5>
+        <p class="card-text"><a href="/blog/{{ i_dict['title_url'] }}/" class="custom-a-2">{{ i_dict['details'] }}</a></p>
+        <a href="/blog/{{ i_dict['title_url'] }}/" class="custom-width-100 btn btn-warning">Read post</a>
       </div>
     </div>
     <!-- ------------------------------------- individual blog post end ------------------------------------- -->  

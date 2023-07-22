@@ -18,7 +18,7 @@
     <div class="custom-br-25 custom-bg-white shadow-sm border custom-p-15">
       <div class="custom-p-25 text-center">
         <p class="custom-m-0 custom-pb-25 custom-header-20">Please add your favorite podcasts</p>
-        <a href="/polling/show/add/1" class="custom-m-0 custom-width-100 btn btn-success btn-lg">Continue <i class="fa-solid fa-angle-right"></i></a>
+        <a href="/show/add/1" class="custom-m-0 custom-width-100 btn btn-success btn-lg">Continue <i class="fa-solid fa-angle-right"></i></a>
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@
       <div class="custom-display-flex custom-jc-between">
         <h2>Your shows</h2>
         <div class="custom-ml-10 custom-mt-5">
-          <a href="/polling/show/add/1" class="btn btn-success btn-sm custom-mb-10-mobile">Add show <i class="fa-solid fa-plus"></i></a>
+          <a href="/show/add/1" class="btn btn-success btn-sm custom-mb-10-mobile">Add show <i class="fa-solid fa-plus"></i></a>
         </div>
       </div>
       <!-- ------------------------------------- search bar start ------------------------------------- -->
@@ -40,26 +40,26 @@
         <div class="custom-br-25 custom-bg-white shadow-sm border custom-p-15 custom-mtb-25 uiSearchItem">
           <!-- ------------------------------------- show details start ------------------------------------- -->
           <div class="custom-display-flex custom-pb-10">
-            <a href="/polling/show/{{ i_dict['id'] }}"><img src="{{ i_dict['platform_image_small'] }}" alt="show logo" class="custom-br-5 border shadow-sm custom-width-66-px"></a>
+            <a href="/show/{{ i_dict['id'] }}"><img src="{{ i_dict['platform_image_small'] }}" alt="show logo" class="custom-br-5 border shadow-sm custom-width-66-px"></a>
             <div class="custom-ml-5 custom-display-flex custom-f-direction-col">
-              <a href="/polling/show/{{ i_dict['id'] }}" class="custom-a-2 custom-header-18">{{ i_dict['name'] }}</a>
-              <a href="/polling/show/{{ i_dict['id'] }}" class="custom-a-2 custom-header-12 custom-opacity-50">{{ i_dict['description'] }}</a>
+              <a href="/show/{{ i_dict['id'] }}" class="custom-a-2 custom-header-18">{{ i_dict['name'] }}</a>
+              <a href="/show/{{ i_dict['id'] }}" class="custom-a-2 custom-header-12 custom-opacity-50">{{ i_dict['description'] }}</a>
             </div>
           </div>
           <!-- ------------------------------------- show details end ------------------------------------- -->
           <!-- ------------------------------------- polling details start ------------------------------------- -->
           <div>
-            <a href="/polling/show/{{ i_dict['id'] }}" class="custom-a-2 custom-header-12 custom-mt-10 custom-display-block">{{ i_dict['percent_total_polls_complete'] }}% total polls answered</a>
+            <a href="/show/{{ i_dict['id'] }}" class="custom-a-2 custom-header-12 custom-mt-10 custom-display-block">{{ i_dict['percent_total_polls_complete'] }}% total polls answered</a>
             <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
               <div class="progress-bar bg-secondary" id="id-progress_bar_{{ i_dict['show_count'] }}catch{{ i_dict['percent_total_polls_complete'] }}" style="width: 20%"></div>
             </div>
             {% if i_dict['user_completed_all_polls'] == true %}
             {% else %}
-              <a href="/polling/show/{{ i_dict['id'] }}" class="btn btn-outline-success btn-lg custom-width-100 custom-mt-10 custom-ptb-15">Continue polls <i class="fa-solid fa-angle-right"></i></a>
+              <a href="/show/{{ i_dict['id'] }}" class="btn btn-outline-success btn-lg custom-width-100 custom-mt-10 custom-ptb-15">Continue polls <i class="fa-solid fa-angle-right"></i></a>
             {% endif %}
             <div class="custom-display-flex custom-jc-around custom-mt-10">
-              <a href="/polling/dashboard/{{ i_dict['id'] }}" class="custom-a-2 custom-header-18 custom-display-block custom-p-10 custom-opacity-50">All poll responses & statistics <i class="fa-solid fa-angle-right"></i></a>
-              <a href="/polling/create/{{ i_dict['id'] }}" class="custom-a-2 custom-header-18 custom-display-block custom-p-10 custom-opacity-50">Create poll for this community <i class="fa-solid fa-plus"></i></a>
+              <a href="/dashboard/{{ i_dict['id'] }}" class="custom-a-2 custom-header-18 custom-display-block custom-p-10 custom-opacity-50">All poll responses & statistics <i class="fa-solid fa-angle-right"></i></a>
+              <a href="/create/{{ i_dict['id'] }}" class="custom-a-2 custom-header-18 custom-display-block custom-p-10 custom-opacity-50">Create poll for this community <i class="fa-solid fa-plus"></i></a>
             </div>
           </div>
           <!-- ------------------------------------- polling details end ------------------------------------- -->
@@ -71,8 +71,8 @@
       <div class="custom-display-flex custom-jc-between">
         <h2>{{ page_dict_to_html['db_show_dict']['name_title'] }}</h2>
         <div class="custom-ml-10 custom-mt-5 custom-f-nowrap custom-mb-10-mobile ">
-          <a href="/polling/dashboard" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-angle-left"></i> Back</a>
-          <a href="/polling/create/{{ page_dict_to_html['db_show_dict']['id'] }}" class="btn btn-success btn-sm custom-ml-5">Create <i class="fa-solid fa-plus"></i></a>
+          <a href="/dashboard" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-angle-left"></i> Back</a>
+          <a href="/create/{{ page_dict_to_html['db_show_dict']['id'] }}" class="btn btn-success btn-sm custom-ml-5">Create <i class="fa-solid fa-plus"></i></a>
         </div>
       </div>
       <!-- ------------------------------------- search bar start ------------------------------------- -->
@@ -82,26 +82,26 @@
         <div class="custom-br-25 custom-bg-white shadow-sm border custom-p-15 custom-mtb-25 uiSearchItem">
           <!-- ------------------------------------- show details start ------------------------------------- -->
           <div class="custom-display-flex custom-pb-10">
-            <a href="/polling/show/{{ page_dict_to_html['db_show_dict']['id'] }}/{{ i_dict['id'] }}"><img src="{{ page_dict_to_html['db_show_dict']['platform_image_small'] }}" alt="show logo" class="custom-br-5 border shadow-sm custom-width-66-px"></a>
+            <a href="/show/{{ page_dict_to_html['db_show_dict']['id'] }}/{{ i_dict['id'] }}"><img src="{{ page_dict_to_html['db_show_dict']['platform_image_small'] }}" alt="show logo" class="custom-br-5 border shadow-sm custom-width-66-px"></a>
             <div class="custom-ml-5 custom-display-flex custom-f-direction-col">
-              <a href="/polling/show/{{ page_dict_to_html['db_show_dict']['id'] }}/{{ i_dict['id'] }}" class="custom-a-2 custom-header-18">Question: {{ i_dict['question'] }}</a>
-              <a href="/polling/show/{{ page_dict_to_html['db_show_dict']['id'] }}/{{ i_dict['id'] }}" class="custom-a-2 custom-header-12 custom-opacity-50">{{ i_dict['description'] }}</a>
+              <a href="/show/{{ page_dict_to_html['db_show_dict']['id'] }}/{{ i_dict['id'] }}" class="custom-a-2 custom-header-18">Question: {{ i_dict['question'] }}</a>
+              <a href="/show/{{ page_dict_to_html['db_show_dict']['id'] }}/{{ i_dict['id'] }}" class="custom-a-2 custom-header-12 custom-opacity-50">{{ i_dict['description'] }}</a>
             </div>
           </div>
           <!-- ------------------------------------- show details end ------------------------------------- -->
           <!-- ------------------------------------- polling details start ------------------------------------- -->
           <div>
             {% if i_dict['user_answered_poll_at_least_once'] == true %}
-              <a href="/polling/show/{{ page_dict_to_html['db_show_dict']['id'] }}/{{ i_dict['id'] }}" class="btn btn-outline-success btn-lg custom-width-100 custom-mt-10">Review answer & statistics <i class="fa-solid fa-angle-right"></i></a>
+              <a href="/show/{{ page_dict_to_html['db_show_dict']['id'] }}/{{ i_dict['id'] }}" class="btn btn-outline-success btn-lg custom-width-100 custom-mt-10">Review answer & statistics <i class="fa-solid fa-angle-right"></i></a>
             {% else %}
-              <a href="/polling/show/{{ page_dict_to_html['db_show_dict']['id'] }}/{{ i_dict['id'] }}" class="btn btn-outline-danger btn-lg custom-width-100 custom-mt-10">Answer poll <i class="fa-solid fa-angle-right"></i></a>
+              <a href="/show/{{ page_dict_to_html['db_show_dict']['id'] }}/{{ i_dict['id'] }}" class="btn btn-outline-danger btn-lg custom-width-100 custom-mt-10">Answer poll <i class="fa-solid fa-angle-right"></i></a>
             {% endif %}
           </div>
           <!-- ------------------------------------- polling details end ------------------------------------- -->
         </div>
       {% endfor %}
       <div class="custom-mt-50">
-        <a href="/polling/dashboard" class="btn btn-outline-secondary custom-width-100"><i class="fa-solid fa-angle-left"></i> Back</a>
+        <a href="/dashboard" class="btn btn-outline-secondary custom-width-100"><i class="fa-solid fa-angle-left"></i> Back</a>
       </div>
     {% endif %}
     <!-- ------------------------------------- dashboard show polls end ------------------------------------- -->

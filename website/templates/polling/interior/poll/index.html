@@ -17,7 +17,7 @@
       </div>
       <!-- ------------------------------------- progress bar end ------------------------------------- -->
       <nav class="container navbar navbar-expand-md navbar-light custom-display-flex custom-jc-between">
-        <a href="/polling/dashboard" class="navbar-brand">
+        <a href="/dashboard" class="navbar-brand">
           <img src="{{ page_dict_to_html['db_show_dict']['platform_image_small'] }}" alt="show logo" class="custom-img-size-40 custom-mr-1 custom-br-5 custom-border-white-opacity-50">
           <span class="fw-bold custom-header-15 custom-color-white">{{ page_dict_to_html['db_show_dict']['name_title'] }}</span>
         </a>
@@ -48,8 +48,8 @@
           {{ page_dict_to_html['alert_message_dict']['message'] }}
         </div>
         {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-          <a href="/polling/signup" class="btn btn-lg btn-warning custom-width-100">Create account <i class="fa-solid fa-angle-right"></i></a>
-          <a href="/polling/show/{{ page_dict_to_html['url_show_id'] }}" class="btn btn-lg btn-success custom-width-100 custom-mt-15 custom-ptb-25">Next poll <i class="fa-solid fa-angle-right"></i></a>
+          <a href="/signup" class="btn btn-lg btn-warning custom-width-100">Create account <i class="fa-solid fa-angle-right"></i></a>
+          <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="btn btn-lg btn-success custom-width-100 custom-mt-15 custom-ptb-25">Next poll <i class="fa-solid fa-angle-right"></i></a>
         {% endif %}
       {% endif %}
       <!-- ----------------------------------- alert end ----------------------------------- -->
@@ -77,10 +77,10 @@
           <span class="custom-header-30">See poll statistics <i class="fa-solid fa-angle-down"></i></span>
         </div>
         {% if page_dict_to_html['db_show_dict']['name_title'] == 'Triviafy.com' %}
-          <a href="/polling/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-p-25 btn btn-success btn-lg custom-width-100 custom-mt-25 custom-header-30">Next user poll <i class="fa-solid fa-angle-right"></i></a>
-          <a href="/polling/dashboard" class="btn btn-outline-secondary btn-sm custom-width-100 custom-mt-25">Return to show polls <i class="fa-solid fa-reply"></i></a>
+          <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-p-25 btn btn-success btn-lg custom-width-100 custom-mt-25 custom-header-30">Next user poll <i class="fa-solid fa-angle-right"></i></a>
+          <a href="/dashboard" class="btn btn-outline-secondary btn-sm custom-width-100 custom-mt-25">Return to show polls <i class="fa-solid fa-reply"></i></a>
         {% else %}
-          <a href="/polling/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-p-25 btn btn-success btn-lg custom-width-100 custom-mt-25 custom-header-30">Next poll <i class="fa-solid fa-angle-right"></i></a>
+          <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-p-25 btn btn-success btn-lg custom-width-100 custom-mt-25 custom-header-30">Next poll <i class="fa-solid fa-angle-right"></i></a>
         {% endif %}
         <!-- ------------------------------------- divider start ------------------------------------- -->
         <div class="custom-border-white-opacity-25 custom-mtb-50 custom-width-100 mx-auto"></div>
@@ -153,7 +153,7 @@
       <!-- ------------------------------------- answer end ------------------------------------- -->
       <!-- ------------------------------------- expand dropdown add written response start ------------------------------------- -->
       <div class="custom-mt-15">
-        <span class="custom-opacity-50-hover custom-hover-1 custom-color-white custom-header-15 uiSelectAllBlockInvisible custom-ptb-5 custom-plr-10 custom-br-10 custom-bg-success custom-width-100 text-center" id="id-flow_hide_details_1"><i class="fa-solid fa-minus"></i> Hide written feedback</span>
+        <span class="custom-hover-1 custom-color-white custom-header-15 uiSelectAllBlockInvisible custom-ptb-5 custom-plr-10 custom-br-10 custom-bg-success custom-width-100 text-center" id="id-flow_hide_details_1"><i class="fa-solid fa-minus"></i> Hide written feedback</span>
         <span class="custom-opacity-50-hover custom-hover-1 custom-color-white custom-header-15 uiSelectAllBlockVisible custom-ptb-5 custom-plr-10 custom-br-10 custom-bg-success custom-width-100 text-center" id="id-flow_show_details_1"><i class="fa-solid fa-plus"></i> Add written feedback</span>
       </div>
       <div class="custom-mt-10 custom-width-100 uiSelectAllBlockInvisible" id="id-activity_details_1">
@@ -219,8 +219,8 @@
           {% for i_dict in page_dict_to_html['poll_statistics_dict']['chart_arr_of_dict'] %}
             {% if i_dict['user_provided_attribute_x'] == none or page_dict_to_html['poll_answered_dict']['poll_answer_submitted'] == 'Skip this question' %}
               <div class="custom-br-15 custom-border-white-opacity-25 custom-p-25 custom-mt-50">
-                <a href="/polling/show/show_user_attributes/{{ i_dict['fk_poll_id'] }}" class="custom-a-white-underline custom-m-0 custom-header-30 custom-display-block custom-pb-10"><i class="fa-solid fa-circle-exclamation custom-color-danger"></i> {{ i_dict['chart_attribute'] }} distribution <i class="fa-solid fa-angle-right"></i></a>
-                <a href="/polling/show/show_user_attributes/{{ i_dict['fk_poll_id'] }}" class="custom-a-white-underline custom-header-15">You must first answer this poll (without skipping) in order to see the community statistics, go to poll <i class="fa-solid fa-angle-right"></i></a>
+                <a href="/show/show_user_attributes/{{ i_dict['fk_poll_id'] }}" class="custom-a-white-underline custom-m-0 custom-header-30 custom-display-block custom-pb-10"><i class="fa-solid fa-circle-exclamation custom-color-danger"></i> {{ i_dict['chart_attribute'] }} distribution <i class="fa-solid fa-angle-right"></i></a>
+                <a href="/show/show_user_attributes/{{ i_dict['fk_poll_id'] }}" class="custom-a-white-underline custom-header-15">You must first answer this poll (without skipping) in order to see the community statistics, go to poll <i class="fa-solid fa-angle-right"></i></a>
                 <!-- ------------------------------------- adding because of error from javascript loop start ------------------------------------- -->
                 <script>
                   var dynamicVariableNameTitle = {{ i_dict['js_variables_arr'][0]|tojson }}; // Variable name
@@ -273,10 +273,10 @@
       <!-- ------------------------------------- create poll start ------------------------------------- -->
       {% if page_dict_to_html['poll_answered'] == true %}
         {% if page_dict_to_html['db_show_dict']['name_title'] == 'Triviafy.com' %}
-          <a href="/polling/show/{{ page_dict_to_html['url_show_id'] }}" class="btn btn-success btn-lg custom-ptb-25 custom-width-100 custom-mb-25 custom-header-30">Next user poll <i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i></a>
-          <a href="/polling/dashboard" class="btn btn-outline-secondary btn-sm custom-width-100 custom-mb-100">Return to show polls <i class="fa-solid fa-reply"></i></a>
+          <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="btn btn-success btn-lg custom-ptb-25 custom-width-100 custom-mb-25 custom-header-30">Next user poll <i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i></a>
+          <a href="/dashboard" class="btn btn-outline-secondary btn-sm custom-width-100 custom-mb-100">Return to show polls <i class="fa-solid fa-reply"></i></a>
         {% else %}
-          <a href="/polling/show/{{ page_dict_to_html['url_show_id'] }}" class="btn btn-success btn-lg custom-ptb-25 custom-width-100 custom-mb-100 custom-header-30">Next poll <i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i></a>
+          <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="btn btn-success btn-lg custom-ptb-25 custom-width-100 custom-mb-100 custom-header-30">Next poll <i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i></a>
         {% endif %}
       {% else %}
       {% endif %}
@@ -284,9 +284,9 @@
         <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-30">Create poll for this community</p>
         <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-10 custom-pb-25">The verified '{{ page_dict_to_html['db_show_dict']['name_title'] }}' host has final approval before your poll can be seen by others in the community.</p>
         {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-          <a href="/polling/signup" class="custom-width-100 btn btn-outline-warning">Create poll for this community <i class="fa-solid fa-plus"></i></a>
+          <a href="/signup" class="custom-width-100 btn btn-outline-warning">Create poll for this community <i class="fa-solid fa-plus"></i></a>
         {% else %}
-          <a href="/polling/create/{{ page_dict_to_html['db_show_dict']['id'] }}" class="custom-width-100 btn btn-outline-warning">Create poll for this community <i class="fa-solid fa-plus"></i></a>
+          <a href="/create/{{ page_dict_to_html['db_show_dict']['id'] }}" class="custom-width-100 btn btn-outline-warning">Create poll for this community <i class="fa-solid fa-plus"></i></a>
         {% endif %}
       </div>
       <!-- ------------------------------------- create poll end ------------------------------------- -->
@@ -309,7 +309,7 @@
               <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-20">Not yet verified <i class="fa-solid fa-circle-check custom-color-info"></i></p>
               <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-15">100% free verification process</p>
               {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-15"><a href="/polling/signup" class="custom-a-white-underline">Get started to learn more <i class="fa-solid fa-angle-right"></i></a></p>  
+                <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-15"><a href="/signup" class="custom-a-white-underline">Get started to learn more <i class="fa-solid fa-angle-right"></i></a></p>  
               {% else %}
                 <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-15">1. Email <a href="mailto:support@triviafy.com" class="custom-a-5 custom-color-info">support@triviafy.com</a> proof that you mentioned Triviafy to your audience on at least one major platform, e.g., podcast episode, Twitter, TikTok, etc.</p>
                 <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-15"><a href="https://calendly.com/triviafy/podcast-host-verification-call" class="custom-a-white-underline" target="_blank">2. Complete step 1 then book <span class="custom-color-info">Calendly</span> call for final verification</a>.</p>
@@ -317,7 +317,7 @@
             </div>
           </div>
           {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-            <a href="/polling/signup" class="custom-width-100 btn btn-outline-info custom-mt-25">Begin host verification process <i class="fa-solid fa-circle-check"></i></a>
+            <a href="/signup" class="custom-width-100 btn btn-outline-info custom-mt-25">Begin host verification process <i class="fa-solid fa-circle-check"></i></a>
           {% else %}
             <a href="mailto:support@triviafy.com" class="custom-width-100 btn btn-outline-info custom-mt-25">Begin host verification process <i class="fa-regular fa-envelope"></i></a>
           {% endif %}
@@ -339,9 +339,9 @@
 <!-- ----------------------------------- exit start ----------------------------------- -->
 <div class="custom-width-600 mx-auto custom-mb-50">
   {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-    <a href="/polling" class="btn btn-outline-secondary custom-width-100"><i class="fa-solid fa-angle-left"></i> Home</a>
+    <a href="/" class="btn btn-outline-secondary custom-width-100"><i class="fa-solid fa-angle-left"></i> Home</a>
   {% else %}
-    <a href="/polling/dashboard" class="btn btn-outline-secondary custom-width-100"><i class="fa-solid fa-angle-left"></i> Back to my shows</a>
+    <a href="/dashboard" class="btn btn-outline-secondary custom-width-100"><i class="fa-solid fa-angle-left"></i> Back to my shows</a>
   {% endif %}
 </div>
 <!-- ----------------------------------- exit end ----------------------------------- -->
