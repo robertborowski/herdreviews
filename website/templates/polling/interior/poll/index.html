@@ -2,7 +2,7 @@
 
 <!-- head tag block content -->
 {% block title %}
-  <title>Poll - Triviafy</title>
+  <title>Poll - HerdReviews</title>
 {% endblock %}
 
 {% block contentBodyExceptNavbarAndFooter %}
@@ -60,7 +60,7 @@
         </div>
       {% endif %}
       {% if page_dict_to_html['poll_answered'] == true %}
-        {% if page_dict_to_html['db_show_dict']['name_title'] != 'Triviafy.com' %}
+        {% if page_dict_to_html['db_show_dict']['name_title'] != 'HerdReviews.com' %}
           <!-- ----------------------------------- host thank you message start ----------------------------------- -->
           <div class="custom-border-white custom-br-15 custom-p-25 custom-display-flex">
             <img src="{{ page_dict_to_html['db_show_dict']['platform_image_medium'] }}" alt="show logo" class="custom-img-size-100 custom-mr-1 custom-br-5 custom-border-white-opacity-50">
@@ -76,7 +76,7 @@
         <div class="custom-p-25 custom-mt-25 btn btn-warning custom-width-100" id="id-general_autoscroll_click_1">
           <span class="custom-header-30">See poll statistics <i class="fa-solid fa-angle-down"></i></span>
         </div>
-        {% if page_dict_to_html['db_show_dict']['name_title'] == 'Triviafy.com' %}
+        {% if page_dict_to_html['db_show_dict']['name_title'] == 'HerdReviews.com' %}
           <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-p-25 btn btn-success btn-lg custom-width-100 custom-mt-25 custom-header-30">Next user poll <i class="fa-solid fa-angle-right"></i></a>
           <a href="/dashboard" class="btn btn-outline-secondary btn-sm custom-width-100 custom-mt-25">Return to show polls <i class="fa-solid fa-reply"></i></a>
         {% else %}
@@ -91,7 +91,7 @@
       <!-- ------------------------------------- question start ------------------------------------- -->
       <div class="custom-mt-50 mx-auto">
         <div class="custom-display-flex custom-header-20 custom-color-white custom-jc-between">
-          <p class="custom-m-0 custom-opacity-75 custom-pb-5">Poll | Triviafy<span class="custom-header-10">.com</span></p>
+          <p class="custom-m-0 custom-opacity-75 custom-pb-5">Poll | HerdReviews<span class="custom-header-10">.com</span></p>
           <div>
             <!-- ------------------------------------- radio upvote start ------------------------------------- -->
             <input type="radio" class="btn-check" id="id-ui_vote_question_up" name="ui_vote_question" value="up" autocomplete="off">
@@ -112,7 +112,7 @@
           </div>
         </div>
         <div class="custom-br-15 custom-p-50 custom-bg-white">
-          <h1 class="custom-m-0 custom-header-25-mobile fw-bold custom-color-black custom-line-35"><img src="https://triviafypublicobjects.s3.us-east-2.amazonaws.com/official_logo_v3.png" alt="triviafy logo" class="custom-img-size-35 custom-mt-negative-5"> {{ page_dict_to_html['poll_dict']['question'] }}</h1>
+          <h1 class="custom-m-0 custom-header-25-mobile fw-bold custom-color-black custom-line-35"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v1_black.png" alt="HerdReviews logo" class="custom-img-size-35 custom-mt-negative-5"> {{ page_dict_to_html['poll_dict']['question'] }}</h1>
         </div>
       </div>
       <!-- ------------------------------------- question end ------------------------------------- -->
@@ -272,7 +272,7 @@
       <!-- ------------------------------------- divider end ------------------------------------- -->
       <!-- ------------------------------------- create poll start ------------------------------------- -->
       {% if page_dict_to_html['poll_answered'] == true %}
-        {% if page_dict_to_html['db_show_dict']['name_title'] == 'Triviafy.com' %}
+        {% if page_dict_to_html['db_show_dict']['name_title'] == 'HerdReviews.com' %}
           <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="btn btn-success btn-lg custom-ptb-25 custom-width-100 custom-mb-25 custom-header-30">Next user poll <i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i></a>
           <a href="/dashboard" class="btn btn-outline-secondary btn-sm custom-width-100 custom-mb-100">Return to show polls <i class="fa-solid fa-reply"></i></a>
         {% else %}
@@ -294,7 +294,7 @@
       <div class="custom-border-white-opacity-25 custom-mtb-100 custom-width-100 mx-auto" id="id-general_autoscroll_location_2"></div>
       <!-- ------------------------------------- divider end ------------------------------------- -->
       <!-- ------------------------------------- verified status start ------------------------------------- -->
-      {% if page_dict_to_html['db_show_dict']['name_title'] == 'Triviafy.com' %}
+      {% if page_dict_to_html['db_show_dict']['name_title'] == 'HerdReviews.com' %}
         <div class="text-center">
           <img src="{{ page_dict_to_html['db_show_dict']['platform_image_small'] }}" alt="show logo" class="custom-mr-1 custom-width-100-px">
         </div>
@@ -311,15 +311,15 @@
               {% if page_dict_to_html['current_user_is_anonymous'] == true %}
                 <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-15"><a href="/signup" class="custom-a-white-underline">Get started to learn more <i class="fa-solid fa-angle-right"></i></a></p>  
               {% else %}
-                <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-15">1. Email <a href="mailto:support@triviafy.com" class="custom-a-5 custom-color-info">support@triviafy.com</a> proof that you mentioned Triviafy to your audience on at least one major platform, e.g., podcast episode, Twitter, TikTok, etc.</p>
-                <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-15"><a href="https://calendly.com/triviafy/podcast-host-verification-call" class="custom-a-white-underline" target="_blank">2. Complete step 1 then book <span class="custom-color-info">Calendly</span> call for final verification</a>.</p>
+                <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-15">1. Email <a href="mailto:support@herdreviews.com" class="custom-a-5 custom-color-info">support@herdreviews.com</a> proof that you mentioned HerdReviews to your audience on at least one major platform, e.g., podcast episode, Twitter, TikTok, etc.</p>
+                <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-15"><a href="https://calendly.com/herdreviews/podcast-host-verification-call" class="custom-a-white-underline" target="_blank">2. Complete step 1 then book <span class="custom-color-info">Calendly</span> call for final verification</a>.</p>
               {% endif %}
             </div>
           </div>
           {% if page_dict_to_html['current_user_is_anonymous'] == true %}
             <a href="/signup" class="custom-width-100 btn btn-outline-info custom-mt-25">Begin host verification process <i class="fa-solid fa-circle-check"></i></a>
           {% else %}
-            <a href="mailto:support@triviafy.com" class="custom-width-100 btn btn-outline-info custom-mt-25">Begin host verification process <i class="fa-regular fa-envelope"></i></a>
+            <a href="mailto:support@herdreviews.com" class="custom-width-100 btn btn-outline-info custom-mt-25">Begin host verification process <i class="fa-regular fa-envelope"></i></a>
           {% endif %}
         </div>
       {% endif %}

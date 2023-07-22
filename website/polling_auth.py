@@ -88,7 +88,7 @@ def polling_signup_function(url_redirect_code=None):
       try:
         output_to_email = os.environ.get('TRIVIAFY_NOTIFICATIONS_EMAIL')
         output_subject = f'Polling - Signup - {ui_email}'
-        output_body = f"Hi there,\n\nNew user signed up: {ui_email} \n\nBest,\nTriviafy"
+        output_body = f"Hi there,\n\nNew user signed up: {ui_email} \n\nBest,\nHerdReviews"
         send_email_template_function(output_to_email, output_subject, output_body)
       except:
         pass
@@ -119,7 +119,7 @@ def polling_login_function(url_redirect_code=None):
         if user == None:
           try:
             redis_connection.delete(get_cookie_value_from_browser)
-            localhost_print_function(f'delete redis key for user logged into different Triviafy product. Deleted: {get_cookie_value_from_browser}')
+            localhost_print_function(f'delete redis key for user logged into different HerdReviews product. Deleted: {get_cookie_value_from_browser}')
             logout_user()
             localhost_print_function('redirect to login page - polling')
             return redirect(url_for('polling_auth.polling_login_function'))

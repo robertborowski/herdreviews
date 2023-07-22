@@ -226,15 +226,15 @@ def verify_email_function(url_redirect_code=None):
                         <p>Please click the link below to verify your email address.</p>\
                         <p>Verify email link: http://127.0.0.1:80/verify/success/{verification_code}</p>\
                         <p style='margin:0;'>Best,</p>\
-                        <p style='margin:0;'>Triviafy Support Team</p>"
+                        <p style='margin:0;'>HerdReviews Support Team</p>"
       # ------------------------ localhost end ------------------------
       # ------------------------ production start ------------------------
       else:
         output_body = f"<p>Hi {guessed_name},</p>\
                         <p>Please click the link below to verify your email address.</p>\
-                        <p>Verify email link: https://triviafy.com/verify/success/{verification_code}</p>\
+                        <p>Verify email link: https://herdreviews.com/verify/success/{verification_code}</p>\
                         <p style='margin:0;'>Best,</p>\
-                        <p style='margin:0;'>Triviafy Support Team</p>"
+                        <p style='margin:0;'>HerdReviews Support Team</p>"
       # ------------------------ production end ------------------------
       send_email_template_function(output_to_email, output_subject, output_body)
     except:
@@ -287,15 +287,15 @@ def verify_email_function(url_redirect_code=None):
                       <p>Please click the link below to verify your email address.</p>\
                       <p>Verify email link: http://127.0.0.1:80/verify/success/{new_verification_code}</p>\
                       <p style='margin:0;'>Best,</p>\
-                      <p style='margin:0;'>Triviafy Support Team</p>"
+                      <p style='margin:0;'>HerdReviews Support Team</p>"
       # ------------------------ localhost end ------------------------
       # ------------------------ production start ------------------------
       else:
         output_body = f"<p>Hi {guessed_name},</p>\
                         <p>Please click the link below to verify your email address.</p>\
-                        <p>Verify email link: https://triviafy.com/verify/success/{new_verification_code}</p>\
+                        <p>Verify email link: https://herdreviews.com/verify/success/{new_verification_code}</p>\
                         <p style='margin:0;'>Best,</p>\
-                        <p style='margin:0;'>Triviafy Support Team</p>"
+                        <p style='margin:0;'>HerdReviews Support Team</p>"
       # ------------------------ production end ------------------------
       send_email_template_function(output_to_email, output_subject, output_body)
       # ------------------------ insert email to db start ------------------------

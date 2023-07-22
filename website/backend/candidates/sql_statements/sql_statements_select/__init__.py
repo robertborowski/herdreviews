@@ -12,17 +12,6 @@ def select_general_function(tag_query_to_use, additional_input=None, additional_
     current_user_id_defined_var = None
   # ------------------------ select queries start ------------------------
   select_queries_dict = {
-    'select_specific_assessment_questions': {
-      'raw_query': f"SELECT \
-                      question_uuid, question_categories_list, question_actual_question, question_difficulty, question_hint, question_title, question_image_aws_url, question_answers_list \
-                    FROM \
-                      triviafy_all_questions_table \
-                    WHERE \
-                      question_uuid IN ({additional_input}) \
-                    ORDER BY \
-                      question_timestamp_created;",
-      'input_args': {}
-    },
     'select_specific_assessment_questions_v2': {
       'raw_query': f"SELECT \
                       id, categories, question, title, aws_image_url, answer, option_a, option_b, option_c, option_d \
@@ -55,28 +44,12 @@ def select_general_function(tag_query_to_use, additional_input=None, additional_
       'raw_query': 'SELECT desired_languages FROM candidates_desired_languages_obj WHERE user_id_fk = :val ORDER BY created_timestamp DESC',
       'input_args': {'val': current_user_id_defined_var}
     },
-    'select_all_candidate_categories_chosen': {
-      'raw_query': "SELECT DISTINCT q.question_categories_list FROM triviafy_all_questions_table AS q WHERE q.question_categories_list LIKE'%Candidates%' ORDER BY q.question_categories_list;",
-      'input_args': {}
-    },
     'select_all_candidate_categories_chosen_v2': {
       'raw_query': "SELECT DISTINCT q.categories FROM activity_a_created_questions_obj AS q WHERE q.status=TRUE AND q.product='candidates' ORDER BY q.categories;",
       'input_args': {}
     },
     'select_all_employees_categories_v1': {
       'raw_query': "SELECT DISTINCT q.categories FROM activity_a_created_questions_obj AS q WHERE q.status=TRUE AND q.product NOT LIKE 'candidates' AND q.categories IS NOT NULL ORDER BY q.categories;",
-      'input_args': {}
-    },
-    'select_all_questions_for_x_categories': {
-      'raw_query': f"SELECT \
-                      question_uuid, question_categories_list, question_actual_question, question_difficulty, question_hint, question_title, question_image_aws_url, question_answers_list \
-                    FROM \
-                      triviafy_all_questions_table \
-                    WHERE \
-                      (question_approved_for_release = TRUE AND question_status_for_creator = 'Approved') \
-                      AND ({additional_input}) \
-                    ORDER BY \
-                      RANDOM();",
       'input_args': {}
     },
     'select_all_questions_for_x_categories_v2': {
@@ -197,10 +170,6 @@ def select_general_function(tag_query_to_use, additional_input=None, additional_
                       RANDOM() \
                     LIMIT 1;",
       'input_args': {}
-    },
-    'select_question_id_actually_exists': {
-      'raw_query': "SELECT question_uuid FROM triviafy_all_questions_table WHERE question_uuid=:val;",
-      'input_args': {'val': additional_input}
     },
     'select_question_id_actually_exists_v2': {
       'raw_query': "SELECT id FROM activity_a_created_questions_obj WHERE id=:val;",

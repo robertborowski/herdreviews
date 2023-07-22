@@ -201,16 +201,16 @@
   background-color: var(--custom-color-16);
 }
 .custom-back-img-1 {
-  background-image: url(https://triviafy-create-question-image-uploads.s3.us-east-2.amazonaws.com/custom_shape_1.png);
+  background-image: url(https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/custom_shape_1.png);
   background-repeat: no-repeat;
   height: 700px;
 }
 .custom-back-img-2 {
-  background-image: url(https://triviafypublicobjects.s3.us-east-2.amazonaws.com/triviafy_pattern.jpg);
+  background-image: url(https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/pattern1.jpg);
   height: 600px;
 }
 .custom-back-img-3 {
-  background-image: url(https://triviafy-create-question-image-uploads.s3.us-east-2.amazonaws.com/custom_shape_1.png);
+  background-image: url(https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/custom_shape_1.png);
   background-repeat: no-repeat;
   height: 600px;
 }

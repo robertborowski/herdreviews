@@ -19,10 +19,10 @@ def email_share_with_team_function(current_user):
       guessed_name = breakup_email_function(current_user.email)
       output_to_email = current_user.email
       output_body = f"<p>Hi {guessed_name},</p>\
-                      <p>Thank you for creating an account with Triviafy!</p>\
-                      <p>Your team members can access the same team building activities <a href='https://triviafy.com/signup'>here</a>, simply forward this email to your team.</p>\
+                      <p>Thank you for creating an account with HerdReviews!</p>\
+                      <p>Your team members can access the same team building activities <a href='https://herdreviews.com/signup'>here</a>, simply forward this email to your team.</p>\
                       <p style='margin:0;'>Best,</p>\
-                      <p style='margin:0;'>Triviafy Support Team</p>"
+                      <p style='margin:0;'>HerdReviews Support Team</p>"
       send_email_template_function(output_to_email, output_subject, output_body)
       # ------------------------ insert email to db start ------------------------
       try:

@@ -611,7 +611,7 @@ def grade_quiz_function(ui_answer, url_test_id, total_questions, url_question_nu
                         <p>Answers on first submission: [{all_user_answers_str}]</p>\
                         <p>Score on first submission: [{wip_grading_final_score}]</p>\
                         <p style='margin:0;'>Best,</p>\
-                        <p style='margin:0;'>Triviafy Support Team</p>"
+                        <p style='margin:0;'>HerdReviews Support Team</p>"
         send_email_template_function(output_to_email, output_subject, output_body)
         # ------------------------ insert email to db start ------------------------
         try:

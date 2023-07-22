@@ -3,7 +3,7 @@ import os
 import datetime
 from backend.db.connection.postgres_connect_to_database import postgres_connect_to_database_function
 from backend.db.connection.postgres_close_connection_to_database import postgres_close_connection_to_database_function
-from backend.db.queries.select_queries.select_queries_all_tables.select_triviafy_all_table_names import select_triviafy_all_table_names_function
+from backend.db.queries.select_queries.select_queries_all_tables.select_all_table_names import select_all_table_names_function
 import boto3
 from botocore.exceptions import ClientError
 from io import StringIO
@@ -25,7 +25,7 @@ def job_daily_backup_all_db_tables_to_aws_function():
   # ------------------------ DB Conection End ------------------------
   # ------------------------ SQL Get DB Table Names START ------------------------
   # Get all table names in the current database
-  db_table_names_arr = select_triviafy_all_table_names_function(postgres_connection, postgres_cursor)
+  db_table_names_arr = select_all_table_names_function(postgres_connection, postgres_cursor)
   # ------------------------ SQL Get DB Table Names END ------------------------
   # ------------------------ Push Info Into AWS s3 START ------------------------
   for table_name_arr in db_table_names_arr:

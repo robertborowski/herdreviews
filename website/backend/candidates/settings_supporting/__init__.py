@@ -83,11 +83,11 @@ def activity_settings_post_function(page_dict, url_activity_code, url_activity_t
         # ------------------------ email self start ------------------------
         try:
           output_to_email = os.environ.get('TRIVIAFY_NOTIFICATIONS_EMAIL')
-          output_subject = f'Triviafy - Employees Settings Categories Changed - {current_user.email}'
+          output_subject = f'HerdReviews - Employees Settings Categories Changed - {current_user.email}'
           output_body = f"<p>Hi there,</p>\
                           <p>{current_user.email} changed their categories to: [{ui_selected_categories_str}]</p>\
                           <p style='margin:0;'>Best,</p>\
-                          <p style='margin:0;'>Triviafy Support Team</p>"
+                          <p style='margin:0;'>HerdReviews Support Team</p>"
           send_email_template_function(output_to_email, output_subject, output_body)
         except:
           pass

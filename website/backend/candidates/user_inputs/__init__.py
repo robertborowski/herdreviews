@@ -295,7 +295,7 @@ def alert_message_default_function_v2(redirect_var=None):
     }
   elif redirect_var == 'e7':
     alert_message_dict = {
-      'message':'You must select at least 1 triviafy category.',
+      'message':'You must select at least 1 category.',
       'type':'danger'
     }
   elif redirect_var == 'e8':
@@ -410,7 +410,7 @@ def alert_message_default_function_v2(redirect_var=None):
     }
   elif redirect_var == 'e30':
     alert_message_dict = {
-      'message':"You must be 18+ years old to participate in Triviafy polling.",
+      'message':"You must be 18+ years old to participate in HerdReviews polling.",
       'type':'danger'
     }
   elif redirect_var == 'e31':
@@ -512,7 +512,7 @@ def alert_message_default_function_v2(redirect_var=None):
     }
   elif redirect_var == 's8':
     alert_message_dict = {
-      'message':'Check your spam/promotions folder and mark Triviafy as "Not Spam". A verification link has been successfully sent to your email.',
+      'message':'Check your spam/promotions folder and mark HerdReviews as "Not Spam". A verification link has been successfully sent to your email.',
       'type':'success'
     }
   elif redirect_var == 's9':
@@ -537,7 +537,7 @@ def alert_message_default_function_v2(redirect_var=None):
     }
   elif redirect_var == 's13':
     alert_message_dict = {
-      'message':'Check your spam/promotions folder and mark Triviafy as "Not Spam". A password reset link has been successfully sent to your email.',
+      'message':'Check your spam/promotions folder and mark HerdReviews as "Not Spam". A password reset link has been successfully sent to your email.',
       'type':'success'
     }
   elif redirect_var == 's14':

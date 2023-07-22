@@ -56,13 +56,11 @@ def create_app_function():
   # stripe.api_key = os.environ.get('STRIPE_TEST_API_KEY')  # TESTING
   # ------------------------ stripe api environment end ------------------------
   # ------------------------ views/auths/routes imports start ------------------------
-  # from .admin_views_interior import admin_views_interior
   from .polling_auth import polling_auth
   from .polling_views_exterior import polling_views_exterior
   from .polling_views_interior import polling_views_interior
   # ------------------------ views/auths/routes imports end ------------------------
   # ------------------------ views/auths/routes register blueprints start ------------------------
-  # app.register_blueprint(admin_views_interior, url_prefix='/')
   app.register_blueprint(polling_auth, url_prefix='/')
   app.register_blueprint(polling_views_exterior, url_prefix='/')
   app.register_blueprint(polling_views_interior, url_prefix='/')
