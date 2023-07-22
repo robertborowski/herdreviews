@@ -3,8 +3,6 @@ import os
 import datetime
 from backend.db.connection.postgres_connect_to_database import postgres_connect_to_database_function
 from backend.db.connection.postgres_close_connection_to_database import postgres_close_connection_to_database_function
-from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
-from backend.utils.uuid_and_timestamp.create_timestamp import create_timestamp_function
 from backend.db.queries.select_queries.select_queries_all_tables.select_triviafy_all_table_names import select_triviafy_all_table_names_function
 import boto3
 from botocore.exceptions import ClientError
@@ -12,12 +10,10 @@ from io import StringIO
 import psycopg2
 import pandas as pd
 from backend.utils.localhost_print_utils.localhost_print import localhost_print_function
-from backend.db.queries.insert_queries.insert_queries_triviafy_emails_sent_table.insert_triviafy_emails_sent_table import insert_triviafy_emails_sent_table_function
 # ------------------------ imports end ------------------------
 
 # ------------------------ individual function start ------------------------
 def job_daily_backup_all_db_tables_to_aws_function():
-  localhost_print_function(' ------------------------ job_daily_backup_all_db_tables_to_aws_function start ------------------------ ')
   # ------------------------ AWS Connect Bucket START ------------------------
   # Create AWS s3 client
   s3_resource = boto3.resource('s3')
@@ -62,14 +58,12 @@ def job_daily_backup_all_db_tables_to_aws_function():
     # Except clause
     except (Exception, psycopg2.Error) as error:
       localhost_print_function('error')
-      localhost_print_function(' ------------------------ job_daily_backup_all_db_tables_to_aws_function end ------------------------ ')
       return True
   # ------------------------ Push Info Into AWS s3 END ------------------------
   # ------------------------ DB Close Conection START ------------------------
   # Close postgres db connection
   postgres_close_connection_to_database_function(postgres_connection, postgres_cursor)
   # ------------------------ DB Close Conection END ------------------------
-  localhost_print_function(' ------------------------ job_daily_backup_all_db_tables_to_aws_function end ------------------------ ')
   return True
 # ------------------------ individual function end ------------------------
 

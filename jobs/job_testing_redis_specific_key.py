@@ -3,7 +3,7 @@ from backend.utils.localhost_print_utils.localhost_print import localhost_print_
 from backend.db.connection.redis_connect_to_database import redis_connect_to_database_function
 from backend.db.connection.postgres_connect_to_database import postgres_connect_to_database_function
 from backend.db.connection.postgres_close_connection_to_database import postgres_close_connection_to_database_function
-from backend.db.queries.select_queries.employees import select_manual_function
+from backend.db.queries.select_queries.polling import select_manual_function
 # ------------------------ imports end ------------------------
 
 
