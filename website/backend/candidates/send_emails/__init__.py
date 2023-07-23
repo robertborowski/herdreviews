@@ -9,7 +9,7 @@ from sendgrid.helpers.mail import Mail, Email, To, Content
 # ------------------------ individual function start ------------------------
 def send_email_template_function(output_email, output_subject_line, output_message_content):
   sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY_TRIVIAFY'))
-  from_email = Email(email = os.environ.get('TRIVIAFY_SUPPORT_EMAIL'), name = "HerdReviews")  # Change to your verified sender
+  from_email = Email(email = os.environ.get('HR_SUPPORT_EMAIL'), name = "HerdReviews")  # Change to your verified sender
   to_email = To(output_email)  # Change to your recipient
   subject = output_subject_line
   content = Content("text/html", output_message_content)

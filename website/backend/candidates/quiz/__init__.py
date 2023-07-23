@@ -599,7 +599,7 @@ def grade_quiz_function(ui_answer, url_test_id, total_questions, url_question_nu
       output_subject = f'Employees Test Graded | {db_user_obj.email} | {url_test_id}'
       db_email_sent_obj = EmailSentObj.query.filter_by(subject=output_subject).first()
       if db_email_sent_obj == None or db_email_sent_obj == []:
-        output_to_email = os.environ.get('TRIVIAFY_NOTIFICATIONS_EMAIL')
+        output_to_email = os.environ.get('HR_SUPPORT_EMAIL')
         # ------------------------ get str of all answers start ------------------------
         all_user_answers_arr = []
         for i in range(len(master_test_tracking_arr_of_dict)):

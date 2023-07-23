@@ -82,7 +82,7 @@ def activity_settings_post_function(page_dict, url_activity_code, url_activity_t
         db_activity_settings_obj.categories = ui_selected_categories_str
         # ------------------------ email self start ------------------------
         try:
-          output_to_email = os.environ.get('TRIVIAFY_NOTIFICATIONS_EMAIL')
+          output_to_email = os.environ.get('HR_SUPPORT_EMAIL')
           output_subject = f'HerdReviews - Employees Settings Categories Changed - {current_user.email}'
           output_body = f"<p>Hi there,</p>\
                           <p>{current_user.email} changed their categories to: [{ui_selected_categories_str}]</p>\

@@ -113,7 +113,7 @@ def create_openai_starter_poll_questions_function(show_name):
   if chatgpt_response_arr_of_dicts == None or chatgpt_response_arr_of_dicts == []:
     # ------------------------ email self start ------------------------
     try:
-      output_to_email = os.environ.get('TRIVIAFY_NOTIFICATIONS_EMAIL')
+      output_to_email = os.environ.get('HR_SUPPORT_EMAIL')
       output_subject = f'Failure on ChatGPT parsing polls for {show_name}'
       output_body = f'Failure on ChatGPT parsing polls for {show_name}'
       send_email_template_function(output_to_email, output_subject, output_body)
