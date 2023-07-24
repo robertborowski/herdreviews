@@ -152,7 +152,7 @@ class PollsAnsweredObj(db.Model):
   fk_show_id = db.Column(db.String(150))
   fk_poll_id = db.Column(db.String(150))
   fk_user_id = db.Column(db.String(150))
-  poll_answer_submitted = db.Column(db.String(150))
+  poll_answer_submitted = db.Column(db.String(500))
   written_answer_submitted = db.Column(db.String(150))
   status_answer_anonymous = db.Column(db.Boolean, default=False)
   poll_vote_updown_question = db.Column(db.Boolean)

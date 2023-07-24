@@ -992,10 +992,11 @@ def polling_create_poll_function(url_redirect_code=None, url_show_id=None):
     ui_question = request.form.get('ui_question')
     ui_answer_choices_arr = request.form.getlist('ui_answer_choices')
     max_character_count = 1000
+    character_count_n1 = 480
     # ------------------------ get ui end ------------------------
     # ------------------------ sanatize ui start ------------------------
     # sanitize question
-    ui_question = sanitize_text_v2_function(ui_question, 150, True)
+    ui_question = sanitize_text_v2_function(ui_question, character_count_n1, True)
     if ui_question == False:
       return redirect(url_for('polling_views_interior.polling_create_poll_function', url_redirect_code='e36', url_show_id=url_show_id))
     # sanitize answer choices
@@ -1003,7 +1004,7 @@ def polling_create_poll_function(url_redirect_code=None, url_show_id=None):
     for i in ui_answer_choices_arr:
       if i == '':
         continue
-      i = sanitize_text_v2_function(i, 480, False)
+      i = sanitize_text_v2_function(i, character_count_n1, False)
       if i == False:
         return redirect(url_for('polling_views_interior.polling_create_poll_function', url_redirect_code='e37', url_show_id=url_show_id))
       ui_answer_choices_arr_cleaned.append(i)
