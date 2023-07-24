@@ -991,6 +991,7 @@ def polling_create_poll_function(url_redirect_code=None, url_show_id=None):
     # ------------------------ get ui start ------------------------
     ui_question = request.form.get('ui_question')
     ui_answer_choices_arr = request.form.getlist('ui_answer_choices')
+    max_character_count = 1000
     # ------------------------ get ui end ------------------------
     # ------------------------ sanatize ui start ------------------------
     # sanitize question
@@ -1002,14 +1003,14 @@ def polling_create_poll_function(url_redirect_code=None, url_show_id=None):
     for i in ui_answer_choices_arr:
       if i == '':
         continue
-      i = sanitize_text_v2_function(i, 150, False)
+      i = sanitize_text_v2_function(i, 480, False)
       if i == False:
         return redirect(url_for('polling_views_interior.polling_create_poll_function', url_redirect_code='e37', url_show_id=url_show_id))
       ui_answer_choices_arr_cleaned.append(i)
     if len(ui_answer_choices_arr_cleaned) < 2:
       return redirect(url_for('polling_views_interior.polling_create_poll_function', url_redirect_code='e39', url_show_id=url_show_id))
     ui_answer_choices_str = "~".join(ui_answer_choices_arr_cleaned)
-    if len(ui_answer_choices_str) > 500:
+    if len(ui_answer_choices_str) > max_character_count:
       return redirect(url_for('polling_views_interior.polling_create_poll_function', url_redirect_code='e38', url_show_id=url_show_id))
     # ------------------------ sanatize ui end ------------------------
     # ------------------------ check if user submitted max amount for today for this show start ------------------------
