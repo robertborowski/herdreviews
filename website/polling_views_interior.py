@@ -809,10 +809,10 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
       poll_arr_of_dict = select_general_function('select_query_general_2', url_show_id, url_poll_id, current_user.id)
   else:
     if current_user.is_anonymous == True:
-      # pull random, unanswered
+      # pull latest, unanswered
       poll_arr_of_dict = select_general_function('select_query_general_1_anonymous', url_show_id)
     else:
-      # pull random, unanswered
+      # pull latest, unanswered
       poll_arr_of_dict = select_general_function('select_query_general_1', url_show_id, current_user.id)
     if poll_arr_of_dict == None or poll_arr_of_dict == []:
       if url_show_id == 'show_user_attributes':
