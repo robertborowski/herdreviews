@@ -198,23 +198,23 @@
             <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">You must first answer this poll in order to see the community statistics.</p>
           </div>
         {% else %}
+        <!-- ------------------------------------- total unique responses start ------------------------------------- -->
+        <div class="custom-color-white custom-header-15 custom-mt-25">
+          <p class="custom-m-0 custom-ml-15">{{ page_dict_to_html['poll_statistics_dict']['total_latest_poll_answers'] }} votes</p>
+        </div>
+        <!-- ------------------------------------- total unique responses end ------------------------------------- -->
           <!-- ------------------------------------- restate q/a start ------------------------------------- -->
           <div class="custom-border-white-opacity-25 custom-br-15 custom-p-15 custom-color-white custom-header-12">
             <p class="custom-m-0 custom-mb-10">Q: {{ page_dict_to_html['poll_dict']['question'] }}</p>
             {% for k,v in page_dict_to_html['poll_dict']['answer_choices_dict'].items() %}
               {% if v == page_dict_to_html['poll_answered_dict']['poll_answer_submitted'] %}
-                <p class="custom-m-0"><i class="fa-solid fa-arrow-right"></i> (You answered) {{ k }}: {{ v }}</p>
+                <p class="custom-m-0"><i class="fa-solid fa-arrow-right"></i> (You voted) {{ v }}</p>
               {% else %}
-                <p class="custom-m-0 custom-opacity-50">{{ k }}: {{ v }}</p>
+                <p class="custom-m-0 custom-opacity-50">{{ v }}</p>
               {% endif %}
             {% endfor %}
           </div>
           <!-- ------------------------------------- restate q/a end ------------------------------------- -->
-          <!-- ------------------------------------- total unique responses start ------------------------------------- -->
-          <div class="custom-color-white custom-header-20">
-            <p class="custom-m-0 custom-mt-25"><i class="fa-solid fa-chevron-right"></i> Total responses: {{ page_dict_to_html['poll_statistics_dict']['total_latest_poll_answers'] }}</p>
-          </div>
-          <!-- ------------------------------------- total unique responses end ------------------------------------- -->
           <!-- ------------------------------------- chart general distribution start ------------------------------------- -->
           {% for i_dict in page_dict_to_html['poll_statistics_dict']['chart_arr_of_dict'] %}
             {% if i_dict['user_provided_attribute_x'] == none or page_dict_to_html['poll_answered_dict']['poll_answer_submitted'] == 'Skip this question' %}
@@ -238,7 +238,12 @@
                 <!-- ------------------------------------- adding because of error from javascript loop end ------------------------------------- -->
               </div>
             {% else %}
-              <div class="custom-bg-white custom-br-15 custom-mt-50">
+              <!-- ------------------------------------- total unique responses start ------------------------------------- -->
+              <div class="custom-color-white custom-header-15 custom-mt-50">
+                <p class="custom-m-0 custom-ml-15">{{ page_dict_to_html['poll_statistics_dict']['total_latest_poll_answers'] }} votes</p>
+              </div>
+              <!-- ------------------------------------- total unique responses end ------------------------------------- -->
+              <div class="custom-bg-white custom-br-15 custom-p-15">
                 <canvas id="{{ i_dict['unique_id'] }}" style="width:100%;"></canvas>
                 <script>
                   var dynamicVariableNameTitle = {{ i_dict['js_variables_arr'][0]|tojson }}; // Variable name
@@ -254,13 +259,13 @@
                   window[dynamicVariableNameValues] = variableValueValues;
                 </script>
               </div>
-              <div class="custom-color-white custom-mt-10 custom-header-12 custom-display-flex custom-f-wrap">
+              <!-- <div class="custom-color-white custom-mt-10 custom-header-12 custom-display-flex custom-f-wrap">
                 {% for k,v in page_dict_to_html['poll_statistics_dict'][i_dict['vote_percent_by_x_dict']].items() %}
                   <div class="custom-f-nowrap custom-border-2 custom-m-5 custom-p-10 custom-border-white-opacity-50 custom-br-15">
                     <span>{{ k }}: {{ v }}%</span>
                   </div>
                 {% endfor %}
-              </div>
+              </div> -->
             {% endif %}
           {% endfor %}
           <!-- ------------------------------------- chart general distribution end ------------------------------------- -->

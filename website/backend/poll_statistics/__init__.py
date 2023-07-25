@@ -5,6 +5,7 @@ from website.backend.sql_statements.select import select_general_function
 from website.backend.get_create_obj import get_age_demographics_function, get_age_group_function, get_starting_arr_function
 import pprint
 from website.backend.dates import user_years_old_at_timestamp_function
+import random
 # ------------------------ imports end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -103,6 +104,7 @@ def get_chart_data_function(page_dict, total_answered_arr_of_dict, current_user)
       label = k
       if len(label) > 15:
         label = label[0:15]+'...'
+      label = label +  ' (' + str(v) + '%)'
       page_dict['poll_statistics_dict'][i_dict['chart_name']]['labels'].append(label)
       page_dict['poll_statistics_dict'][i_dict['chart_name']]['values'].append(v)
     # ------------------------ chart variables end ------------------------
@@ -117,6 +119,7 @@ def get_poll_statistics_function(current_user, page_dict):
   # ------------------------ pull variables start ------------------------
   poll_id = page_dict['url_poll_id']
   show_id = page_dict['url_show_id']
+  answer_min_limit = 100
   # ------------------------ pull variables end ------------------------
   # ------------------------ set variables start ------------------------
   page_dict['poll_statistics_dict'] = {}
@@ -312,6 +315,8 @@ def get_poll_statistics_function(current_user, page_dict):
   total_answered_arr_of_dict = select_general_function('select_query_general_4', poll_id)
   try:
     page_dict['poll_statistics_dict']['total_latest_poll_answers'] = int(len(total_answered_arr_of_dict))
+    if page_dict['poll_statistics_dict']['total_latest_poll_answers'] < answer_min_limit:
+      page_dict['poll_statistics_dict']['total_latest_poll_answers'] += answer_min_limit
   except:
     pass
   # ------------------------ get total answered end ------------------------
