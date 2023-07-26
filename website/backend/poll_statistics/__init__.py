@@ -138,8 +138,7 @@ def get_poll_statistics_function(current_user, page_dict):
   page_dict['poll_statistics_dict']['all_user_ids_participated'] = []
   charts_arr = ['answer_choice','generation','age_group','gender','annual_income','relationship_status','education','employment','collar','ethnicity','politics','own_vs_rent','industry']
   for i in charts_arr:
-    if i!='answer_choice' and i!='generation' and i!='age_group':
-      page_dict['poll_statistics_dict']['user_provided_attribute_'+i] = None
+    page_dict['poll_statistics_dict']['user_provided_attribute_'+i] = None
     page_dict['poll_statistics_dict']['vote_count_dict_'+i] = {}
     page_dict['poll_statistics_dict']['vote_percent_dict_'+i] = {}
     page_dict['poll_statistics_dict']['chart_distribution_'+i] = {}
