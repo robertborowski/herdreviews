@@ -63,10 +63,6 @@ def polling_dashboard_function(url_redirect_code=None, url_show_id=None):
   onbaording_status = onboarding_checks_v2_function(current_user)
   if onbaording_status == 'verify':
     return redirect(url_for('polling_views_interior.verify_email_function'))
-  # if onbaording_status == 'attribute_tos':
-    # return redirect(url_for('polling_views_interior.polling_feedback_function', url_feedback_code=onbaording_status))
-  if onbaording_status == 'attribute_birthday':
-    return redirect(url_for('polling_views_interior.polling_feedback_function', url_feedback_code=onbaording_status))
   if onbaording_status == 'attribute_marketing':
     return redirect(url_for('polling_views_interior.polling_feedback_function', url_feedback_code=onbaording_status))
   # ------------------------ onboarding checks end ------------------------
@@ -345,8 +341,10 @@ def polling_feedback_function(url_redirect_code=None, url_feedback_code=None):
   page_dict['alert_message_dict'] = alert_message_dict
   # ------------------------ page dict end ------------------------
   # ------------------------ double check redirect start ------------------------
-  onbaording_status = onboarding_checks_v2_function(current_user)
-  if onbaording_status != url_feedback_code:
+  if url_feedback_code != 'attribute_marketing' and url_feedback_code != 'attribute_birthday':
+    return redirect(url_for('polling_views_interior.polling_dashboard_function'))
+  db_user_attribute_obj = UserAttributesObj.query.filter_by(attribute_code=url_feedback_code,fk_user_id=current_user.id).first()
+  if db_user_attribute_obj != None:
     return redirect(url_for('polling_views_interior.polling_dashboard_function'))
   # ------------------------ double check redirect end ------------------------
   # ------------------------ set loading bar variables start ------------------------
@@ -392,10 +390,11 @@ def polling_feedback_function(url_redirect_code=None, url_feedback_code=None):
       onbaording_status = onboarding_checks_v2_function(current_user)
       if onbaording_status != url_feedback_code:
         return redirect(url_for('polling_views_interior.polling_dashboard_function'))
-    if url_feedback_code == 'attribute_birthday':
-      onbaording_status = onboarding_checks_v2_function(current_user)
-      if onbaording_status != url_feedback_code:
-        return redirect(url_for('polling_views_interior.polling_dashboard_function'))
+    # ------------------------ double check redirect end ------------------------
+    # ------------------------ double check redirect start ------------------------
+    db_user_attribute_obj = UserAttributesObj.query.filter_by(attribute_code=url_feedback_code,fk_user_id=current_user.id).first()
+    if db_user_attribute_obj != None:
+      return redirect(url_for('polling_views_interior.polling_dashboard_function'))
     # ------------------------ double check redirect end ------------------------
     # ------------------------ post feedback tos start ------------------------
     if url_feedback_code == 'attribute_tos':

@@ -12,14 +12,6 @@
     <div class="progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
       <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 25%"></div>
     </div>
-  {% elif page_dict_to_html['feedback_step'] == '1' %}
-    <div class="progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-      <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 50%"></div>
-    </div>
-  {% elif page_dict_to_html['feedback_step'] == '2' %}
-    <div class="progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-      <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
-    </div>
   {% elif page_dict_to_html['feedback_step'] == '3' %}
     <div class="progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
       <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 99%"></div>
@@ -42,7 +34,6 @@
           <h1 class="custom-color-white">Terms of service</h1>
         {% elif page_dict_to_html['feedback_request'] == 'attribute_birthday' %}
           <h1 class="custom-color-white">Age demographic</h1>
-          <p class="custom-color-white custom-opacity-75">You must be 18+ years old to participate in HerdReviews polling.</p>
         {% elif page_dict_to_html['feedback_request'] == 'attribute_marketing' %}
           <h1 class="custom-color-white">How did you hear about HerdReviews?</h1>
         {% endif %}

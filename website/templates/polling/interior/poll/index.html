@@ -219,8 +219,13 @@
           {% for i_dict in page_dict_to_html['poll_statistics_dict']['chart_arr_of_dict'] %}
             {% if i_dict['user_provided_attribute_x'] == none or page_dict_to_html['poll_answered_dict']['poll_answer_submitted'] == 'Skip this question' %}
               <div class="custom-br-15 custom-border-white-opacity-25 custom-p-25 custom-mt-50">
-                <a href="/show/show_user_attributes/{{ i_dict['fk_poll_id'] }}" class="custom-a-white-underline custom-m-0 custom-header-30 custom-display-block custom-pb-10"><i class="fa-solid fa-circle-exclamation custom-color-danger"></i> {{ i_dict['chart_attribute'] }} distribution <i class="fa-solid fa-angle-right"></i></a>
-                <a href="/show/show_user_attributes/{{ i_dict['fk_poll_id'] }}" class="custom-a-white-underline custom-header-15">You must first answer this poll (without skipping) in order to see the community statistics, go to poll <i class="fa-solid fa-angle-right"></i></a>
+                {% if i_dict['chart_name'] == 'chart_distribution_generation' or i_dict['chart_name'] == 'chart_distribution_age_group' %}
+                  <a href="/feedback/attribute_birthday" class="custom-a-white-underline custom-m-0 custom-header-30 custom-display-block custom-pb-10"><i class="fa-solid fa-circle-exclamation custom-color-danger"></i> {{ i_dict['chart_attribute'] }} distribution <i class="fa-solid fa-angle-right"></i></a>
+                  <a href="/feedback/attribute_birthday" class="custom-a-white-underline custom-header-15">You must first answer this poll (without skipping) in order to see the community statistics, go to poll <i class="fa-solid fa-angle-right"></i></a>
+                {% else %}
+                  <a href="/show/show_user_attributes/{{ i_dict['fk_poll_id'] }}" class="custom-a-white-underline custom-m-0 custom-header-30 custom-display-block custom-pb-10"><i class="fa-solid fa-circle-exclamation custom-color-danger"></i> {{ i_dict['chart_attribute'] }} distribution <i class="fa-solid fa-angle-right"></i></a>
+                  <a href="/show/show_user_attributes/{{ i_dict['fk_poll_id'] }}" class="custom-a-white-underline custom-header-15">You must first answer this poll (without skipping) in order to see the community statistics, go to poll <i class="fa-solid fa-angle-right"></i></a>
+                {% endif %}
                 <!-- ------------------------------------- adding because of error from javascript loop start ------------------------------------- -->
                 <script>
                   var dynamicVariableNameTitle = {{ i_dict['js_variables_arr'][0]|tojson }}; // Variable name

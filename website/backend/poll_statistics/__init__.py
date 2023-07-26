@@ -23,7 +23,7 @@ def get_chart_data_function(page_dict, total_answered_arr_of_dict, current_user)
   # ------------------------ chart general start ------------------------
   for i_dict in page_dict['poll_statistics_dict']['chart_arr_of_dict']:
     # ------------------------ check if current user provided attribute poll response start ------------------------
-    if i_dict['user_provided_attribute_x'] != 'ignore':
+    if i_dict['chart_name'] != 'chart_distribution_generation' and i_dict['chart_name'] != 'chart_distribution_age_group':
       db_poll_answered_obj = PollsAnsweredObj.query.filter_by(fk_user_id=current_user.id,fk_show_id=i_dict['fk_show_id'],fk_poll_id=i_dict['fk_poll_id']).order_by(PollsAnsweredObj.created_timestamp.desc()).first()
       if db_poll_answered_obj == None or db_poll_answered_obj == []:
         i_dict['user_provided_attribute_x'] = None
@@ -33,11 +33,19 @@ def get_chart_data_function(page_dict, total_answered_arr_of_dict, current_user)
         else:
           i_dict['user_provided_attribute_x'] = True
     # ------------------------ check if current user provided attribute poll response end ------------------------
+    # ------------------------ check if current user provided attribute birthday response start ------------------------
+    if i_dict['chart_name'] == 'chart_distribution_generation' or i_dict['chart_name'] == 'chart_distribution_age_group':
+      db_user_attribute_obj = UserAttributesObj.query.filter_by(fk_user_id=current_user.id,attribute_code='attribute_birthday').first()
+      if db_user_attribute_obj == None or db_user_attribute_obj == []:
+        i_dict['user_provided_attribute_x'] = None
+      else:
+        i_dict['user_provided_attribute_x'] = True
+    # ------------------------ check if current user provided attribute birthday response end ------------------------
     # ------------------------ set count to zero for options start ------------------------
     # answer choices only
     if i_dict['chart_name'] == 'chart_distribution_answer_choice':
       for k,v in page_dict['poll_dict']['answer_choices_dict'].items():
-        if v != 'Skip this question':
+        if v != 'Skip this question': # Don't want people to know if a question is heavily skipped
           page_dict['poll_statistics_dict'][i_dict['vote_count_by_x_dict']][k] = 0
     # generation only
     elif i_dict['chart_name'] == 'chart_distribution_generation':
@@ -74,17 +82,18 @@ def get_chart_data_function(page_dict, total_answered_arr_of_dict, current_user)
       for i_poll_answered_dict in total_answered_arr_of_dict:
         i_poll_answer_submitted_timestamp = i_poll_answered_dict['created_timestamp']
         db_user_obj = UserAttributesObj.query.filter_by(fk_user_id=i_poll_answered_dict['fk_user_id'],attribute_code='attribute_birthday').first()
-        age_at_submission = user_years_old_at_timestamp_function(i_poll_answer_submitted_timestamp, int(db_user_obj.attribute_year), int(db_user_obj.attribute_month), int(db_user_obj.attribute_day))
-        if age_at_submission <= 29:
-          page_dict['poll_statistics_dict'][i_dict['vote_count_by_x_dict']]["18-20's"] += 1
-        elif age_at_submission >= 30 and age_at_submission <= 39:
-          page_dict['poll_statistics_dict'][i_dict['vote_count_by_x_dict']]["30's"] += 1
-        elif age_at_submission >= 40 and age_at_submission <= 49:
-          page_dict['poll_statistics_dict'][i_dict['vote_count_by_x_dict']]["40's"] += 1
-        elif age_at_submission >= 50 and age_at_submission <= 59:
-          page_dict['poll_statistics_dict'][i_dict['vote_count_by_x_dict']]["50's"] += 1
-        elif age_at_submission >= 60:
-          page_dict['poll_statistics_dict'][i_dict['vote_count_by_x_dict']]["60's +"] += 1
+        if db_user_obj != None and db_user_obj != []:
+          age_at_submission = user_years_old_at_timestamp_function(i_poll_answer_submitted_timestamp, int(db_user_obj.attribute_year), int(db_user_obj.attribute_month), int(db_user_obj.attribute_day))
+          if age_at_submission <= 29:
+            page_dict['poll_statistics_dict'][i_dict['vote_count_by_x_dict']]["18-20's"] += 1
+          elif age_at_submission >= 30 and age_at_submission <= 39:
+            page_dict['poll_statistics_dict'][i_dict['vote_count_by_x_dict']]["30's"] += 1
+          elif age_at_submission >= 40 and age_at_submission <= 49:
+            page_dict['poll_statistics_dict'][i_dict['vote_count_by_x_dict']]["40's"] += 1
+          elif age_at_submission >= 50 and age_at_submission <= 59:
+            page_dict['poll_statistics_dict'][i_dict['vote_count_by_x_dict']]["50's"] += 1
+          elif age_at_submission >= 60:
+            page_dict['poll_statistics_dict'][i_dict['vote_count_by_x_dict']]["60's +"] += 1
     else:
       # all user attribute checks
       total_answered_arr_of_dict = select_general_function('select_query_general_6', i_dict['fk_poll_id'], page_dict['url_poll_id'])
@@ -147,7 +156,7 @@ def get_poll_statistics_function(current_user, page_dict):
       'chart_title':page_dict['db_show_dict']['name_title']+' | Answer (%) | HerdReviews.com',
       'fk_show_id':show_id,
       'fk_poll_id':poll_id,
-      'user_provided_attribute_x':'ignore',
+      'user_provided_attribute_x':None,
       'starting_point_arr':None,
       'vote_count_by_x_dict':'vote_count_dict_answer_choice',
       'vote_percent_by_x_dict':'vote_percent_dict_answer_choice'
@@ -160,7 +169,7 @@ def get_poll_statistics_function(current_user, page_dict):
       'chart_title':page_dict['db_show_dict']['name_title']+' | Generation (%) | HerdReviews.com',
       'fk_show_id':show_id,
       'fk_poll_id':poll_id,
-      'user_provided_attribute_x':'ignore',
+      'user_provided_attribute_x':None,
       'starting_point_arr':None,
       'vote_count_by_x_dict':'vote_count_dict_generation',
       'vote_percent_by_x_dict':'vote_percent_dict_generation'
@@ -173,7 +182,7 @@ def get_poll_statistics_function(current_user, page_dict):
       'chart_title':page_dict['db_show_dict']['name_title']+' | Age group (%) | HerdReviews.com',
       'fk_show_id':show_id,
       'fk_poll_id':poll_id,
-      'user_provided_attribute_x':'ignore',
+      'user_provided_attribute_x':None,
       'starting_point_arr':get_age_group_function(),
       'vote_count_by_x_dict':'vote_count_dict_age_group',
       'vote_percent_by_x_dict':'vote_percent_dict_age_group'
