@@ -33,6 +33,7 @@ from website.backend.dict_manipulation import arr_of_dict_all_columns_single_ite
 from website.backend.show_utils import shows_following_arr_of_dict_function, follow_user_polls_show_function, follow_show_function
 from website.backend.sql_statements.select import select_general_function
 from website.backend.poll_statistics import get_poll_statistics_function
+from website.backend.poll_statistics_v2 import get_poll_statistics_v2_function
 from datetime import datetime
 # ------------------------ imports end ------------------------
 
@@ -794,6 +795,7 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
   # ------------------------ variables end ------------------------
   # ------------------------ pull show + poll combination start ------------------------
   poll_arr_of_dict = []
+  # ------------------------ if poll id provided start ------------------------
   if url_poll_id != None:
     # ------------------------ check if poll exists in db start ------------------------
     db_poll_obj = get_poll_based_on_id_function(url_poll_id)
@@ -806,6 +808,8 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
     else:
       # pull specific, unanswered or answered
       poll_arr_of_dict = select_general_function('select_query_general_2', url_show_id, url_poll_id, current_user.id)
+  # ------------------------ if poll id provided end ------------------------
+  # ------------------------ if poll id not provided start ------------------------
   else:
     if current_user.is_anonymous == True:
       # pull latest, unanswered
@@ -818,12 +822,15 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
         return redirect(url_for('polling_views_interior.polling_dashboard_function', url_redirect_code='s18'))
       else:
         return redirect(url_for('polling_views_interior.polling_dashboard_function', url_redirect_code='s17'))
+  # ------------------------ if poll id not provided end ------------------------
+  # ------------------------ poll dict prep start ------------------------
   try:
     page_dict['poll_dict'] = prep_poll_dict_function(poll_arr_of_dict[0])
   except:
     return redirect(url_for('polling_views_interior.polling_dashboard_function', url_redirect_code='e41'))
   if url_poll_id == None or url_poll_id != page_dict['poll_dict']['id']:
     return redirect(url_for('polling_views_interior.polling_show_function', url_show_id=url_show_id, url_poll_id=page_dict['poll_dict']['id'], url_redirect_code=url_redirect_code))
+  # ------------------------ poll dict prep end ------------------------
   # ------------------------ pull show + poll combination end ------------------------
   # ------------------------ pull + calculate status bar percent complete start ------------------------
   if current_user.is_anonymous == True:
@@ -847,7 +854,9 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
     pass
   else:
     if page_dict['poll_answered'] == True:
-      page_dict = get_poll_statistics_function(current_user, page_dict)
+      pass
+      # page_dict = get_poll_statistics_function(current_user, page_dict)
+      page_dict = get_poll_statistics_v2_function(current_user, page_dict)
   # ------------------------ get poll statistics end ------------------------
   if request.method == 'POST':
     if current_user.is_anonymous == True:
