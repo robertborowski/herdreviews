@@ -160,6 +160,16 @@ class PollsAnsweredObj(db.Model):
 # ------------------------ individual model end ------------------------
 
 # ------------------------ individual model start ------------------------
+class PollsStandInObj(db.Model):
+  id = db.Column(db.String(150), primary_key=True)
+  created_timestamp = db.Column(db.DateTime(timezone=True))
+  fk_show_id = db.Column(db.String(150))
+  fk_poll_id = db.Column(db.String(150))
+  standin_key = db.Column(db.String(150))
+  standin_values = db.Column(db.String(500))
+# ------------------------ individual model end ------------------------
+
+# ------------------------ individual model start ------------------------
 class ShowsFollowingObj(db.Model):
   id = db.Column(db.String(150), primary_key=True)
   created_timestamp = db.Column(db.DateTime(timezone=True))

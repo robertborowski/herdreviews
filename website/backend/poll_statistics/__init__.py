@@ -1,11 +1,15 @@
 # ------------------------ imports start ------------------------
 from backend.utils.localhost_print_utils.localhost_print import localhost_print_function
-from website.models import UserAttributesObj, PollsAnsweredObj
+from website.models import UserAttributesObj, PollsAnsweredObj, PollsStandInObj
+from website import db
 from website.backend.sql_statements.select import select_general_function
 from website.backend.get_create_obj import get_age_demographics_function, get_age_group_function, get_starting_arr_function
 import pprint
 from website.backend.dates import user_years_old_at_timestamp_function
 import random
+from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
+from backend.utils.uuid_and_timestamp.create_timestamp import create_timestamp_function
+import json
 # ------------------------ imports end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -19,6 +23,59 @@ def get_percent_data_function(input_numerator, input_denominator):
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
+def get_create_random_chart_data_function(page_dict, chart_name, fk_show_id, fk_poll_id):
+  if chart_name == 'chart_distribution_answer_choice':
+    # ------------------------ check if already exists in db start ------------------------
+    db_stand_in_obj = PollsStandInObj.query.filter_by(standin_key=chart_name,fk_show_id=fk_show_id,fk_poll_id=fk_poll_id).first()
+    # ------------------------ check if already exists in db end ------------------------
+    # ------------------------ create random values start ------------------------
+    if db_stand_in_obj == None or db_stand_in_obj == []:
+      # ------------------------ set variables start ------------------------
+      answer_choices_arr = page_dict['poll_dict']['answer_choices']
+      total_votes = page_dict['answer_min_limit']
+      item_votes_arr = []
+      # ------------------------ set variables end ------------------------
+      # ------------------------ randomize count start ------------------------
+      # Calculate the number of elements in the array
+      num_items = len(answer_choices_arr)
+      # Assign random votes to each item except the last one
+      for i in range(num_items - 1):
+        max_votes_check = int(int(page_dict['answer_min_limit']) / int(3))
+        random_votes = random.randint(1, total_votes - (num_items - i - 1))
+        while random_votes > max_votes_check:
+          random_votes = random.randint(1, total_votes - (num_items - i - 1))
+        item_votes_arr.append(random_votes)
+        total_votes -= random_votes
+      # Assign the remaining votes to the last item
+      item_votes_arr.append(total_votes)
+      # ------------------------ randomize count end ------------------------
+      # ------------------------ randomize arr order start ------------------------
+      random.shuffle(item_votes_arr)
+      # ------------------------ randomize arr order end ------------------------
+      # ------------------------ add to db start ------------------------
+      try:
+        new_row = PollsStandInObj(
+          id = create_uuid_function('standin_'),
+          created_timestamp = create_timestamp_function(),
+          fk_show_id = fk_show_id,
+          fk_poll_id = fk_poll_id,
+          standin_key = chart_name,
+          standin_values = json.dumps(item_votes_arr)
+        )
+        db.session.add(new_row)
+        db.session.commit()
+      except Exception as e:
+        pass
+      # ------------------------ add to db end ------------------------
+    # ------------------------ create random values end ------------------------
+    # ------------------------ pull existning random values start ------------------------
+    else:
+      item_votes_arr = json.loads(db_stand_in_obj.standin_values)
+    # ------------------------ pull existning random values end ------------------------
+  return item_votes_arr
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
 def get_chart_data_function(page_dict, total_answered_arr_of_dict, current_user):
   # ------------------------ chart general start ------------------------
   for i_dict in page_dict['poll_statistics_dict']['chart_arr_of_dict']:
@@ -27,9 +84,11 @@ def get_chart_data_function(page_dict, total_answered_arr_of_dict, current_user)
       db_poll_answered_obj = PollsAnsweredObj.query.filter_by(fk_user_id=current_user.id,fk_show_id=i_dict['fk_show_id'],fk_poll_id=i_dict['fk_poll_id']).order_by(PollsAnsweredObj.created_timestamp.desc()).first()
       if db_poll_answered_obj == None or db_poll_answered_obj == []:
         i_dict['user_provided_attribute_x'] = None
+        continue
       else:
         if db_poll_answered_obj.poll_answer_submitted == 'Skip this question':
           i_dict['user_provided_attribute_x'] = None
+          continue
         else:
           i_dict['user_provided_attribute_x'] = True
     # ------------------------ check if current user provided attribute poll response end ------------------------
@@ -38,6 +97,7 @@ def get_chart_data_function(page_dict, total_answered_arr_of_dict, current_user)
       db_user_attribute_obj = UserAttributesObj.query.filter_by(fk_user_id=current_user.id,attribute_code='attribute_birthday').first()
       if db_user_attribute_obj == None or db_user_attribute_obj == []:
         i_dict['user_provided_attribute_x'] = None
+        continue
       else:
         i_dict['user_provided_attribute_x'] = True
     # ------------------------ check if current user provided attribute birthday response end ------------------------
@@ -128,7 +188,6 @@ def get_poll_statistics_function(current_user, page_dict):
   # ------------------------ pull variables start ------------------------
   poll_id = page_dict['url_poll_id']
   show_id = page_dict['url_show_id']
-  answer_min_limit = 100
   # ------------------------ pull variables end ------------------------
   # ------------------------ set variables start ------------------------
   page_dict['poll_statistics_dict'] = {}
@@ -323,8 +382,6 @@ def get_poll_statistics_function(current_user, page_dict):
   total_answered_arr_of_dict = select_general_function('select_query_general_4', poll_id)
   try:
     page_dict['poll_statistics_dict']['total_latest_poll_answers'] = int(len(total_answered_arr_of_dict))
-    if page_dict['poll_statistics_dict']['total_latest_poll_answers'] < answer_min_limit:
-      page_dict['poll_statistics_dict']['total_latest_poll_answers'] += answer_min_limit
   except:
     pass
   # ------------------------ get total answered end ------------------------
