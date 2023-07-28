@@ -201,9 +201,5 @@ def get_starting_arr_function(fk_poll_id):
   else:
     get_str = db_obj.answer_choices
     get_arr = get_str.split('~')
-    try:
-      get_arr.remove('Skip this question')
-    except:
-      pass
   return get_arr
 # ------------------------ individual function end ------------------------

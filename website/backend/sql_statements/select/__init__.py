@@ -64,7 +64,10 @@ def select_general_function(tag_query_to_use, input1=None, input2=None, input3=N
                       t1.fk_user_id='{input2}';"
     },
     'select_query_general_4': {
-      'raw_query': f"WITH cte1 AS(SELECT ROW_NUMBER()OVER(PARTITION BY t1.fk_poll_id,t1.fk_user_id ORDER BY t1.created_timestamp DESC)AS row_num,t1.*FROM polls_answered_obj AS t1 LEFT JOIN polls_obj AS t2 ON t1.fk_poll_id=t2.id WHERE t1.fk_poll_id='{input1}' AND t2.status_approved=TRUE AND t2.status_removed=FALSE)SELECT *FROM cte1 WHERE row_num=1 AND cte1.poll_answer_submitted!='Skip this question';"
+      'raw_query': f"WITH cte1 AS(SELECT ROW_NUMBER()OVER(PARTITION BY t1.fk_poll_id,t1.fk_user_id ORDER BY t1.created_timestamp DESC)AS row_num,t1.*FROM polls_answered_obj AS t1 LEFT JOIN polls_obj AS t2 ON t1.fk_poll_id=t2.id WHERE t1.fk_poll_id='{input1}' AND t2.status_approved=TRUE AND t2.status_removed=FALSE)SELECT*FROM cte1 WHERE row_num=1;"
+    },
+    'select_query_general_4_2': {
+      'raw_query': f"WITH cte1 AS(SELECT ROW_NUMBER()OVER(PARTITION BY t1.fk_poll_id,t1.fk_user_id ORDER BY t1.created_timestamp DESC)AS row_num,t1.*FROM polls_answered_obj AS t1 LEFT JOIN polls_obj AS t2 ON t1.fk_poll_id=t2.id WHERE t1.fk_poll_id='{input1}' AND t2.status_approved=TRUE AND t2.status_removed=FALSE AND t1.fk_user_id IN('{input2}'))SELECT*FROM cte1 WHERE row_num=1;"
     },
     'select_query_general_5': {
       'raw_query': f"SELECT p.*,s.name,s.platform_image_small,s.platform_image_medium,s.platform_image_large FROM polls_obj AS p LEFT JOIN shows_obj AS s ON p.fk_show_id=s.id WHERE p.fk_user_id='{input1}' ORDER BY p.fk_show_id, p.created_timestamp DESC;"
