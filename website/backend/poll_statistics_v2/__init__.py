@@ -1,71 +1,79 @@
 # ------------------------ imports start ------------------------
 from backend.utils.localhost_print_utils.localhost_print import localhost_print_function
-from website.models import UserAttributesObj, PollsAnsweredObj, PollsStandInObj
-from website import db
 from website.backend.sql_statements.select import select_general_function
-from website.backend.get_create_obj import get_age_demographics_function, get_age_group_function, get_starting_arr_function
+from website.backend.get_create_obj import get_starting_arr_function
 import pprint
-from website.backend.dates import user_years_old_at_timestamp_function
-import random
-from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
-from backend.utils.uuid_and_timestamp.create_timestamp import create_timestamp_function
-import json
 # ------------------------ imports end ------------------------
 
 # ------------------------ individual function start ------------------------
-def total_upvote_downvote_function(page_dict, k):
+def arr_to_shortened_dict_function(page_dict, stat_name):
+  # ------------------------ set starting arrays start ------------------------
+  choices_arr = page_dict['poll_statistics_v2_dict'][stat_name]['choices_arr']
+  page_dict['poll_statistics_v2_dict'][stat_name]['choices_dict'] = {}
+  for i in choices_arr:
+    i_short = i
+    if len(i_short) > 10:
+      i_short = i_short[:10] + '...'
+    page_dict['poll_statistics_v2_dict'][stat_name]['choices_dict'][i_short] = i
+  # ------------------------ set starting arrays end ------------------------
+  return page_dict
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
+def total_upvote_downvote_function(page_dict, stat_name, search_col_name):
   # ------------------------ set variables start ------------------------
-  page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict'] = {}
-  page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['count_dict'] = {}
-  page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['count_dict']['upvotes'] = 0
-  page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['count_dict']['downvotes'] = 0
-  page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['count_dict']['no_votes'] = 0
-  page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['percent_dict'] = {}
-  page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['percent_dict']['upvotes'] = 0
-  page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['percent_dict']['downvotes'] = 0
-  page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['percent_dict']['no_votes'] = 0
+  page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict'] = {}
+  page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['count_dict'] = {}
+  page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['count_dict']['trues'] = 0
+  page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['count_dict']['falses'] = 0
+  page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['count_dict']['no_repsonses'] = 0
+  page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['percent_dict'] = {}
+  page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['percent_dict']['trues'] = 0
+  page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['percent_dict']['falses'] = 0
+  page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['percent_dict']['no_repsonses'] = 0
   # ------------------------ set variables end ------------------------
   # ------------------------ get upvote downvote counts start ------------------------
-  for i_dict in page_dict['poll_statistics_v2_dict'][k]['all_response_objs']:
-    if i_dict['poll_vote_updown_question'] == True:
-      page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['count_dict']['upvotes'] += 1
-    elif i_dict['poll_vote_updown_question'] == False:
-      page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['count_dict']['downvotes'] += 1
+  for i_dict in page_dict['poll_statistics_v2_dict'][stat_name]['all_response_objs']:
+    if i_dict[search_col_name] == True:
+      page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['count_dict']['trues'] += 1
+    elif i_dict[search_col_name] == False:
+      page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['count_dict']['falses'] += 1
     else:
-      page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['count_dict']['no_votes'] += 1
+      page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['count_dict']['no_repsonses'] += 1
   # ------------------------ get upvote downvote counts end ------------------------
   # ------------------------ get upvote downvote percents start ------------------------
-  for k2,v2 in page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['count_dict'].items():
-    if k2 == 'upvotes':
-      page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['percent_dict']['upvotes'] = str(float(float(v2) / float(len(page_dict['poll_statistics_v2_dict'][k]['all_response_objs']))) * float(100))+'%'
-    if k2 == 'downvotes':
-      page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['percent_dict']['downvotes'] = str(float(float(v2) / float(len(page_dict['poll_statistics_v2_dict'][k]['all_response_objs']))) * float(100))+'%'
-    if k2 == 'no_votes':
-      page_dict['poll_statistics_v2_dict'][k]['upvote_downvote_dict']['percent_dict']['no_votes'] = str(float(float(v2) / float(len(page_dict['poll_statistics_v2_dict'][k]['all_response_objs']))) * float(100))+'%'
+  for k2,v2 in page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['count_dict'].items():
+    if k2 == 'trues':
+      page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['percent_dict']['trues'] = str(float(float(v2) / float(len(page_dict['poll_statistics_v2_dict'][stat_name]['all_response_objs']))) * float(100))+'%'
+    if k2 == 'falses':
+      page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['percent_dict']['falses'] = str(float(float(v2) / float(len(page_dict['poll_statistics_v2_dict'][stat_name]['all_response_objs']))) * float(100))+'%'
+    if k2 == 'no_repsonses':
+      page_dict['poll_statistics_v2_dict'][stat_name][search_col_name+'_dict']['percent_dict']['no_repsonses'] = str(float(float(v2) / float(len(page_dict['poll_statistics_v2_dict'][stat_name]['all_response_objs']))) * float(100))+'%'
   # ------------------------ get upvote downvote percents end ------------------------
   return page_dict
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
-def get_count_and_percent_stats_function(page_dict, k, choices_arr, objs_arr_of_dicts, total_denominator):
+def get_count_and_percent_stats_function(page_dict, stat_name, choices_arr, objs_arr_of_dicts):
+  total_denominator = len(objs_arr_of_dicts)
   # ------------------------ loop through submitted answers to get answer choice distribution start ------------------------
   # set count and percent to 0
-  page_dict['poll_statistics_v2_dict'][k][k+'_votes_dict'] = {}
-  page_dict['poll_statistics_v2_dict'][k][k+'_votes_dict']['count_dict'] = {}
-  page_dict['poll_statistics_v2_dict'][k][k+'_votes_dict']['percent_dict'] = {}
+  page_dict['poll_statistics_v2_dict'][stat_name][stat_name+'_votes_dict'] = {}
+  page_dict['poll_statistics_v2_dict'][stat_name][stat_name+'_votes_dict']['count_dict'] = {}
+  page_dict['poll_statistics_v2_dict'][stat_name][stat_name+'_votes_dict']['percent_dict'] = {}
   for i in choices_arr:
-    page_dict['poll_statistics_v2_dict'][k][k+'_votes_dict']['count_dict'][i] = 0
-    page_dict['poll_statistics_v2_dict'][k][k+'_votes_dict']['percent_dict'][i] = 0
+    page_dict['poll_statistics_v2_dict'][stat_name][stat_name+'_votes_dict']['count_dict'][i] = 0
+    page_dict['poll_statistics_v2_dict'][stat_name][stat_name+'_votes_dict']['percent_dict'][i] = 0
   # loop + update count
   for i_dict in objs_arr_of_dicts:
     try:
-      page_dict['poll_statistics_v2_dict'][k][k+'_votes_dict']['count_dict'][i_dict['poll_answer_submitted']] += 1
+      page_dict['poll_statistics_v2_dict'][stat_name][stat_name+'_votes_dict']['count_dict'][i_dict['poll_answer_submitted']] += 1
     except:
       pass
   # loop + update percents
-  for k,v in page_dict['poll_statistics_v2_dict'][k][k+'_votes_dict']['count_dict'].items():
+  for k,v in page_dict['poll_statistics_v2_dict'][stat_name][stat_name+'_votes_dict']['count_dict'].items():
     try:
-      page_dict['poll_statistics_v2_dict'][k][k+'_votes_dict']['percent_dict'][k] = str(float(float(v) / float(total_denominator)) * float(100))+'%'
+      page_dict['poll_statistics_v2_dict'][stat_name][stat_name+'_votes_dict']['percent_dict'][k] = str(float(float(v) / float(total_denominator)) * float(100))+'%'
     except:
       pass
   # ------------------------ loop through submitted answers to get answer choice distribution end ------------------------
@@ -83,26 +91,36 @@ def get_poll_statistics_v2_function(current_user, page_dict):
   }
   page_dict['poll_statistics_v2_dict']['user_ids_only'] = []
   page_dict['poll_statistics_v2_dict']['user_ids_str_only'] = ''
+  find_true_false_stats_arr = ['poll_vote_updown_question', 'poll_vote_updown_feedback', 'status_answer_anonymous']
   # ------------------------ set variables end ------------------------
+  # ------------------------ get user responses start ------------------------
   for k,v in page_dict['poll_statistics_v2_dict']['define_dict'].items():
     page_dict['poll_statistics_v2_dict'][k] = {}
     if k == 'feedback':
       page_dict['poll_statistics_v2_dict'][k]['all_response_objs'] = select_general_function('select_query_general_4', v)
-      page_dict = total_upvote_downvote_function(page_dict, k)
-      # ------------------------ get total people that answered poll user ids only start ------------------------
+      # ------------------------ get user ids only start ------------------------
       for i_dict in page_dict['poll_statistics_v2_dict'][k]['all_response_objs']:
         page_dict['poll_statistics_v2_dict']['user_ids_only'].append(i_dict['fk_user_id'])
       page_dict['poll_statistics_v2_dict']['user_ids_str_only'] = "','".join(page_dict['poll_statistics_v2_dict']['user_ids_only'])
-      # ------------------------ get total people that answered poll user ids only end ------------------------
+      # ------------------------ get user ids only end ------------------------
     if k != 'feedback':
       page_dict['poll_statistics_v2_dict'][k]['all_response_objs'] = select_general_function('select_query_general_4_2', v, page_dict['poll_statistics_v2_dict']['user_ids_str_only'])
-      page_dict = total_upvote_downvote_function(page_dict, k)
+    # ------------------------ get user responses end ------------------------
+    # ------------------------ total user responses start ------------------------
+    page_dict['poll_statistics_v2_dict'][k]['all_response_objs_len'] = len(page_dict['poll_statistics_v2_dict'][k]['all_response_objs'])
+    # ------------------------ total user responses end ------------------------
     # ------------------------ set starting arrays start ------------------------
     page_dict['poll_statistics_v2_dict'][k]['choices_arr'] = get_starting_arr_function(v)
+    page_dict = arr_to_shortened_dict_function(page_dict, k)
     # ------------------------ set starting arrays end ------------------------
-    # ------------------------ get counts and percentages start ------------------------
-    page_dict = get_count_and_percent_stats_function(page_dict, k, page_dict['poll_statistics_v2_dict'][k]['choices_arr'], page_dict['poll_statistics_v2_dict'][k]['all_response_objs'], len(page_dict['poll_statistics_v2_dict'][k]['all_response_objs']))
-    # ------------------------ get counts and percentages end ------------------------
+    # ------------------------ get counts and percentages for poll start ------------------------
+    page_dict = get_count_and_percent_stats_function(page_dict, k, page_dict['poll_statistics_v2_dict'][k]['choices_arr'], page_dict['poll_statistics_v2_dict'][k]['all_response_objs'])
+    # ------------------------ get counts and percentages for poll end ------------------------
+    # ------------------------ get counts and percentages for true/false upvote/downvotes start ------------------------
+    for i in find_true_false_stats_arr:
+      # page_dict = get_count_and_percent_stats_function(page_dict, k, page_dict['poll_statistics_v2_dict'][k]['choices_arr'], page_dict['poll_statistics_v2_dict'][k]['all_response_objs'])
+      page_dict = total_upvote_downvote_function(page_dict, k, i)
+    # ------------------------ get counts and percentages for true/false upvote/downvotes end ------------------------
   localhost_print_function(' ------------- 50 ------------- ')
   localhost_print_function(pprint.pformat(page_dict, indent=2))
   localhost_print_function(' ------------- 50 ------------- ')

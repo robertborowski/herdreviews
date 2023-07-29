@@ -32,7 +32,6 @@ from website.backend.user_inputs import sanitize_letters_numbers_spaces_specials
 from website.backend.dict_manipulation import arr_of_dict_all_columns_single_item_function, prep_poll_dict_function
 from website.backend.show_utils import shows_following_arr_of_dict_function, follow_user_polls_show_function, follow_show_function
 from website.backend.sql_statements.select import select_general_function
-from website.backend.poll_statistics import get_poll_statistics_function
 from website.backend.poll_statistics_v2 import get_poll_statistics_v2_function
 from datetime import datetime
 # ------------------------ imports end ------------------------
@@ -855,7 +854,6 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
   else:
     if page_dict['poll_answered'] == True:
       pass
-      # page_dict = get_poll_statistics_function(current_user, page_dict)
       page_dict = get_poll_statistics_v2_function(current_user, page_dict)
   # ------------------------ get poll statistics end ------------------------
   if request.method == 'POST':
