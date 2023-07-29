@@ -50,7 +50,7 @@ def get_count_and_percent_stats_function(page_dict, stat_name, choices_arr, col_
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
-def get_poll_statistics_v2_function(current_user, page_dict):
+def get_poll_statistics_v2_function(page_dict):
   # ------------------------ set variables start ------------------------
   page_dict['poll_statistics_v2_dict'] = {}
   page_dict['poll_statistics_v2_dict']['define_dict'] = {

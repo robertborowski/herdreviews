@@ -854,7 +854,7 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
   else:
     if page_dict['poll_answered'] == True:
       pass
-      page_dict = get_poll_statistics_v2_function(current_user, page_dict)
+      page_dict = get_poll_statistics_v2_function(page_dict)
   # ------------------------ get poll statistics end ------------------------
   if request.method == 'POST':
     if current_user.is_anonymous == True:
