@@ -3,6 +3,8 @@ from backend.utils.localhost_print_utils.localhost_print import localhost_print_
 from website.backend.sql_statements.select import select_general_function
 from website.backend.get_create_obj import get_starting_arr_function
 import pprint
+from website.models import PollsObj
+from website import db
 # ------------------------ imports end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -52,13 +54,19 @@ def get_poll_statistics_v2_function(current_user, page_dict):
   # ------------------------ set variables start ------------------------
   page_dict['poll_statistics_v2_dict'] = {}
   page_dict['poll_statistics_v2_dict']['define_dict'] = {
-    # k: v, | 'name': 'poll_id',
+    # k: v, | 'gender': 'poll_user_attribute_gender'
     'feedback': page_dict['url_poll_id'],
-    'gender': 'poll_user_attribute_gender'
   }
   page_dict['poll_statistics_v2_dict']['user_ids_only'] = []
   page_dict['poll_statistics_v2_dict']['user_ids_str_only'] = ''
   # ------------------------ set variables end ------------------------
+  # ------------------------ get all variable names start ------------------------
+  db_polls_objs = PollsObj.query.filter_by(fk_show_id='show_user_attributes').order_by(PollsObj.created_timestamp.asc()).all()
+  for i_obj in db_polls_objs:
+    id = i_obj.id
+    name = id.replace('poll_user_attribute_','')
+    page_dict['poll_statistics_v2_dict']['define_dict'][name] = id
+  # ------------------------ get all variable names end ------------------------
   # ------------------------ get user responses start ------------------------
   for k,v in page_dict['poll_statistics_v2_dict']['define_dict'].items():
     page_dict['poll_statistics_v2_dict'][k] = {}
