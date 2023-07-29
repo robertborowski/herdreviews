@@ -897,11 +897,11 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
         return redirect(url_for('polling_views_interior.polling_show_function', url_show_id=url_show_id, url_poll_id=page_dict['poll_dict']['id'], url_redirect_code='e6'))
       # ------------------------ sanatize ui end ------------------------
       # ------------------------ variables before insert start ------------------------
-      if ui_vote_question == 'up':
+      if ui_vote_question == 'up' or ui_vote_question == None:
         ui_vote_question = True
       if ui_vote_question == 'down':
         ui_vote_question = False
-      if ui_vote_feedback == 'up':
+      if ui_vote_feedback == 'up' or ui_vote_feedback == None:
         ui_vote_feedback = True
       if ui_vote_feedback == 'down':
         ui_vote_feedback = False
