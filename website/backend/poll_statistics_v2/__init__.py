@@ -84,6 +84,9 @@ def create_fake_count_stats_function(page_dict, stat_name, col_name, exception_v
   for k, v in page_dict['poll_statistics_v2_dict'][stat_name][col_name+'_dict']['count_dict'].items():
     page_dict['poll_statistics_v2_dict'][stat_name][col_name+'_dict']['count_dict'][k] = int(float(vote_distribution_dict[k]) * float(min_votes_limit))
   # ------------------------ assign/map the percentages to the counts end ------------------------
+  # ------------------------ update dict variables start ------------------------
+  page_dict['poll_statistics_v2_dict'][stat_name]['all_response_objs_len'] += min_votes_limit
+  # ------------------------ update dict variables end ------------------------
   return page_dict
 # ------------------------ individual function end ------------------------
 
