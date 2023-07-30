@@ -201,6 +201,54 @@
           <div class="custom-br-15 custom-border-white-opacity-25 custom-p-15">
             <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">Work in progress...</p>
           </div>
+          <!-- ------------------------------------- charts start ------------------------------------- -->
+          {% for k,v in page_dict_to_html['poll_statistics_v2_dict'].items() %}
+            {% if k in page_dict_to_html['poll_statistics_v2_dict']['define_dict_arr'] %}
+              <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25 custom-mb-50">
+                <canvas id="{{ v['chart_dict']['id'] }}"></canvas>
+              </div>
+              <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+              <script>
+                var jquery_id = {{ v['chart_dict']['id']|tojson }};
+                var jquery_labels_array = {{ v['chart_dict']['js_dict']['labels_arr']|tojson }};
+                var jquery_values_array = {{ v['chart_dict']['js_dict']['values_arr']|tojson }};
+                // ----------------------------- i chart start -----------------------------
+                var ctx = document.getElementById(jquery_id);
+                try {
+                  new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                      labels: jquery_labels_array,
+                      datasets: [{
+                        label: '# of Votes',
+                        data: jquery_values_array,
+                        borderWidth: 1
+                      }]
+                    },
+                    options: {
+                      indexAxis: 'y',
+                      scales: {
+                        y: {
+                          beginAtZero: true
+                        }
+                      },
+                      legend: {display: false},
+                      title: {
+                        display: true,
+                        text: 'test'
+                      }
+                    }
+                  });
+                } catch (error) {
+                  console.log('ERROR')
+                  console.log(error)
+                }
+                // ----------------------------- i chart end -----------------------------
+              </script>
+            {% else %}
+            {% endif %}
+          {% endfor %}
+          <!-- ------------------------------------- charts end ------------------------------------- -->
         {% endif %}
       </div>
       <!-- ------------------------------------- poll statistics end ------------------------------------- -->

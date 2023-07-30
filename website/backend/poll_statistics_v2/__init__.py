@@ -126,6 +126,25 @@ def get_count_and_percent_stats_function(page_dict, stat_name, choices_arr, col_
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
+def get_chart_info_function(page_dict, stat_name):
+  # ------------------------ set variables start ------------------------
+  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict'] = {}
+  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['id'] = 'id-chart_' + stat_name
+  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict'] = {}
+  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['labels_arr'] = []
+  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['values_arr'] = []
+  # ------------------------ set variables end ------------------------
+  # ------------------------ start ------------------------
+  js_dict = {}
+  for k,v in page_dict['poll_statistics_v2_dict'][stat_name]['choices_dict'].items():
+    label_string = k + ' (' + page_dict['poll_statistics_v2_dict'][stat_name]['poll_answer_submitted_dict']['percent_dict'][v] + ' | ' + str(page_dict['poll_statistics_v2_dict'][stat_name]['poll_answer_submitted_dict']['count_dict'][v]) + ')'
+    page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['labels_arr'].append(label_string)
+    page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['values_arr'].append(page_dict['poll_statistics_v2_dict'][stat_name]['poll_answer_submitted_dict']['count_dict'][v])
+  # ------------------------ end ------------------------
+  return page_dict
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
 def get_poll_statistics_v2_function(page_dict):
   # ------------------------ set variables start ------------------------
   page_dict['poll_statistics_v2_dict'] = {}
@@ -143,6 +162,11 @@ def get_poll_statistics_v2_function(page_dict):
     name = id.replace('poll_user_attribute_','')
     page_dict['poll_statistics_v2_dict']['define_dict'][name] = id
   # ------------------------ get all variable names end ------------------------
+  # ------------------------ define dict arr start ------------------------
+  page_dict['poll_statistics_v2_dict']['define_dict_arr'] = []
+  for k,v in page_dict['poll_statistics_v2_dict']['define_dict'].items():
+    page_dict['poll_statistics_v2_dict']['define_dict_arr'].append(k)
+  # ------------------------ define dict arr end ------------------------
   # ------------------------ get user responses start ------------------------
   for k,v in page_dict['poll_statistics_v2_dict']['define_dict'].items():
     page_dict['poll_statistics_v2_dict'][k] = {}
@@ -172,6 +196,9 @@ def get_poll_statistics_v2_function(page_dict):
     for i in col_names_arr:
       page_dict = get_count_and_percent_stats_function(page_dict, k, temp_starting_arr, i, True)
     # ------------------------ get counts and percentages for poll end ------------------------
+    # ------------------------ chart information start ------------------------
+    page_dict = get_chart_info_function(page_dict, k)
+    # ------------------------ chart information end ------------------------
   localhost_print_function(' ------------- 50 ------------- ')
   localhost_print_function(pprint.pformat(page_dict, indent=2))
   localhost_print_function(' ------------- 50 ------------- ')
