@@ -57,7 +57,11 @@
         <div class="custom-width-800 mx-auto">
           <!-- ------------------------------------- search bar start ------------------------------------- -->
           <label for="ui_search_show_name" class="form-label custom-color-white">Podcast feedback from the die-hard fans <i class="fa-brands fa-spotify"></i> <i class="fa-solid fa-podcast"></i></label>
-          <input type="text" class="form-control custom-ptb-15" id="ui_search_show_name" name="ui_search_show_name" placeholder="Search podcast" required>
+          {% if page_dict_to_html['url_searched_value'] == none %}
+            <input type="text" class="form-control custom-ptb-15" id="ui_search_show_name" name="ui_search_show_name" placeholder="Search podcast" required>
+          {% else %}
+            <input type="text" class="form-control custom-ptb-15" id="ui_search_show_name" name="ui_search_show_name" placeholder="Search podcast" value="{{ page_dict_to_html['url_searched_value'] }}" required>
+          {% endif %}
           <!-- ------------------------------------- search bar end ------------------------------------- -->
           <!-- ------------------------------------- buttons start ------------------------------------- -->
           <button type="submit" class="btn btn-lg btn-success custom-width-100 custom-mt-25"><i class="fa-solid fa-magnifying-glass"></i> Search</button>

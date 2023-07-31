@@ -39,9 +39,9 @@ redis_connection = redis_connect_to_database_function()
 # ------------------------ connect to redis end ------------------------
 
 # ------------------------ individual route start ------------------------
-@polling_views_exterior.route('/')
-@polling_views_exterior.route('/<url_reference_id>')
-@polling_views_exterior.route('/<url_reference_id>/')
+@polling_views_exterior.route('/', methods=['GET', 'POST'])
+@polling_views_exterior.route('/<url_reference_id>', methods=['GET', 'POST'])
+@polling_views_exterior.route('/<url_reference_id>/', methods=['GET', 'POST'])
 def polling_landing_details_function(url_reference_id=None):
   # ------------------------ ref id hit start ------------------------
   if url_reference_id != None:
@@ -60,6 +60,15 @@ def polling_landing_details_function(url_reference_id=None):
   for i in show_arr_of_dict:
     page_dict['shows_arr_of_dicts'].append(i)
   # ------------------------ get all podcasts end ------------------------
+  if request.method == 'POST':
+    # ------------------------ get user inputs start ------------------------
+    ui_search_show_name = request.form.get('ui_search_show_name')
+    # ------------------------ get user inputs end ------------------------
+    # ------------------------ sanitize ui start ------------------------
+    ui_search_show_name_check = sanitize_letters_numbers_spaces_specials_only_function(ui_search_show_name)
+    if ui_search_show_name_check != False:
+      return redirect(url_for('polling_views_interior.polling_add_show_function', url_step_code='1', url_platform_id='platform001', searchvalue=ui_search_show_name))
+    # ------------------------ sanitize ui end ------------------------
   return render_template('polling/exterior/landing/index.html', page_dict_to_html=page_dict)
 # ------------------------ individual route end ------------------------
 

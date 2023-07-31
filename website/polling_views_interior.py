@@ -557,6 +557,14 @@ def polling_add_show_function(url_redirect_code=None, url_step_code='1', url_pla
   page_dict = {}
   page_dict['alert_message_dict'] = alert_message_dict
   # ------------------------ page dict end ------------------------
+  # ------------------------ get search value from landing url start ------------------------
+  pulled_search_value = None
+  try:
+    pulled_search_value = request.args.get('searchvalue')
+  except:
+    pass
+  page_dict['url_searched_value'] = pulled_search_value
+  # ------------------------ get search value from landing url end ------------------------
   # ------------------------ remove from redis check start ------------------------
   try:
     wip_key = request.args.get('wip_key')
@@ -584,11 +592,11 @@ def polling_add_show_function(url_redirect_code=None, url_step_code='1', url_pla
     page_dict['current_user_is_anonymous'] = True
   # ------------------------ redirect steps check start ------------------------
   if url_step_code == '1':
-    return redirect(url_for('polling_views_interior.polling_add_show_function', url_step_code='2',url_platform_id='platform001'))
+    return redirect(url_for('polling_views_interior.polling_add_show_function', url_step_code='2',url_platform_id='platform001', searchvalue=pulled_search_value))
   if url_step_code == '2' and (url_platform_id == None or url_redis_key != None):
-    return redirect(url_for('polling_views_interior.polling_add_show_function', url_step_code=page_dict['url_previous_step_code'], url_redirect_code='e6'))
+    return redirect(url_for('polling_views_interior.polling_add_show_function', url_step_code=page_dict['url_previous_step_code'], url_redirect_code='e6', searchvalue=pulled_search_value))
   if url_step_code == '3' and (url_platform_id == None or url_redis_key == None):
-    return redirect(url_for('polling_views_interior.polling_add_show_function', url_step_code=page_dict['url_previous_step_code'], url_platform_id=url_platform_id, url_redirect_code='e6'))
+    return redirect(url_for('polling_views_interior.polling_add_show_function', url_step_code=page_dict['url_previous_step_code'], url_platform_id=url_platform_id, url_redirect_code='e6', searchvalue=pulled_search_value))
   # ------------------------ redirect steps check end ------------------------
   # ------------------------ set back button string start ------------------------
   if url_step_code == '2':
