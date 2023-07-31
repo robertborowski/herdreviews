@@ -3,7 +3,7 @@ from backend.utils.localhost_print_utils.localhost_print import localhost_print_
 from website.backend.sql_statements.select import select_general_function
 from website.backend.get_create_obj import get_starting_arr_function
 import pprint
-from website.models import PollsObj, PollsStandInObj, ShowsAttributesObj
+from website.models import PollsObj, PollsStandInObj, ShowsAttributesObj, PollsAnsweredObj
 from website import db
 import random
 from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
@@ -195,9 +195,23 @@ def get_chart_title_function(stat_name, show_name_title):
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
-def get_chart_info_function(page_dict, stat_name):
+def get_chart_info_function(page_dict, stat_name, passed_current_user_obj):
   # ------------------------ set variables start ------------------------
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict'] = {}
+  db_answered_obj = {}
+  # ------------------------ check if answered feedback start ------------------------
+  if stat_name == 'feedback':
+    db_answered_obj = PollsAnsweredObj.query.filter_by(fk_show_id=page_dict['url_show_id'],fk_poll_id=page_dict['url_poll_id'],fk_user_id=passed_current_user_obj.id).order_by(PollsAnsweredObj.created_timestamp.desc()).first()
+  # ------------------------ check if answered feedback end ------------------------
+  # ------------------------ check if answered attritbutes start ------------------------
+  else:
+    db_answered_obj = PollsAnsweredObj.query.filter_by(fk_show_id='show_user_attributes',fk_poll_id='poll_user_attribute_'+stat_name,fk_user_id=passed_current_user_obj.id).order_by(PollsAnsweredObj.created_timestamp.desc()).first()
+  if db_answered_obj == None or db_answered_obj == []:
+    page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['status'] = 'invisible'
+    page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['id'] = 'id-none-001'
+    return page_dict
+  # ------------------------ check if answered attritbutes end ------------------------
+  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['status'] = 'visible'
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['id'] = 'id-chart_' + stat_name
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['title'] = get_chart_title_function(stat_name, page_dict['db_show_dict']['name_title'])
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict'] = {}
@@ -209,7 +223,7 @@ def get_chart_info_function(page_dict, stat_name):
   # ------------------------ start ------------------------
   js_dict = {}
   for k,v in page_dict['poll_statistics_v2_dict'][stat_name]['choices_dict'].items():
-    label_string = k + ' (' + page_dict['poll_statistics_v2_dict'][stat_name]['poll_answer_submitted_dict']['percent_dict'][v] + ' | ' + str(page_dict['poll_statistics_v2_dict'][stat_name]['poll_answer_submitted_dict']['count_dict'][v]) + ')'
+    label_string = k + ' | ' + page_dict['poll_statistics_v2_dict'][stat_name]['poll_answer_submitted_dict']['percent_dict'][v] + ' | ' + str(page_dict['poll_statistics_v2_dict'][stat_name]['poll_answer_submitted_dict']['count_dict'][v]) + ' |'
     page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['labels_arr'].append(label_string)
     page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['values_arr'].append(page_dict['poll_statistics_v2_dict'][stat_name]['poll_answer_submitted_dict']['count_dict'][v])
   # ------------------------ end ------------------------
@@ -227,7 +241,7 @@ def get_chart_info_function(page_dict, stat_name):
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
-def get_poll_statistics_v2_function(page_dict):
+def get_poll_statistics_v2_function(page_dict, passed_current_user_obj):
   # ------------------------ set variables start ------------------------
   page_dict['poll_statistics_v2_dict'] = {}
   page_dict['poll_statistics_v2_dict']['define_dict'] = {
@@ -279,7 +293,7 @@ def get_poll_statistics_v2_function(page_dict):
       page_dict = get_count_and_percent_stats_function(page_dict, k, temp_starting_arr, i, True)
     # ------------------------ get counts and percentages for poll end ------------------------
     # ------------------------ chart information start ------------------------
-    page_dict = get_chart_info_function(page_dict, k)
+    page_dict = get_chart_info_function(page_dict, k, passed_current_user_obj)
     # ------------------------ chart information end ------------------------
   localhost_print_function(' ------------- 50 ------------- ')
   localhost_print_function(pprint.pformat(page_dict, indent=2))

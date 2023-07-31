@@ -40,7 +40,13 @@ redis_connection = redis_connect_to_database_function()
 
 # ------------------------ individual route start ------------------------
 @polling_views_exterior.route('/')
-def polling_landing_details_function():
+@polling_views_exterior.route('/<url_reference_id>')
+@polling_views_exterior.route('/<url_reference_id>/')
+def polling_landing_details_function(url_reference_id=None):
+  # ------------------------ ref id hit start ------------------------
+  if url_reference_id != None:
+    return redirect(url_for('polling_auth.polling_signup_function'))
+  # ------------------------ ref id hit end ------------------------
   # ------------------------ set variables start ------------------------
   page_dict = {}
   # ------------------------ set variables end ------------------------

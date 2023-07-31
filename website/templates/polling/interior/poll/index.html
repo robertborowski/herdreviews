@@ -213,70 +213,86 @@
           <!-- ------------------------------------- charts start ------------------------------------- -->
           {% for k,v in page_dict_to_html['poll_statistics_v2_dict'].items() %}
             {% if k in page_dict_to_html['poll_statistics_v2_dict']['define_dict_arr'] %}
-              <div class="custom-pt-25">
-                <p class="custom-m-0 custom-header-15 custom-color-white custom-ml-25">{{ v['all_response_objs_len'] }} votes on HerdReviews.com</p>
-              </div>
-              <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25 custom-mb-50">
-                <canvas id="{{ v['chart_dict']['id'] }}"></canvas>
-              </div>
-              <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-              <script>
-                // ----------------------------- set variables start -----------------------------
-                var jquery_id = {{ v['chart_dict']['id']|tojson }};
-                var jquery_title = {{ v['chart_dict']['title']|tojson }};
-                var jquery_labels_array = {{ v['chart_dict']['js_dict']['labels_arr']|tojson }};
-                var jquery_values_array = {{ v['chart_dict']['js_dict']['values_arr']|tojson }};
-                var jquery_chart_colors_array = {{ v['chart_dict']['js_dict']['chart_colors_arr']|tojson }};
-                var jquery_text_colors_array = {{ v['chart_dict']['js_dict']['text_colors_arr']|tojson }};
-                // ----------------------------- set variables end -----------------------------
-                // ----------------------------- i chart start -----------------------------
-                var ctx = document.getElementById(jquery_id);
-                try {
-                  new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                      labels: jquery_labels_array,
-                      datasets: [{
-                        label: 'Total votes: ',
-                        data: jquery_values_array,
-                        borderWidth: 1,
-                        backgroundColor: jquery_chart_colors_array
-                      }]
-                    },
-                    options: {
-                      indexAxis: 'y',
-                      scales: {
-                        y: {
-                          beginAtZero: true,
-                          ticks: {
-                            color: jquery_text_colors_array,
-                            font: {
-                              weight: 'lighter'
+              {% if v['chart_dict']['status'] == 'invisible' %}
+                <div class="custom-br-15 custom-border-white-opacity-25 custom-p-25 custom-mt-50">
+                  {% if k=='generation' or k=='age_group' %}
+                    <a href="/feedback/attribute_birthday" class="custom-a-white-underline custom-m-0 custom-header-30 custom-display-block custom-pb-10"><i class="fa-solid fa-circle-exclamation custom-color-danger"></i> {{ k }} community votes and trends <i class="fa-solid fa-angle-right"></i></a>
+                    <a href="/feedback/attribute_birthday" class="custom-a-white-underline custom-header-15">You must first answer this poll (without skipping) in order to see the community statistics, go to poll <i class="fa-solid fa-angle-right"></i></a>
+                  {% else %}
+                    <a href="/show/show_user_attributes/poll_user_attribute_{{ k }}" class="custom-a-white-underline custom-m-0 custom-header-30 custom-display-block custom-pb-10"><i class="fa-solid fa-circle-exclamation custom-color-danger"></i> {{ k }} community votes and trends <i class="fa-solid fa-angle-right"></i></a>
+                    <a href="/show/show_user_attributes/poll_user_attribute_{{ k }}" class="custom-a-white-underline custom-header-15">You must first answer this poll (without skipping) in order to see the community statistics, go to poll <i class="fa-solid fa-angle-right"></i></a>
+                  {% endif %}
+                </div>
+              {% else %}
+                <div class="custom-pt-25">
+                  {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+                    <p class="custom-m-0 custom-header-15 custom-color-white custom-ml-25">{{ v['all_response_objs_len'] }} votes on <a href="/{{ page_dict_to_html['db_show_dict']['reference_name'] }}" class="custom-a-white custom-a-white-underline">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a></p>
+                  {% else %}
+                    <p class="custom-m-0 custom-header-15 custom-color-white custom-ml-25">{{ v['all_response_objs_len'] }} votes on HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</p>
+                  {% endif %}
+                </div>
+                <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25 custom-mb-50">
+                  <canvas id="{{ v['chart_dict']['id'] }}"></canvas>
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                  // ----------------------------- set variables start -----------------------------
+                  var jquery_id = {{ v['chart_dict']['id']|tojson }};
+                  var jquery_title = {{ v['chart_dict']['title']|tojson }};
+                  var jquery_labels_array = {{ v['chart_dict']['js_dict']['labels_arr']|tojson }};
+                  var jquery_values_array = {{ v['chart_dict']['js_dict']['values_arr']|tojson }};
+                  var jquery_chart_colors_array = {{ v['chart_dict']['js_dict']['chart_colors_arr']|tojson }};
+                  var jquery_text_colors_array = {{ v['chart_dict']['js_dict']['text_colors_arr']|tojson }};
+                  // ----------------------------- set variables end -----------------------------
+                  // ----------------------------- i chart start -----------------------------
+                  var ctx = document.getElementById(jquery_id);
+                  try {
+                    new Chart(ctx, {
+                      type: 'bar',
+                      data: {
+                        labels: jquery_labels_array,
+                        datasets: [{
+                          label: 'Total votes: ',
+                          data: jquery_values_array,
+                          borderWidth: 1,
+                          backgroundColor: jquery_chart_colors_array
+                        }]
+                      },
+                      options: {
+                        indexAxis: 'y',
+                        scales: {
+                          y: {
+                            beginAtZero: true,
+                            ticks: {
+                              color: jquery_text_colors_array,
+                              font: {
+                                weight: 'lighter'
+                              }
                             }
                           }
-                        }
-                      },
-                      plugins: {
-                        legend: {display: false},
-                        title: {
-                          display: true,
-                          text: jquery_title,
-                          color: 'white',
-                          font: {
-                            size: '20',
-                            weight: 'lighter'
-                          },
-                          padding: {top: 0, left: 0, right: 0, bottom: 15}
+                        },
+                        plugins: {
+                          legend: {display: false},
+                          title: {
+                            display: true,
+                            text: jquery_title,
+                            color: 'white',
+                            font: {
+                              size: '20',
+                              weight: 'lighter'
+                            },
+                            padding: {top: 0, left: 0, right: 0, bottom: 15}
+                          }
                         }
                       }
-                    }
-                  });
-                } catch (error) {
-                  console.log('ERROR')
-                  console.log(error)
-                }
-                // ----------------------------- i chart end -----------------------------
-              </script>
+                    });
+                  } catch (error) {
+                    console.log('ERROR')
+                    console.log(error)
+                  }
+                  // ----------------------------- i chart end -----------------------------
+                </script>
+              {% endif %}
             {% else %}
             {% endif %}
           {% endfor %}

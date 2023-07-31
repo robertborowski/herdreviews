@@ -777,6 +777,16 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
     page_dict['db_show_dict']['name_title'] = page_dict['db_show_dict']['name'][0:title_limit] + '...'
   else:
     page_dict['db_show_dict']['name_title'] = page_dict['db_show_dict']['name']
+  # ------------------------ ref name start ------------------------
+  reference_name = page_dict['db_show_dict']['name'].replace("'","")
+  reference_name = reference_name.replace(' ','')
+  reference_name = reference_name.replace('-','')
+  reference_name = reference_name.replace('!','')
+  reference_name = reference_name.replace('?','')
+  reference_name = reference_name.replace('.','')
+  reference_name = reference_name.replace(',','')
+  page_dict['db_show_dict']['reference_name'] = reference_name
+  # ------------------------ ref name end ------------------------
   # ------------------------ pull show info end ------------------------
   # ------------------------ variables start ------------------------
   page_dict['url_show_id'] = url_show_id
@@ -854,7 +864,7 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
   else:
     if page_dict['poll_answered'] == True:
       page_dict['show_colors_dict'] = get_create_show_chart_colors_function(page_dict)
-      page_dict = get_poll_statistics_v2_function(page_dict)
+      page_dict = get_poll_statistics_v2_function(page_dict, current_user)
   # ------------------------ get poll statistics end ------------------------
   if request.method == 'POST':
     if current_user.is_anonymous == True:
