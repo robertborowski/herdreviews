@@ -212,6 +212,8 @@
                 var jquery_id = {{ v['chart_dict']['id']|tojson }};
                 var jquery_labels_array = {{ v['chart_dict']['js_dict']['labels_arr']|tojson }};
                 var jquery_values_array = {{ v['chart_dict']['js_dict']['values_arr']|tojson }};
+                var jquery_chart_colors_array = {{ v['chart_dict']['js_dict']['chart_colors_arr']|tojson }};
+                var jquery_text_colors_array = {{ v['chart_dict']['js_dict']['text_colors_arr']|tojson }};
                 // ----------------------------- i chart start -----------------------------
                 var ctx = document.getElementById(jquery_id);
                 try {
@@ -222,14 +224,18 @@
                       datasets: [{
                         label: '# of Votes',
                         data: jquery_values_array,
-                        borderWidth: 1
+                        borderWidth: 1,
+                        backgroundColor: jquery_chart_colors_array
                       }]
                     },
                     options: {
                       indexAxis: 'y',
                       scales: {
                         y: {
-                          beginAtZero: true
+                          beginAtZero: true,
+                          ticks: {
+                            color: jquery_text_colors_array
+                          }
                         }
                       },
                       legend: {display: false},

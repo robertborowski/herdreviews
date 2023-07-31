@@ -3,12 +3,13 @@ from backend.utils.localhost_print_utils.localhost_print import localhost_print_
 from website.backend.sql_statements.select import select_general_function
 from website.backend.get_create_obj import get_starting_arr_function
 import pprint
-from website.models import PollsObj, PollsStandInObj
+from website.models import PollsObj, PollsStandInObj, ShowsAttributesObj
 from website import db
 import random
 from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
 from backend.utils.uuid_and_timestamp.create_timestamp import create_timestamp_function
 import json
+from website.backend.get_create_obj import default_chart_colors_function
 # ------------------------ imports end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -129,6 +130,63 @@ def get_count_and_percent_stats_function(page_dict, stat_name, choices_arr, col_
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
+def get_create_show_chart_colors_function(page_dict):
+  end_dict =  {}
+  fk_show_id = page_dict['url_show_id']
+  db_show_attributes_obj_primary = ShowsAttributesObj.query.filter_by(fk_show_id=fk_show_id,attribute_key='show_color_primary').order_by(ShowsAttributesObj.created_timestamp.desc()).first()
+  db_show_attributes_obj_secondary = ShowsAttributesObj.query.filter_by(fk_show_id=fk_show_id,attribute_key='show_color_secondary').order_by(ShowsAttributesObj.created_timestamp.desc()).first()
+  # ------------------------ if missing start ------------------------
+  if db_show_attributes_obj_primary == None or db_show_attributes_obj_primary == [] or db_show_attributes_obj_secondary == None or db_show_attributes_obj_secondary == []:
+    # ------------------------ get random color set from list start ------------------------
+    colors_arr = default_chart_colors_function()
+    # ------------------------ get random color set from list end ------------------------
+    # ------------------------ insert to db start ------------------------
+    try:
+      new_row = ShowsAttributesObj(
+        id = create_uuid_function('s-att_'),
+        created_timestamp = create_timestamp_function(),
+        fk_show_id = fk_show_id,
+        attribute_key = 'show_color_primary',
+        attribute_value = colors_arr[0],
+        attribute_note = colors_arr[2]
+      )
+      db.session.add(new_row)
+      db.session.commit()
+    except Exception as e:
+      pass
+    # ------------------------ insert to db end ------------------------
+    # ------------------------ insert to db start ------------------------
+    try:
+      new_row = ShowsAttributesObj(
+        id = create_uuid_function('s-att_'),
+        created_timestamp = create_timestamp_function(),
+        fk_show_id = fk_show_id,
+        attribute_key = 'show_color_secondary',
+        attribute_value = colors_arr[1],
+        attribute_note = colors_arr[3]
+      )
+      db.session.add(new_row)
+      db.session.commit()
+    except Exception as e:
+      pass
+    # ------------------------ insert to db end ------------------------
+    db_show_attributes_obj_primary = ShowsAttributesObj.query.filter_by(fk_show_id=fk_show_id,attribute_key='show_color_primary').order_by(ShowsAttributesObj.created_timestamp.desc()).first()
+    db_show_attributes_obj_secondary = ShowsAttributesObj.query.filter_by(fk_show_id=fk_show_id,attribute_key='show_color_secondary').order_by(ShowsAttributesObj.created_timestamp.desc()).first()
+  # ------------------------ if missing end ------------------------
+  else:
+    pass
+  end_dict['show_color_primary'] = db_show_attributes_obj_primary.attribute_value
+  end_dict['show_color_secondary'] = db_show_attributes_obj_secondary.attribute_value
+  # ------------------------ defaults start ------------------------
+  db_words_faded_obj = ShowsAttributesObj.query.filter_by(fk_show_id='admin_default',attribute_key='text_faded').order_by(ShowsAttributesObj.created_timestamp.desc()).first()
+  db_words_correct_obj = ShowsAttributesObj.query.filter_by(fk_show_id='admin_default',attribute_key='text_correct').order_by(ShowsAttributesObj.created_timestamp.desc()).first()
+  end_dict['text_faded'] = db_words_faded_obj.attribute_value
+  end_dict['text_correct'] = db_words_correct_obj.attribute_value
+  # ------------------------ defaults end ------------------------
+  return end_dict
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
 def get_chart_info_function(page_dict, stat_name):
   # ------------------------ set variables start ------------------------
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict'] = {}
@@ -136,6 +194,8 @@ def get_chart_info_function(page_dict, stat_name):
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict'] = {}
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['labels_arr'] = []
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['values_arr'] = []
+  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['chart_colors_arr'] = []
+  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['text_colors_arr'] = []
   # ------------------------ set variables end ------------------------
   # ------------------------ start ------------------------
   js_dict = {}
@@ -144,6 +204,16 @@ def get_chart_info_function(page_dict, stat_name):
     page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['labels_arr'].append(label_string)
     page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['values_arr'].append(page_dict['poll_statistics_v2_dict'][stat_name]['poll_answer_submitted_dict']['count_dict'][v])
   # ------------------------ end ------------------------
+  # ------------------------ assign chart colors based on max start ------------------------
+  max_value = max(page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['values_arr'])
+  for i in range(len(page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['values_arr'])):
+    if int(page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['values_arr'][i]) == int(max_value):
+      page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['chart_colors_arr'].append(page_dict['show_colors_dict']['show_color_primary'])
+      page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['text_colors_arr'].append(page_dict['show_colors_dict']['text_correct'])
+    else:
+      page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['chart_colors_arr'].append(page_dict['show_colors_dict']['show_color_secondary'])
+      page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['text_colors_arr'].append(page_dict['show_colors_dict']['text_faded'])
+  # ------------------------ assign chart colors based on max end ------------------------
   return page_dict
 # ------------------------ individual function end ------------------------
 

@@ -32,7 +32,7 @@ from website.backend.user_inputs import sanitize_letters_numbers_spaces_specials
 from website.backend.dict_manipulation import arr_of_dict_all_columns_single_item_function, prep_poll_dict_function
 from website.backend.show_utils import shows_following_arr_of_dict_function, follow_user_polls_show_function, follow_show_function
 from website.backend.sql_statements.select import select_general_function
-from website.backend.poll_statistics_v2 import get_poll_statistics_v2_function
+from website.backend.poll_statistics_v2 import get_poll_statistics_v2_function, get_create_show_chart_colors_function
 from datetime import datetime
 # ------------------------ imports end ------------------------
 
@@ -853,6 +853,7 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
     pass
   else:
     if page_dict['poll_answered'] == True:
+      page_dict['show_colors_dict'] = get_create_show_chart_colors_function(page_dict)
       page_dict = get_poll_statistics_v2_function(page_dict)
   # ------------------------ get poll statistics end ------------------------
   if request.method == 'POST':

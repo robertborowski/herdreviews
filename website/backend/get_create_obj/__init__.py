@@ -2,6 +2,7 @@
 from website.models import UserObj, ShowsFollowingObj, PlatformsObj, ShowsObj, PollsObj, PollsAnsweredObj
 from website.backend.sql_statements.select import select_general_function
 from datetime import datetime, date
+import random
 # ------------------------ imports end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -202,4 +203,16 @@ def get_starting_arr_function(fk_poll_id):
     get_str = db_obj.answer_choices
     get_arr = get_str.split('~')
   return get_arr
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
+def default_chart_colors_function():
+  colors_arr = [
+    # primary, secondary
+    ['rgb(25 135 84)','rgb(163 207 187 / 50%)','green','green_light'],
+    ['rgb(220 53 69)','rgb(241 174 181 / 50%)','red','red_light'],
+    ['rgb(13 110 253)','rgb(158 197 254 / 50%)','blue','blue_light']
+  ]
+  random_choice = random.choice(colors_arr)
+  return random.choice(colors_arr)
 # ------------------------ individual function end ------------------------

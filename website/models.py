@@ -195,6 +195,16 @@ class ShowsObj(db.Model):
 # ------------------------ individual model end ------------------------
 
 # ------------------------ individual model start ------------------------
+class ShowsAttributesObj(db.Model):
+  id = db.Column(db.String(150), primary_key=True)
+  created_timestamp = db.Column(db.DateTime(timezone=True))
+  fk_show_id = db.Column(db.String(150))
+  attribute_key = db.Column(db.String(150))
+  attribute_value = db.Column(db.String(150))
+  attribute_note = db.Column(db.String(150))
+# ------------------------ individual model end ------------------------
+
+# ------------------------ individual model start ------------------------
 class ShowsQueueObj(db.Model):
   id = db.Column(db.String(150), primary_key=True)
   created_timestamp = db.Column(db.DateTime(timezone=True))
