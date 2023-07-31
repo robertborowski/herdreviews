@@ -292,6 +292,11 @@ def get_poll_statistics_v2_function(page_dict, passed_current_user_obj):
     for i in col_names_arr:
       page_dict = get_count_and_percent_stats_function(page_dict, k, temp_starting_arr, i, True)
     # ------------------------ get counts and percentages for poll end ------------------------
+    # ------------------------ presentation names start ------------------------
+    proper_case = k.replace('_',' ')
+    proper_case = proper_case[0].upper() + proper_case[1:]
+    page_dict['poll_statistics_v2_dict'][k]['name_proper_case'] = proper_case
+    # ------------------------ presentation names end ------------------------
     # ------------------------ chart information start ------------------------
     page_dict = get_chart_info_function(page_dict, k, passed_current_user_obj)
     # ------------------------ chart information end ------------------------
