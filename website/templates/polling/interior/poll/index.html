@@ -231,7 +231,7 @@
                     <p class="custom-m-0 custom-header-15 custom-color-white custom-ml-25">{{ v['all_response_objs_len'] }} votes on HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</p>
                   {% endif %}
                 </div>
-                <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25 custom-mb-50">
+                <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25">
                   <canvas id="{{ v['chart_dict']['id'] }}"></canvas>
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -292,6 +292,13 @@
                   }
                   // ----------------------------- i chart end -----------------------------
                 </script>
+                <div class="custom-mb-50 custom-mt-5 custom-tar">
+                  {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+                    <a href="signup" class="custom-mr-25 custom-m-0 custom-header-15 custom-opacity-75 custom-a-white custom-a-white-underline">Detailed insights and trends <i class="fa-solid fa-plus"></i></a>
+                  {% else %}
+                    <span class="custom-mr-25 custom-m-0 custom-header-15 custom-opacity-75 custom-a-white custom-hover-1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Host verification required. See verification process below.">Detailed insights and trends <i class="fa-solid fa-plus"></i></span>
+                  {% endif %}
+                </div>
               {% endif %}
             {% else %}
             {% endif %}
