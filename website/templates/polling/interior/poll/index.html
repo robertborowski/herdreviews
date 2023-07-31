@@ -198,10 +198,22 @@
             <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">You must first answer this poll in order to see the community statistics.</p>
           </div>
         {% else %}
+        <!-- ------------------------------------- restate q/a start ------------------------------------- -->
+        <div class="custom-border-white-opacity-25 custom-br-15 custom-p-15 custom-color-white custom-header-12 custom-mtb-25">
+          <p class="custom-m-0 custom-mb-10">Q: {{ page_dict_to_html['poll_dict']['question'] }}</p>
+          {% for k,v in page_dict_to_html['poll_dict']['answer_choices_dict'].items() %}
+            {% if v == page_dict_to_html['poll_answered_dict']['poll_answer_submitted'] %}
+              <p class="custom-m-0"><i class="fa-solid fa-arrow-right"></i> (You voted) {{ v }}</p>
+            {% else %}
+              <p class="custom-m-0 custom-opacity-50">{{ v }}</p>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <!-- ------------------------------------- restate q/a end ------------------------------------- -->
           <!-- ------------------------------------- charts start ------------------------------------- -->
           {% for k,v in page_dict_to_html['poll_statistics_v2_dict'].items() %}
             {% if k in page_dict_to_html['poll_statistics_v2_dict']['define_dict_arr'] %}
-              <div class="custom-pt-50">
+              <div class="custom-pt-25">
                 <p class="custom-m-0 custom-header-15 custom-color-white custom-ml-25">{{ v['all_response_objs_len'] }} votes on HerdReviews.com</p>
               </div>
               <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25 custom-mb-50">
@@ -237,7 +249,10 @@
                         y: {
                           beginAtZero: true,
                           ticks: {
-                            color: jquery_text_colors_array
+                            color: jquery_text_colors_array,
+                            font: {
+                              weight: 'lighter'
+                            }
                           }
                         }
                       },
@@ -246,7 +261,12 @@
                         title: {
                           display: true,
                           text: jquery_title,
-                          color: 'white'
+                          color: 'white',
+                          font: {
+                            size: '20',
+                            weight: 'lighter'
+                          },
+                          padding: {top: 0, left: 0, right: 0, bottom: 15}
                         }
                       }
                     }
