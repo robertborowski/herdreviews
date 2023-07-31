@@ -187,10 +187,19 @@ def get_create_show_chart_colors_function(page_dict):
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
+def get_chart_title_function(stat_name, show_name_title):
+  chart_title = stat_name
+  chart_title = chart_title.replace('_', ' ')
+  chart_title = chart_title.title()
+  return chart_title + ' | ' + show_name_title
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
 def get_chart_info_function(page_dict, stat_name):
   # ------------------------ set variables start ------------------------
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict'] = {}
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['id'] = 'id-chart_' + stat_name
+  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['title'] = get_chart_title_function(stat_name, page_dict['db_show_dict']['name_title'])
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict'] = {}
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['labels_arr'] = []
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['values_arr'] = []

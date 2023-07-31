@@ -166,7 +166,7 @@ class PollsStandInObj(db.Model):
   fk_show_id = db.Column(db.String(150))
   fk_poll_id = db.Column(db.String(150))
   standin_key = db.Column(db.String(150))
-  standin_values = db.Column(db.String(500))
+  standin_values = db.Column(db.String(1000))
 # ------------------------ individual model end ------------------------
 
 # ------------------------ individual model start ------------------------

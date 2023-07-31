@@ -202,18 +202,21 @@
           {% for k,v in page_dict_to_html['poll_statistics_v2_dict'].items() %}
             {% if k in page_dict_to_html['poll_statistics_v2_dict']['define_dict_arr'] %}
               <div class="custom-pt-50">
-                <p class="custom-m-0 custom-header-15 custom-color-white custom-ml-25">{{ v['all_response_objs_len'] }} votes</p>
+                <p class="custom-m-0 custom-header-15 custom-color-white custom-ml-25">{{ v['all_response_objs_len'] }} votes on HerdReviews.com</p>
               </div>
               <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25 custom-mb-50">
                 <canvas id="{{ v['chart_dict']['id'] }}"></canvas>
               </div>
               <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
               <script>
+                // ----------------------------- set variables start -----------------------------
                 var jquery_id = {{ v['chart_dict']['id']|tojson }};
+                var jquery_title = {{ v['chart_dict']['title']|tojson }};
                 var jquery_labels_array = {{ v['chart_dict']['js_dict']['labels_arr']|tojson }};
                 var jquery_values_array = {{ v['chart_dict']['js_dict']['values_arr']|tojson }};
                 var jquery_chart_colors_array = {{ v['chart_dict']['js_dict']['chart_colors_arr']|tojson }};
                 var jquery_text_colors_array = {{ v['chart_dict']['js_dict']['text_colors_arr']|tojson }};
+                // ----------------------------- set variables end -----------------------------
                 // ----------------------------- i chart start -----------------------------
                 var ctx = document.getElementById(jquery_id);
                 try {
@@ -222,7 +225,7 @@
                     data: {
                       labels: jquery_labels_array,
                       datasets: [{
-                        label: '# of Votes',
+                        label: 'Total votes: ',
                         data: jquery_values_array,
                         borderWidth: 1,
                         backgroundColor: jquery_chart_colors_array
@@ -238,10 +241,13 @@
                           }
                         }
                       },
-                      legend: {display: false},
-                      title: {
-                        display: true,
-                        text: 'test'
+                      plugins: {
+                        legend: {display: false},
+                        title: {
+                          display: true,
+                          text: jquery_title,
+                          color: 'white'
+                        }
                       }
                     }
                   });
