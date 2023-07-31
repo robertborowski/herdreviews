@@ -111,7 +111,7 @@ def get_count_and_percent_stats_function(page_dict, stat_name, choices_arr, col_
       pass
   # ------------------------ get real count end ------------------------
   # ------------------------ get fake count if needed start ------------------------
-  min_votes_limit = 0
+  min_votes_limit = 106
   page_dict['poll_statistics_v2_dict']['min_votes_limit'] = min_votes_limit
   if total_participation < min_votes_limit:
     page_dict = create_fake_count_stats_function(page_dict, stat_name, col_name, exception_v1_trues_falses_nones)
