@@ -876,7 +876,7 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
   # ------------------------ get poll statistics end ------------------------
   if request.method == 'POST':
     if current_user.is_anonymous == True:
-      return redirect(url_for('polling_views_interior.polling_show_function', url_show_id=url_show_id, url_poll_id=page_dict['poll_dict']['id'], url_redirect_code='w3'))
+      return redirect(url_for('polling_views_interior.polling_show_function', url_show_id=url_show_id, url_poll_id=page_dict['poll_dict']['id'], url_redirect_code='e44'))
     else:
       # ------------------------ check how many posts this person did today on this question start ------------------------
       total_poll_submissions_today = 0
