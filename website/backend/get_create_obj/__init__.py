@@ -209,9 +209,15 @@ def get_starting_arr_function(fk_poll_id):
 def default_chart_colors_function():
   colors_arr = [
     # primary, secondary
+    ['rgb(13 110 253)','rgb(158 197 254 / 50%)','blue','blue_light'],
+    ['rgb(13 202 240)','rgb(158 234 249 / 50%)','cyan','cyan_light'],
     ['rgb(25 135 84)','rgb(163 207 187 / 50%)','green','green_light'],
+    ['rgb(253 126 20)','rgb(254 203 161 / 50%)','orange','orange_light'],
+    ['rgb(214 51 132)','rgb(239 173 206 / 50%)','pink','pink_light'],
+    ['rgb(111 66 193)','rgb(197 179 230 / 50%)','purple','purple_light'],
     ['rgb(220 53 69)','rgb(241 174 181 / 50%)','red','red_light'],
-    ['rgb(13 110 253)','rgb(158 197 254 / 50%)','blue','blue_light']
+    ['rgb(32 201 151)','rgb(166 233 213 / 50%)','teal','teal_light'],
+    ['rgb(255 193 7)','rgb(255 230 156 / 50%)','yellow','yellow_light']
   ]
   random_choice = random.choice(colors_arr)
   return random.choice(colors_arr)
