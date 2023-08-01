@@ -772,6 +772,8 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
   page_dict = {}
   page_dict['alert_message_dict'] = alert_message_dict
   # ------------------------ page dict end ------------------------
+  if current_user.is_anonymous == True and url_show_id == 'show_user_attributes':
+    return redirect(url_for('polling_auth.polling_signup_function'))
   # ------------------------ pull show info start ------------------------
   # Get show based on id from shows table
   db_show_obj = get_show_based_on_id_function(url_show_id)

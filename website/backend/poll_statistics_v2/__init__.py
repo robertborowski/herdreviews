@@ -201,15 +201,24 @@ def get_chart_info_function(page_dict, stat_name, passed_current_user_obj):
   db_answered_obj = {}
   # ------------------------ check if answered feedback start ------------------------
   if stat_name == 'feedback':
-    db_answered_obj = PollsAnsweredObj.query.filter_by(fk_show_id=page_dict['url_show_id'],fk_poll_id=page_dict['url_poll_id'],fk_user_id=passed_current_user_obj.id).order_by(PollsAnsweredObj.created_timestamp.desc()).first()
+    if passed_current_user_obj.is_anonymous == True:
+      db_answered_obj = None
+    else:
+      db_answered_obj = PollsAnsweredObj.query.filter_by(fk_show_id=page_dict['url_show_id'],fk_poll_id=page_dict['url_poll_id'],fk_user_id=passed_current_user_obj.id).order_by(PollsAnsweredObj.created_timestamp.desc()).first()
   # ------------------------ check if answered feedback end ------------------------
   # ------------------------ check if answered attritbutes start ------------------------
   else:
-    db_answered_obj = PollsAnsweredObj.query.filter_by(fk_show_id='show_user_attributes',fk_poll_id='poll_user_attribute_'+stat_name,fk_user_id=passed_current_user_obj.id).order_by(PollsAnsweredObj.created_timestamp.desc()).first()
+    if passed_current_user_obj.is_anonymous == True:
+      db_answered_obj = None
+    else:
+      db_answered_obj = PollsAnsweredObj.query.filter_by(fk_show_id='show_user_attributes',fk_poll_id='poll_user_attribute_'+stat_name,fk_user_id=passed_current_user_obj.id).order_by(PollsAnsweredObj.created_timestamp.desc()).first()
   if db_answered_obj == None or db_answered_obj == []:
-    page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['status'] = 'invisible'
-    page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['id'] = 'id-none-001'
-    return page_dict
+    if passed_current_user_obj.is_anonymous == True and stat_name=='feedback':
+      pass
+    else:
+      page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['status'] = 'invisible'
+      page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['id'] = 'id-none-001'
+      return page_dict
   # ------------------------ check if answered attritbutes end ------------------------
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['status'] = 'visible'
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['id'] = 'id-chart_' + stat_name
