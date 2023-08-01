@@ -10,22 +10,8 @@ from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
 from backend.utils.uuid_and_timestamp.create_timestamp import create_timestamp_function
 import json
 from website.backend.get_create_obj import default_chart_colors_function
+from website.backend.dict_manipulation import get_answers_shortened_v2_function
 # ------------------------ imports end ------------------------
-
-# ------------------------ individual function start ------------------------
-def arr_to_shortened_dict_function(page_dict, stat_name):
-  alphabet_arr = get_alphabet_arr_function()
-  # ------------------------ set starting arrays start ------------------------
-  choices_arr = page_dict['poll_statistics_v2_dict'][stat_name]['choices_arr']
-  page_dict['poll_statistics_v2_dict'][stat_name]['choices_dict'] = {}
-  for i in range(len(choices_arr)):
-    i_short = alphabet_arr[i] + ': ' + choices_arr[i]
-    if len(i_short) > 10:
-      i_short = i_short[:10] + '...'
-    page_dict['poll_statistics_v2_dict'][stat_name]['choices_dict'][i_short] = choices_arr[i]
-  # ------------------------ set starting arrays end ------------------------
-  return page_dict
-# ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
 def create_fake_count_stats_function(page_dict, stat_name, col_name, exception_v1_trues_falses_nones=False):
@@ -290,7 +276,7 @@ def get_poll_statistics_v2_function(page_dict, passed_current_user_obj):
     # ------------------------ total user responses end ------------------------
     # ------------------------ set starting arrays start ------------------------
     page_dict['poll_statistics_v2_dict'][k]['choices_arr'] = get_starting_arr_function(v)
-    page_dict = arr_to_shortened_dict_function(page_dict, k)
+    page_dict['poll_statistics_v2_dict'][k]['choices_dict'] = get_answers_shortened_v2_function(page_dict['poll_statistics_v2_dict'][k]['choices_arr'])
     # ------------------------ set starting arrays end ------------------------
     # ------------------------ get counts and percentages for poll start ------------------------
     # answer submitted column
