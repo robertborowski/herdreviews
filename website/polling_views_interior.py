@@ -640,7 +640,7 @@ def polling_add_show_function(url_redirect_code=None, url_step_code='1', url_pla
     for i in show_arr_of_dict:
       page_dict['shows_arr_of_dicts'].append(i)
   # ------------------------ get all podcasts end ------------------------
-  if request.method == 'POST':
+  if request.method == 'POST' or (current_user.is_anonymous == True and page_dict['url_searched_value'] != None):
     if page_dict['url_step_code'] == '1':
       # ------------------------ get user inputs start ------------------------
       ui_platform_selection = request.form.get('ui_general_selection_radio')
@@ -657,7 +657,11 @@ def polling_add_show_function(url_redirect_code=None, url_step_code='1', url_pla
       # ------------------------ get id based on user inputs end ------------------------
     if page_dict['url_step_code'] == '2':
       # ------------------------ get user inputs start ------------------------
-      ui_search_show_name = request.form.get('ui_search_show_name')
+      ui_search_show_name = None
+      if current_user.is_anonymous == True:
+        ui_search_show_name = page_dict['url_searched_value']
+      else:
+        ui_search_show_name = request.form.get('ui_search_show_name')
       # ------------------------ get user inputs end ------------------------
       # ------------------------ sanitize ui start ------------------------
       ui_search_show_name_check = sanitize_letters_numbers_spaces_specials_only_function(ui_search_show_name)
