@@ -31,7 +31,7 @@
     <!-- ------------------------------------- background start ------------------------------------- -->
     <div class="custom-width-600 mx-auto">
       <!-- ----------------------------------- alert start ----------------------------------- -->
-      {% if page_dict_to_html['alert_message_dict']['message'] != '' %}
+      {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == false %}
         <div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container" role="alert">
           {{ page_dict_to_html['alert_message_dict']['message'] }}
         </div>
@@ -56,6 +56,11 @@
           </div>
           <!-- ----------------------------------- host thank you message end ----------------------------------- -->
         {% else %}
+        {% endif %}
+        {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+          <div class="custom-mt-25">
+            <a href="/signup" class="btn btn-lg btn-danger custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
+          </div>
         {% endif %}
         <div class="custom-p-25 custom-mt-25 btn btn-warning custom-width-100" id="id-general_autoscroll_click_1">
           <span class="custom-header-30">See poll statistics <i class="fa-solid fa-angle-down"></i></span>
@@ -182,6 +187,16 @@
             <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">You must first answer this poll in order to see the community statistics.</p>
           </div>
         {% else %}
+        <!-- ----------------------------------- alert start ----------------------------------- -->
+        {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == true %}
+          <div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container" role="alert">
+            {{ page_dict_to_html['alert_message_dict']['message'] }}
+          </div>
+          <div class="custom-mt-15">
+            <a href="/signup" class="custom-header-25 btn btn-lg btn-danger custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
+          </div>
+        {% endif %}
+        <!-- ----------------------------------- alert end ----------------------------------- -->
         <!-- ------------------------------------- restate q/a start ------------------------------------- -->
         <div class="custom-border-white-opacity-25 custom-br-15 custom-p-15 custom-color-white custom-header-12 custom-mtb-25">
           <p class="custom-m-0 custom-mb-10">Q: {{ page_dict_to_html['poll_dict']['question'] }}</p>
