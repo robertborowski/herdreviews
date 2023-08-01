@@ -802,6 +802,8 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
   reference_name = reference_name.replace('?','')
   reference_name = reference_name.replace('.','')
   reference_name = reference_name.replace(',','')
+  if len(reference_name) > 10:
+    reference_name = reference_name[:10]
   page_dict['db_show_dict']['reference_name'] = reference_name
   # ------------------------ ref name end ------------------------
   # ------------------------ pull show info end ------------------------
