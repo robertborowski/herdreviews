@@ -200,11 +200,11 @@
         <!-- ------------------------------------- restate q/a start ------------------------------------- -->
         <div class="custom-border-white-opacity-25 custom-br-15 custom-p-15 custom-color-white custom-header-12 custom-mtb-25">
           <p class="custom-m-0 custom-mb-10">Q: {{ page_dict_to_html['poll_dict']['question'] }}</p>
-          {% for k,v in page_dict_to_html['poll_dict']['answer_choices_dict'].items() %}
+          {% for k,v in page_dict_to_html['poll_dict']['answer_choices_dict_letters_only'].items() %}
             {% if v == page_dict_to_html['poll_answered_dict']['poll_answer_submitted'] %}
-              <p class="custom-m-0"><i class="fa-solid fa-arrow-right"></i> (You voted) {{ v }}</p>
+              <p class="custom-m-0"><i class="fa-solid fa-arrow-right"></i> (You voted) {{ k }}: {{ v }}</p>
             {% else %}
-              <p class="custom-m-0 custom-opacity-50">{{ v }}</p>
+              <p class="custom-m-0 custom-opacity-50">{{ k }}: {{ v }}</p>
             {% endif %}
           {% endfor %}
         </div>
