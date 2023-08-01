@@ -57,11 +57,6 @@
           <!-- ----------------------------------- host thank you message end ----------------------------------- -->
         {% else %}
         {% endif %}
-        {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-          <div class="custom-mt-25">
-            <a href="/signup" class="btn btn-lg btn-danger custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
-          </div>
-        {% endif %}
         <div class="custom-p-25 custom-mt-25 btn btn-warning custom-width-100" id="id-general_autoscroll_click_1">
           <span class="custom-header-30">See poll statistics <i class="fa-solid fa-angle-down"></i></span>
         </div>
@@ -70,6 +65,11 @@
           <a href="/dashboard" class="btn btn-outline-secondary btn-sm custom-width-100 custom-mt-25">Return to show polls <i class="fa-solid fa-reply"></i></a>
         {% else %}
           <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-p-25 btn btn-success btn-lg custom-width-100 custom-mt-25 custom-header-30">Next poll <i class="fa-solid fa-angle-right"></i></a>
+        {% endif %}
+        {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+          <div class="custom-mt-25">
+            <a href="/signup" class="btn btn-lg btn-danger custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
+          </div>
         {% endif %}
         <!-- ------------------------------------- divider start ------------------------------------- -->
         <div class="custom-border-white-opacity-25 custom-mtb-50 custom-width-100 mx-auto"></div>
