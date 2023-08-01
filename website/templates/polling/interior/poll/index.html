@@ -32,25 +32,9 @@
     <div class="custom-width-600 mx-auto">
       <!-- ----------------------------------- alert start ----------------------------------- -->
       {% if page_dict_to_html['alert_message_dict']['message'] != '' %}
-        {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-          <!-- ----------------------------------- host thank you message start ----------------------------------- -->
-          <div class="custom-border-white custom-br-15 custom-p-25 custom-display-flex custom-mb-25">
-            <img src="{{ page_dict_to_html['db_show_dict']['platform_image_medium'] }}" alt="show logo" class="custom-img-size-100 custom-mr-1 custom-br-5 custom-border-white-opacity-50">
-            <div class="custom-ml-10">
-              <p class="fw-bold custom-header-25 custom-color-white custom-m-0 fst-italic"><i class="fa-solid fa-quote-left"></i> Really appreciate your feedback on the pod! <i class="fa-solid fa-quote-right"></i></p>
-              <p class="fw-bold custom-header-12 custom-color-white custom-m-0"><span class="fst-italic custom-mr-1">{{ page_dict_to_html['db_show_dict']['name'] }}</span> [unofficial]</p>
-              <p class="fw-bold custom-header-10 custom-color-white custom-m-0 custom-mt-10 custom-opacity-50 custom-hover-1" id="id-general_autoscroll_click_2"><i class="fa-solid fa-angle-down"></i> Podcast verification details below</p>
-            </div>
-          </div>
-          <!-- ----------------------------------- host thank you message end ----------------------------------- -->
-        {% endif %}
         <div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container" role="alert">
           {{ page_dict_to_html['alert_message_dict']['message'] }}
         </div>
-        {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-          <a href="/signup" class="btn btn-lg btn-danger custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
-          <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="btn btn-lg btn-success custom-width-100 custom-mt-15 custom-ptb-25">Next poll <i class="fa-solid fa-angle-right"></i></a>
-        {% endif %}
       {% endif %}
       <!-- ----------------------------------- alert end ----------------------------------- -->
       <!-- ----------------------------------- button auto page scroll start ----------------------------------- -->
