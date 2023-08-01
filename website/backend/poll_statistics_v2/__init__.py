@@ -1,7 +1,7 @@
 # ------------------------ imports start ------------------------
 from backend.utils.localhost_print_utils.localhost_print import localhost_print_function
 from website.backend.sql_statements.select import select_general_function
-from website.backend.get_create_obj import get_starting_arr_function
+from website.backend.get_create_obj import get_starting_arr_function, get_alphabet_arr_function
 import pprint
 from website.models import PollsObj, PollsStandInObj, ShowsAttributesObj, PollsAnsweredObj
 from website import db
@@ -14,14 +14,15 @@ from website.backend.get_create_obj import default_chart_colors_function
 
 # ------------------------ individual function start ------------------------
 def arr_to_shortened_dict_function(page_dict, stat_name):
+  alphabet_arr = get_alphabet_arr_function()
   # ------------------------ set starting arrays start ------------------------
   choices_arr = page_dict['poll_statistics_v2_dict'][stat_name]['choices_arr']
   page_dict['poll_statistics_v2_dict'][stat_name]['choices_dict'] = {}
-  for i in choices_arr:
-    i_short = i
+  for i in range(len(choices_arr)):
+    i_short = alphabet_arr[i] + ': ' + choices_arr[i]
     if len(i_short) > 10:
       i_short = i_short[:10] + '...'
-    page_dict['poll_statistics_v2_dict'][stat_name]['choices_dict'][i_short] = i
+    page_dict['poll_statistics_v2_dict'][stat_name]['choices_dict'][i_short] = choices_arr[i]
   # ------------------------ set starting arrays end ------------------------
   return page_dict
 # ------------------------ individual function end ------------------------

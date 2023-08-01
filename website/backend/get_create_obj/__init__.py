@@ -222,3 +222,8 @@ def default_chart_colors_function():
   random_choice = random.choice(colors_arr)
   return random.choice(colors_arr)
 # ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
+def get_alphabet_arr_function():
+  return ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+# ------------------------ individual function end ------------------------

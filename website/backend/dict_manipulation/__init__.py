@@ -1,5 +1,6 @@
 # ------------------------ imports start ------------------------
 from datetime import datetime
+from website.backend.get_create_obj import get_alphabet_arr_function
 # ------------------------ imports end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -25,13 +26,14 @@ def get_answers_with_letter_choices_dict(input_arr):
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
-def get_answers_shortened_function(input_arr):
+def get_answers_shortened_v2_function(input_arr):
+  alphabet_arr = get_alphabet_arr_function()
   final_dict = {}
-  for i in input_arr:
-    i_short = i
+  for i in range(len(input_arr)):
+    i_short = alphabet_arr[i] + ': ' + input_arr[i]
     if len(i_short) > 10:
-      i_short = i[0:10]+'...'
-    final_dict[i_short] = i
+      i_short = i_short[0:10]+'...'
+    final_dict[i_short] = input_arr[i]
   return final_dict
 # ------------------------ individual function end ------------------------
 
@@ -41,8 +43,7 @@ def prep_poll_dict_function(poll_dict):
   poll_dict['answer_choices'] = poll_dict['answer_choices'].split('~')
   # ------------------------ separate answer choices end ------------------------
   # ------------------------ dict for answer + letter association start ------------------------
-  # poll_dict['answer_choices_dict'] = get_answers_with_letter_choices_dict(poll_dict['answer_choices'])
-  poll_dict['answer_choices_dict'] = get_answers_shortened_function(poll_dict['answer_choices'])
+  poll_dict['answer_choices_dict'] = get_answers_shortened_v2_function(poll_dict['answer_choices'])
   # ------------------------ dict for answer + letter association end ------------------------
   return poll_dict
 # ------------------------ individual function end ------------------------
