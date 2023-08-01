@@ -42,9 +42,6 @@ def create_fake_count_stats_function(page_dict, stat_name, col_name, exception_v
     if exception_v1_trues_falses_nones == True:
       current_choices_arr = ['falses','nones','trues']
     # ------------------------ exception 1 end ------------------------
-    # for i_choice in current_choices_arr:
-    #   random_value = round(float(random.uniform(0.1, 0.9)),2)
-    #   vote_distribution_dict[i_choice] = random_value
     # ------------------------ randomize array start ------------------------
     percentages_arr = [0] * len(current_choices_arr)
     remaining_percentage = float(100.0)
@@ -92,7 +89,7 @@ def create_fake_count_stats_function(page_dict, stat_name, col_name, exception_v
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
-def get_count_and_percent_stats_function(page_dict, stat_name, choices_arr, col_name, exception_v1_trues_falses_nones=False):
+def get_count_and_percent_stats_function(page_dict, stat_name, choices_arr, col_name, exception_v1_trues_falses_nones=False, passed_current_user_obj=None):
   objs_arr_of_dicts = page_dict['poll_statistics_v2_dict'][stat_name]['all_response_objs']
   total_participation = int(page_dict['poll_statistics_v2_dict'][stat_name]['all_response_objs_len'])
   # ------------------------ set count to 0 for all options start ------------------------
@@ -111,7 +108,9 @@ def get_count_and_percent_stats_function(page_dict, stat_name, choices_arr, col_
       pass
   # ------------------------ get real count end ------------------------
   # ------------------------ get fake count if needed start ------------------------
-  min_votes_limit = 106
+  min_votes_limit = 0
+  if passed_current_user_obj.is_anonymous == True:
+    min_votes_limit = 106
   page_dict['poll_statistics_v2_dict']['min_votes_limit'] = min_votes_limit
   if total_participation < min_votes_limit:
     page_dict = create_fake_count_stats_function(page_dict, stat_name, col_name, exception_v1_trues_falses_nones)
@@ -213,7 +212,7 @@ def get_chart_info_function(page_dict, stat_name, passed_current_user_obj):
     else:
       db_answered_obj = PollsAnsweredObj.query.filter_by(fk_show_id='show_user_attributes',fk_poll_id='poll_user_attribute_'+stat_name,fk_user_id=passed_current_user_obj.id).order_by(PollsAnsweredObj.created_timestamp.desc()).first()
   if db_answered_obj == None or db_answered_obj == []:
-    if passed_current_user_obj.is_anonymous == True and stat_name=='feedback':
+    if passed_current_user_obj.is_anonymous == True:
       pass
     else:
       page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['status'] = 'invisible'
@@ -294,12 +293,12 @@ def get_poll_statistics_v2_function(page_dict, passed_current_user_obj):
     # ------------------------ set starting arrays end ------------------------
     # ------------------------ get counts and percentages for poll start ------------------------
     # answer submitted column
-    page_dict = get_count_and_percent_stats_function(page_dict, k, page_dict['poll_statistics_v2_dict'][k]['choices_arr'], 'poll_answer_submitted')
+    page_dict = get_count_and_percent_stats_function(page_dict, k, page_dict['poll_statistics_v2_dict'][k]['choices_arr'], 'poll_answer_submitted', False, passed_current_user_obj)
     # trues falses nones columns exception_v1
     col_names_arr = ['poll_vote_updown_feedback', 'poll_vote_updown_question', 'status_answer_anonymous']
     temp_starting_arr = ['trues','falses','nones']
     for i in col_names_arr:
-      page_dict = get_count_and_percent_stats_function(page_dict, k, temp_starting_arr, i, True)
+      page_dict = get_count_and_percent_stats_function(page_dict, k, temp_starting_arr, i, True, passed_current_user_obj)
     # ------------------------ get counts and percentages for poll end ------------------------
     # ------------------------ presentation names start ------------------------
     proper_case = k.replace('_',' ')

@@ -772,6 +772,13 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
   page_dict = {}
   page_dict['alert_message_dict'] = alert_message_dict
   # ------------------------ page dict end ------------------------
+  # ------------------------ try for url value start ------------------------
+  url_anonymous_code = None
+  try:
+    url_anonymous_code = request.args.get('url_anonymous_code')
+  except:
+    pass
+  # ------------------------ try for url value end ------------------------
   if current_user.is_anonymous == True and url_show_id == 'show_user_attributes':
     return redirect(url_for('polling_auth.polling_signup_function'))
   # ------------------------ pull show info start ------------------------
@@ -860,6 +867,8 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
   # ------------------------ pull latest answer if exists start ------------------------
   try:
     if current_user.is_anonymous == True:
+      if url_anonymous_code == 'submitted':
+        page_dict['poll_answered'] = True
       pass
     else:
       db_latest_poll_obj = PollsAnsweredObj.query.filter_by(fk_show_id=url_show_id,fk_poll_id=url_poll_id,fk_user_id=current_user.id).order_by(PollsAnsweredObj.created_timestamp.desc()).first()
@@ -869,16 +878,13 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
     pass
   # ------------------------ pull latest answer if exists end ------------------------
   # ------------------------ get poll statistics start ------------------------
-  if current_user.is_anonymous == True:
-    pass
-  else:
-    if page_dict['poll_answered'] == True:
-      page_dict['show_colors_dict'] = get_create_show_chart_colors_function(page_dict)
-      page_dict = get_poll_statistics_v2_function(page_dict, current_user)
+  if page_dict['poll_answered'] == True:
+    page_dict['show_colors_dict'] = get_create_show_chart_colors_function(page_dict)
+    page_dict = get_poll_statistics_v2_function(page_dict, current_user)
   # ------------------------ get poll statistics end ------------------------
   if request.method == 'POST':
     if current_user.is_anonymous == True:
-      return redirect(url_for('polling_views_interior.polling_show_function', url_show_id=url_show_id, url_poll_id=page_dict['poll_dict']['id'], url_redirect_code='e44'))
+      return redirect(url_for('polling_views_interior.polling_show_function', url_show_id=url_show_id, url_poll_id=page_dict['poll_dict']['id'], url_redirect_code='e44', url_anonymous_code='submitted'))
     else:
       # ------------------------ check how many posts this person did today on this question start ------------------------
       total_poll_submissions_today = 0
