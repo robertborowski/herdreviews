@@ -814,6 +814,7 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
   # ------------------------ variables start ------------------------
   page_dict['url_show_id'] = url_show_id
   page_dict['url_poll_id'] = url_poll_id
+  page_dict['url_poll_id_random_next'] = None
   page_dict['poll_answered'] = False
   page_dict['poll_answered_dict'] = None
   page_dict['current_user_email'] = None
@@ -837,6 +838,13 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
     if current_user.is_anonymous == True:
       # pull specific, unanswered or answered
       poll_arr_of_dict = select_general_function('select_query_general_2_anonymous', url_show_id, url_poll_id)
+      # ------------------------ get next random question start ------------------------
+      poll_arr_of_dict_next_random = select_general_function('select_query_general_1_anonymous_random', url_show_id, url_poll_id)
+      if poll_arr_of_dict_next_random == None or poll_arr_of_dict_next_random == []:
+        page_dict['url_poll_id_random_next'] = poll_arr_of_dict[0]['id']
+      else:
+        page_dict['url_poll_id_random_next'] = poll_arr_of_dict_next_random[0]['id']
+      # ------------------------ get next random question end ------------------------
     else:
       # pull specific, unanswered or answered
       poll_arr_of_dict = select_general_function('select_query_general_2', url_show_id, url_poll_id, current_user.id)

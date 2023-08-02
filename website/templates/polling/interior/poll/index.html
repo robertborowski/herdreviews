@@ -64,7 +64,11 @@
           <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-p-25 btn btn-success btn-lg custom-width-100 custom-mt-25 custom-header-30">Next user poll <i class="fa-solid fa-angle-right"></i></a>
           <a href="/dashboard" class="btn btn-outline-secondary btn-sm custom-width-100 custom-mt-25">Return to show polls <i class="fa-solid fa-reply"></i></a>
         {% else %}
-          <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-p-25 btn btn-success btn-lg custom-width-100 custom-mt-25 custom-header-30">Next poll <i class="fa-solid fa-angle-right"></i></a>
+          {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+            <a href="/show/{{ page_dict_to_html['url_show_id'] }}/{{ page_dict_to_html['url_poll_id_random_next'] }}" class="custom-p-25 btn btn-success btn-lg custom-width-100 custom-mt-25 custom-header-30">Next poll <i class="fa-solid fa-angle-right"></i></a>
+          {% else %}
+            <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-p-25 btn btn-success btn-lg custom-width-100 custom-mt-25 custom-header-30">Next poll <i class="fa-solid fa-angle-right"></i></a>
+          {% endif %}
         {% endif %}
         {% if page_dict_to_html['current_user_is_anonymous'] == true %}
           <div class="custom-mt-25">
@@ -327,7 +331,11 @@
           <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="btn btn-success btn-lg custom-ptb-25 custom-width-100 custom-mb-25 custom-header-30">Next user poll <i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i></a>
           <a href="/dashboard" class="btn btn-outline-secondary btn-sm custom-width-100 custom-mb-100">Return to show polls <i class="fa-solid fa-reply"></i></a>
         {% else %}
-          <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="btn btn-success btn-lg custom-ptb-25 custom-width-100 custom-mb-100 custom-header-30">Next poll <i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i></a>
+          {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+            <a href="/show/{{ page_dict_to_html['url_show_id'] }}/{{ page_dict_to_html['url_poll_id_random_next'] }}" class="btn btn-success btn-lg custom-ptb-25 custom-width-100 custom-mb-100 custom-header-30">Next poll <i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i></a>
+          {% else %}
+            <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="btn btn-success btn-lg custom-ptb-25 custom-width-100 custom-mb-100 custom-header-30">Next poll <i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i><i class="fa-solid fa-angle-right"></i></a>
+          {% endif %}
         {% endif %}
       {% else %}
       {% endif %}

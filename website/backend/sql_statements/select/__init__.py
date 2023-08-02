@@ -33,6 +33,18 @@ def select_general_function(tag_query_to_use, input1=None, input2=None, input3=N
                       created_timestamp DESC \
                     LIMIT 1;"
     },
+    'select_query_general_1_anonymous_random': {
+      'raw_query': f"SELECT \
+                      * \
+                    FROM \
+                      polls_obj \
+                    WHERE \
+                      status_removed=False AND status_approved=True AND \
+                      fk_show_id='{input1}' \
+                      AND id!='{input2}' \
+                    ORDER BY \
+                      RANDOM()LIMIT 1"
+    },
     'select_query_general_2': {
       'raw_query': f"SELECT \
                       * \
