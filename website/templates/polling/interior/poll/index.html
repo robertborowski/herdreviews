@@ -180,6 +180,16 @@
       <!-- ------------------------------------- divider end ------------------------------------- -->
       <!-- ------------------------------------- poll statistics start ------------------------------------- -->
       <div class="mx-auto">
+        <!-- ----------------------------------- alert start ----------------------------------- -->
+        {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == true %}
+          <div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container" role="alert">
+            {{ page_dict_to_html['alert_message_dict']['message'] }}
+          </div>
+          <div class="custom-mb-15">
+            <a href="/signup" class="btn btn-light custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
+          </div>
+        {% endif %}
+        <!-- ----------------------------------- alert end ----------------------------------- -->
         <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-30">Poll statistics</p>
         <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-10 custom-pb-10">Only the verified '{{ page_dict_to_html['db_show_dict']['name_title'] }}' host can see your direct feedback. Your feedback and privacy will always be hidden from the public poll statistics.</p>
         {% if page_dict_to_html['poll_answered'] == false %}
@@ -187,16 +197,6 @@
             <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">You must first answer this poll in order to see the community statistics.</p>
           </div>
         {% else %}
-        <!-- ----------------------------------- alert start ----------------------------------- -->
-        {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == true %}
-          <div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container" role="alert">
-            {{ page_dict_to_html['alert_message_dict']['message'] }}
-          </div>
-          <div class="custom-mt-15">
-            <a href="/signup" class="custom-header-25 btn btn-lg btn-danger custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
-          </div>
-        {% endif %}
-        <!-- ----------------------------------- alert end ----------------------------------- -->
         <!-- ------------------------------------- restate q/a start ------------------------------------- -->
         <div class="custom-border-white-opacity-25 custom-br-15 custom-p-15 custom-color-white custom-header-12 custom-mtb-25">
           <p class="custom-m-0 custom-mb-10">Q: {{ page_dict_to_html['poll_dict']['question'] }}</p>
@@ -305,7 +305,7 @@
                 </script>
                 <div class="custom-mb-50 custom-mt-5 custom-tar">
                   {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                    <a href="/signup" class="custom-mr-25 custom-m-0 custom-header-15 custom-opacity-75 custom-a-white custom-a-white-underline">View details and trends <i class="fa-solid fa-angle-right"></i></a>
+                    <a href="/signup" class="custom-mr-25 custom-m-0 custom-header-15 custom-opacity-75 custom-a-white custom-a-white-underline">See more details <i class="fa-solid fa-angle-right"></i></a>
                   {% else %}
                     <span class="custom-mr-25 custom-m-0 custom-header-15 custom-opacity-75 custom-a-white custom-hover-1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Host verification required. See verification process below.">Detailed insights and trends <i class="fa-solid fa-plus"></i></span>
                   {% endif %}
@@ -351,7 +351,7 @@
         </div>
       {% else %}
         <div class="mx-auto">
-          <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-30 custom-pb-25">Verify podcast and get access to your specialized audience feedback</p>
+          <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-30 custom-pb-25">Verified podcasts get access to their audience feedback</p>
           <div class="custom-display-flex">
             <div>
               <img src="{{ page_dict_to_html['db_show_dict']['platform_image_small'] }}" alt="show logo" class="custom-mr-1 custom-br-5 custom-border-white-opacity-75">
