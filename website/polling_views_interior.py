@@ -159,7 +159,7 @@ def polling_dashboard_function(url_redirect_code=None, url_show_id=None):
 @polling_views_interior.route('/verify/success/<url_verification_code>')
 @polling_views_interior.route('/verify/success/<url_verification_code>/<url_redirect_code>')
 @polling_views_interior.route('/verify/success/<url_verification_code>/<url_redirect_code>/')
-@login_required
+# @login_required
 def verification_code_clicked_function(url_redirect_code=None, url_verification_code=None):
   # ------------------------ page dict start ------------------------
   alert_message_dict = alert_message_default_function_v2(url_redirect_code)
@@ -1067,6 +1067,11 @@ def polling_create_poll_function(url_redirect_code=None, url_show_id=None):
     # ------------------------ check if user submitted max amount for today for this show end ------------------------
     # ------------------------ insert to db start ------------------------
     new_poll_id=create_uuid_function('poll_')
+    # ------------------------ admin logic start ------------------------
+    poll_user_to_insert = current_user.id
+    if current_user.email == os.environ.get('RUN_TEST_EMAIL'):
+      poll_user_to_insert = 'ADMIN'
+    # ------------------------ admin logic end ------------------------
     new_row = PollsObj(
       id=new_poll_id,
       created_timestamp=create_timestamp_function(),
@@ -1077,7 +1082,7 @@ def polling_create_poll_function(url_redirect_code=None, url_show_id=None):
       written_response_allowed=True,
       status_approved=False,
       status_removed=False,
-      fk_user_id=current_user.id
+      fk_user_id=poll_user_to_insert
     )
     db.session.add(new_row)
     db.session.commit()
