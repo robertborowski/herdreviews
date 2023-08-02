@@ -204,7 +204,7 @@
             {% if v == page_dict_to_html['poll_answered_dict']['poll_answer_submitted'] %}
               <p class="custom-m-0"><i class="fa-solid fa-arrow-right"></i> (You voted) {{ k }}: {{ v }}</p>
             {% else %}
-              <p class="custom-m-0 custom-opacity-50">{{ k }}: {{ v }}</p>
+              <p class="custom-m-0 custom-opacity-50 custom-p-10">{{ k }}: {{ v }}</p>
             {% endif %}
           {% endfor %}
         </div>
@@ -230,18 +230,22 @@
                     <p class="custom-m-0 custom-header-15 custom-color-white custom-ml-25">{{ v['all_response_objs_len'] }} votes on HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</p>
                   {% endif %}
                 </div>
-                <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25">
+                <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25" id="{{ v['chart_dict']['id'] }}_height">
                   <canvas id="{{ v['chart_dict']['id'] }}"></canvas>
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <script>
                   // ----------------------------- set variables start -----------------------------
+                  // for chart
                   var jquery_id = {{ v['chart_dict']['id']|tojson }};
                   var jquery_title = {{ v['chart_dict']['title']|tojson }};
                   var jquery_labels_array = {{ v['chart_dict']['js_dict']['labels_arr']|tojson }};
                   var jquery_values_array = {{ v['chart_dict']['js_dict']['values_arr']|tojson }};
                   var jquery_chart_colors_array = {{ v['chart_dict']['js_dict']['chart_colors_arr']|tojson }};
                   var jquery_text_colors_array = {{ v['chart_dict']['js_dict']['text_colors_arr']|tojson }};
+                  // for chart height
+                  var jquery_id_height = {{ v['chart_dict']['id']|tojson }} + '_height';
+                  var jquery_chart_size_to_change = {{ v['chart_dict']['change_chart_size_to']|tojson }};
                   // ----------------------------- set variables end -----------------------------
                   // ----------------------------- i chart start -----------------------------
                   var ctx = document.getElementById(jquery_id);
@@ -251,22 +255,28 @@
                       data: {
                         labels: jquery_labels_array,
                         datasets: [{
-                          label: 'Total votes: ',
+                          label: '# votes: ',
                           data: jquery_values_array,
-                          borderWidth: 1,
-                          backgroundColor: jquery_chart_colors_array
+                          backgroundColor: jquery_chart_colors_array,
+                          barThickness: 20,
+                          borderRadius: 10,
                         }]
                       },
                       options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
                         indexAxis: 'y',
                         scales: {
                           y: {
                             beginAtZero: true,
                             ticks: {
-                              color: jquery_text_colors_array,
-                              font: {
-                                weight: 'lighter'
-                              }
+                              color: jquery_text_colors_array
+                            }
+                          },
+                          x: {
+                            beginAtZero: true,
+                            ticks: {
+                              color: jquery_text_colors_array
                             }
                           }
                         },
@@ -276,9 +286,6 @@
                             display: true,
                             text: jquery_title,
                             color: 'white',
-                            font: {
-                              weight: 'lighter'
-                            },
                             padding: {top: 0, left: 0, right: 0, bottom: 10}
                           }
                         }
@@ -290,9 +297,15 @@
                   }
                   // ----------------------------- i chart end -----------------------------
                 </script>
+                <script>
+                  // ----------------------------- adjust chart height based on id start -----------------------------
+                  var elementToChangeHeight = document.getElementById(jquery_id_height);
+                  elementToChangeHeight.style.height = jquery_chart_size_to_change.toString() + 'px';
+                  // ----------------------------- adjust chart height based on id end -----------------------------
+                </script>
                 <div class="custom-mb-50 custom-mt-5 custom-tar">
                   {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                    <a href="/signup" class="custom-mr-25 custom-m-0 custom-header-15 custom-opacity-75 custom-a-white custom-a-white-underline">Detailed insights and trends <i class="fa-solid fa-plus"></i></a>
+                    <a href="/signup" class="custom-mr-25 custom-m-0 custom-header-15 custom-opacity-75 custom-a-white custom-a-white-underline">View details and trends <i class="fa-solid fa-angle-right"></i></a>
                   {% else %}
                     <span class="custom-mr-25 custom-m-0 custom-header-15 custom-opacity-75 custom-a-white custom-hover-1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Host verification required. See verification process below.">Detailed insights and trends <i class="fa-solid fa-plus"></i></span>
                   {% endif %}

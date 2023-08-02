@@ -177,7 +177,7 @@ def get_chart_title_function(stat_name, show_name_title):
   chart_title = stat_name
   chart_title = chart_title.replace('_', ' ')
   chart_title = chart_title.title()
-  return chart_title + ' | ' + show_name_title
+  return chart_title + ' | ' + show_name_title + ' listeners'
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -232,6 +232,9 @@ def get_chart_info_function(page_dict, stat_name, passed_current_user_obj):
       page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['chart_colors_arr'].append(page_dict['show_colors_dict']['show_color_secondary'])
       page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['text_colors_arr'].append(page_dict['show_colors_dict']['text_faded'])
   # ------------------------ assign chart colors based on max end ------------------------
+  # ------------------------ chart height for js start ------------------------
+  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['change_chart_size_to'] = 75 * len(page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['labels_arr'])
+  # ------------------------ chart height for js end ------------------------
   return page_dict
 # ------------------------ individual function end ------------------------
 
