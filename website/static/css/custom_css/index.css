@@ -440,6 +440,9 @@
 .custom-filler-82 {
   height: 82px;
 }
+.custom-filler-93 {
+  height: 93px;
+}
 /* ------------------- filler end ------------------- */
 /* ------------------- flex start ------------------- */
 .custom-fw-1 {
@@ -694,6 +697,9 @@
 }
 .custom-img-size-10 {
   max-height: 60px;
+}
+.custom-img-size-20 {
+  max-height: 20px;
 }
 .custom-img-size-25 {
   max-height: 25px;
