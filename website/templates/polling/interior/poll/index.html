@@ -18,10 +18,13 @@
       <!-- ------------------------------------- progress bar end ------------------------------------- -->
       <nav class="container navbar navbar-expand-md navbar-light custom-display-flex custom-jc-between">
         <div class="custom-display-flex">
-          <a href="/dashboard"><img src="{{ page_dict_to_html['db_show_dict']['platform_image_small'] }}" alt="show logo" class="custom-img-size-40 custom-mr-1 custom-br-5 custom-border-white-opacity-50"></a>
+          <a href="/dashboard"><img src="{{ page_dict_to_html['db_show_dict']['platform_image_small'] }}" alt="show logo" class="custom-img-size-50 custom-mr-1 custom-br-5 custom-border-white-opacity-50"></a>
           <div>
             <a href="/dashboard" class="fw-bold custom-header-15 custom-a-white-none custom-display-block">{{ page_dict_to_html['db_show_dict']['name_title'] }}</a>
-            <a href="/dashboard" class="fw-bold custom-header-15 custom-a-white-none custom-display-block"><i class="fa-solid fa-chevron-right"></i><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v2_white.png" alt="HerdReviews logo, Vecteezy.com" class="custom-img-size-35"> HerdReviews.com</a>
+            {% if page_dict_to_html['db_show_dict']['name_title'] == 'HerdReviews.com' %}
+            {% else %}
+              <a href="/dashboard" class="fw-bold custom-header-15 custom-a-white-none custom-display-block"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v2_white.png" alt="HerdReviews logo, Vecteezy.com" class="custom-img-size-30">HerdReviews.com</a>
+            {% endif %}
           </div>
         </div>
         <div class="custom-display-flex custom-f-direction-row custom-f-nowrap">
@@ -29,7 +32,7 @@
         </div>
       </nav>
     </div>
-    <div class="custom-filler-93"></div>
+    <div class="custom-filler-84"></div>
     <!-- ------------------------------------- navbar end ------------------------------------- -->
     <!-- ------------------------------------- background start ------------------------------------- -->
     <div class="custom-width-600 mx-auto">
