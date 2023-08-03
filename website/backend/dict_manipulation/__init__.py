@@ -31,8 +31,8 @@ def get_answers_shortened_v2_function(input_arr):
   final_dict = {}
   for i in range(len(input_arr)):
     i_short = alphabet_arr[i] + ': ' + input_arr[i]
-    if len(i_short) > 10:
-      i_short = i_short[0:10]+'...'
+    if len(i_short) > 15:
+      i_short = i_short[:15]+'...'
     final_dict[i_short] = input_arr[i]
   return final_dict
 # ------------------------ individual function end ------------------------
