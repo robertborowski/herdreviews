@@ -575,6 +575,11 @@ def alert_message_default_function_v2(redirect_var=None):
       'message':'Poll successfully created! Pending admin final approval.',
       'type':'success'
     }
+  elif redirect_var == 's20':
+    alert_message_dict = {
+      'message':'You have already submitted this poll.',
+      'type':'success'
+    }
   # ------------------------ success end ------------------------
   # ------------------------ info end ------------------------
   elif redirect_var == 'i1':

@@ -345,7 +345,7 @@ def polling_feedback_function(url_redirect_code=None, url_feedback_code=None):
     return redirect(url_for('polling_views_interior.polling_dashboard_function'))
   db_user_attribute_obj = UserAttributesObj.query.filter_by(attribute_code=url_feedback_code,fk_user_id=current_user.id).first()
   if db_user_attribute_obj != None:
-    return redirect(url_for('polling_views_interior.polling_dashboard_function'))
+    return redirect(url_for('polling_views_interior.polling_dashboard_function', url_redirect_code='s20'))
   # ------------------------ double check redirect end ------------------------
   # ------------------------ set loading bar variables start ------------------------
   if url_feedback_code == 'attribute_tos':
@@ -803,6 +803,10 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
   # ------------------------ try for url value end ------------------------
   if current_user.is_anonymous == True and url_show_id == 'show_user_attributes':
     return redirect(url_for('polling_auth.polling_signup_function'))
+  # ------------------------ if somebody tries to change their generation start ------------------------
+  if url_show_id == 'show_user_attributes' and url_poll_id=='poll_user_attribute_generation':
+    return redirect(url_for('polling_views_interior.polling_feedback_function', url_feedback_code='attribute_birthday'))
+  # ------------------------ if somebody tries to change their generation end ------------------------
   # ------------------------ pull show info start ------------------------
   # Get show based on id from shows table
   db_show_obj = get_show_based_on_id_function(url_show_id)
