@@ -26,7 +26,7 @@ import json
 from website.backend.candidates.send_emails import send_email_template_function
 from website.backend.candidates.lists import get_month_days_years_function, get_marketing_list_v2_function
 from website.backend.dates import get_years_from_date_function, return_ints_from_str_function
-from website.backend.get_create_obj import get_all_shows_following_function, get_all_platforms_function, get_platform_based_on_name_function, get_all_shows_for_platform_function, get_show_based_on_name_function, get_show_based_on_id_and_platform_id_function, check_if_currently_following_show_function, get_show_based_on_id_function, get_poll_based_on_id_function, get_show_percent_of_all_polls_answered_function, get_all_polls_based_on_show_id_function, check_at_least_one_poll_answer_submitted_function, get_total_polls_created_today_by_user_for_one_show_function
+from website.backend.get_create_obj import get_all_shows_following_function, get_all_platforms_function, get_platform_based_on_name_function, get_show_based_on_name_function, get_show_based_on_id_and_platform_id_function, check_if_currently_following_show_function, get_show_based_on_id_function, get_poll_based_on_id_function, get_show_percent_of_all_polls_answered_function, get_all_polls_based_on_show_id_function, check_at_least_one_poll_answer_submitted_function, get_total_polls_created_today_by_user_for_one_show_function, get_age_demographics_function
 from website.backend.spotify import spotify_search_show_function
 from website.backend.user_inputs import sanitize_letters_numbers_spaces_specials_only_function, sanitize_text_v1_function, sanitize_text_v2_function
 from website.backend.dict_manipulation import arr_of_dict_all_columns_single_item_function, prep_poll_dict_function
@@ -445,8 +445,8 @@ def polling_feedback_function(url_redirect_code=None, url_feedback_code=None):
       # ------------------------ sanatize inputs end ------------------------
       # ------------------------ age check start ------------------------
       current_age = get_years_from_date_function(ui_year, ui_month, ui_day)
-      if float(current_age) < float(18.0):
-        return redirect(url_for('polling_views_interior.polling_feedback_function', url_redirect_code='e30', url_feedback_code=url_feedback_code))
+      # if float(current_age) < float(18.0):
+      #   return redirect(url_for('polling_views_interior.polling_feedback_function', url_redirect_code='e30', url_feedback_code=url_feedback_code))
       # ------------------------ age check end ------------------------
       # ------------------------ insert to db start ------------------------
       new_row = UserAttributesObj(
@@ -462,6 +462,24 @@ def polling_feedback_function(url_redirect_code=None, url_feedback_code=None):
       db.session.add(new_row)
       db.session.commit()
       # ------------------------ insert to db end ------------------------
+      # ------------------------ insert to db poll start ------------------------
+      year_generation_dict, generation_options_arr = get_age_demographics_function()
+      users_generation = year_generation_dict[str(ui_year)]
+      new_row = PollsAnsweredObj(
+        id=create_uuid_function('vote_'),
+        created_timestamp=create_timestamp_function(),
+        fk_show_id='show_user_attributes',
+        fk_poll_id='poll_user_attribute_generation',
+        fk_user_id=current_user.id,
+        poll_answer_submitted=users_generation,
+        written_answer_submitted=None,
+        status_answer_anonymous=False,
+        poll_vote_updown_question=True,
+        poll_vote_updown_feedback=True
+      )
+      db.session.add(new_row)
+      db.session.commit()
+      # ------------------------ insert to db poll end ------------------------
       return redirect(url_for('polling_views_interior.polling_dashboard_function'))
     # ------------------------ post feedback birthday end ------------------------
     # ------------------------ post feedback marketing start ------------------------

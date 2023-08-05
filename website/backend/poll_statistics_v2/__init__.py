@@ -250,7 +250,7 @@ def get_poll_statistics_v2_function(page_dict, passed_current_user_obj):
   page_dict['poll_statistics_v2_dict']['user_ids_str_only'] = ''
   # ------------------------ set variables end ------------------------
   # ------------------------ get all variable names start ------------------------
-  db_polls_objs = PollsObj.query.filter_by(fk_show_id='show_user_attributes',status_approved=True,status_removed=False).order_by(PollsObj.created_timestamp.asc()).all()
+  db_polls_objs = PollsObj.query.filter_by(fk_show_id='show_user_attributes',status_approved=True,status_removed=False).order_by(PollsObj.id.asc()).all()
   for i_obj in db_polls_objs:
     id = i_obj.id
     name = id.replace('poll_user_attribute_','')

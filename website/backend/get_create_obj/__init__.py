@@ -165,6 +165,7 @@ def get_age_demographics_function():
   generation_arr_gen_x = list(range(1965, 1980+1))
   generation_arr_millenial = list(range(1981, 1996+1))
   generation_arr_gen_z = list(range(1997, 2012+1))
+  generation_arr_gen_alpha = list(range(2013, 2023+1))
   # ------------------------ identify generations in arr end ------------------------
   # ------------------------ map generations to dict start ------------------------
   year_generation_dict = {}
@@ -178,9 +179,11 @@ def get_age_demographics_function():
     year_generation_dict[str(i)] = 'Millenials'
   for i in generation_arr_gen_z:
     year_generation_dict[str(i)] = 'Gen Z'
+  for i in generation_arr_gen_alpha:
+    year_generation_dict[str(i)] = 'Gen Alpha'
   # ------------------------ map generations to dict end ------------------------
   # ------------------------ generation options start ------------------------
-  generation_options_arr = ['Silent','Boomers','Gen X','Millenials','Gen Z']
+  generation_options_arr = ['Silent','Boomers','Gen X','Millenials','Gen Z','Gen Alpha']
   # ------------------------ generation options end ------------------------
   return year_generation_dict, generation_options_arr
 # ------------------------ individual function end ------------------------
