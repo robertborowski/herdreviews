@@ -152,10 +152,10 @@
       <!-- ------------------------------------- answer end ------------------------------------- -->
       <!-- ------------------------------------- expand dropdown add written response start ------------------------------------- -->
       <div class="custom-mt-15">
-        <span class="custom-hover-1 custom-color-white custom-header-15 uiSelectAllBlockInvisible custom-ptb-5 custom-plr-10 custom-br-10 custom-bg-success custom-width-100 text-center" id="id-flow_hide_details_1"><i class="fa-solid fa-minus"></i> Hide written feedback</span>
-        <span class="custom-opacity-50-hover custom-hover-1 custom-color-white custom-header-15 uiSelectAllBlockVisible custom-ptb-5 custom-plr-10 custom-br-10 custom-bg-success custom-width-100 text-center" id="id-flow_show_details_1"><i class="fa-solid fa-plus"></i> Add written feedback</span>
+        <span class="custom-opacity-50-hover custom-hover-1 custom-color-white custom-header-15 uiSelectAllBlockVisible custom-ptb-5 custom-plr-10 custom-br-10 custom-bg-secondary custom-width-100 text-center" id="id-flow_hide_details_1"><i class="fa-solid fa-minus"></i> Additional feedback</span>
+        <span class="custom-opacity-50-hover custom-hover-1 custom-color-white custom-header-15 uiSelectAllBlockInvisible custom-ptb-5 custom-plr-10 custom-br-10 custom-bg-secondary custom-width-100 text-center" id="id-flow_show_details_1"><i class="fa-solid fa-plus"></i> Additional feedback</span>
       </div>
-      <div class="custom-mt-10 custom-width-100 uiSelectAllBlockInvisible" id="id-activity_details_1">
+      <div class="custom-mt-10 custom-width-100 uiSelectAllBlockVisible" id="id-activity_details_1">
         <!-- ------------------------------------- ui written response start ------------------------------------- -->
         <!-- <label for="ui_written_feedback" class="custom-m-0"></label> -->
         {% if page_dict_to_html['poll_answered'] == true %}
@@ -168,7 +168,7 @@
       </div>
       <!-- ------------------------------------- expand dropdown add written response end ------------------------------------- -->
       <!-- ------------------------------------- email + anonymous option start ------------------------------------- -->
-      <div class="custom-mt-50 mx-auto">
+      <div class="custom-mt-25 mx-auto">
         {% if page_dict_to_html['current_user_email'] == 'robjborowski@gmail.com' or page_dict_to_html['current_user_is_anonymous'] == true %}
           <p class="custom-m-0 custom-color-white custom-opacity-75 custom-header-15">Feedback from #1 fan: <span id="id-user_email">jackdoe@gmail.com</span></p>
         {% else %}

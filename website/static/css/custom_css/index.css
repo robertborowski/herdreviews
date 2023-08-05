@@ -113,6 +113,9 @@
 .custom-bg-info {
   background-color: var(--custom-color-info);
 }
+.custom-bg-secondary {
+  background-color: var(--custom-color-secondary);
+}
 .custom-bg-success {
   background-color: var(--custom-color-success);
 }
@@ -242,6 +245,7 @@
   --custom-color-primary: #000000;
   --custom-color-primary-lighter: rgb(230 217 255);
   --custom-color-primary-darker: rgb(44 26 77);
+  --custom-color-secondary: rgb(108 117 125);
   --custom-color-success: rgb(25, 135, 84);
   --custom-color-info: #0dcaf0;
   --custom-color-danger: #dc3545;
