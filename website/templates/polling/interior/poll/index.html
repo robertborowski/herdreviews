@@ -190,16 +190,6 @@
       <!-- ------------------------------------- divider end ------------------------------------- -->
       <!-- ------------------------------------- poll statistics start ------------------------------------- -->
       <div class="mx-auto">
-        <!-- ----------------------------------- alert start ----------------------------------- -->
-        {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == true %}
-          <div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container" role="alert">
-            {{ page_dict_to_html['alert_message_dict']['message'] }}
-          </div>
-          <div class="custom-mb-15">
-            <a href="/signup" class="btn btn-light custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
-          </div>
-        {% endif %}
-        <!-- ----------------------------------- alert end ----------------------------------- -->
         <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-30">Poll statistics</p>
         <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-10 custom-pb-10">Only the verified '{{ page_dict_to_html['db_show_dict']['name_title'] }}' host can see your direct feedback. Your feedback and privacy will always be hidden from the public poll statistics.</p>
         {% if page_dict_to_html['poll_answered'] == false %}
@@ -333,6 +323,16 @@
         {% endif %}
       </div>
       <!-- ------------------------------------- poll statistics end ------------------------------------- -->
+      <!-- ----------------------------------- alert start ----------------------------------- -->
+      {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == true %}
+      <div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container" role="alert">
+        {{ page_dict_to_html['alert_message_dict']['message'] }}
+      </div>
+      <div class="custom-mb-15">
+        <a href="/signup" class="btn btn-light custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
+      </div>
+    {% endif %}
+    <!-- ----------------------------------- alert end ----------------------------------- -->
       <!-- ------------------------------------- divider start ------------------------------------- -->
       <div class="custom-border-white-opacity-25 custom-mtb-100 custom-width-100 mx-auto"></div>
       <!-- ------------------------------------- divider end ------------------------------------- -->
