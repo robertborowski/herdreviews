@@ -868,8 +868,13 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
         page_dict['url_poll_id_random_next'] = poll_arr_of_dict_next_random[0]['id']
       # ------------------------ get next random question end ------------------------
     else:
+      user_to_lookup = current_user.id
+      # ------------------------ admin check start ------------------------
+      if current_user.email == os.environ.get('RUN_TEST_EMAIL'):
+        user_to_lookup = 'ADMIN'
+      # ------------------------ admin check end ------------------------
       # pull specific, unanswered or answered
-      poll_arr_of_dict = select_general_function('select_query_general_2', url_show_id, url_poll_id, current_user.id)
+      poll_arr_of_dict = select_general_function('select_query_general_2', url_show_id, url_poll_id, user_to_lookup)
   # ------------------------ if poll id provided end ------------------------
   # ------------------------ if poll id not provided start ------------------------
   else:
