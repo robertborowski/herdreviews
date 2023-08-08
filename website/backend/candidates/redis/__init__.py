@@ -64,3 +64,21 @@ def redis_set_employees_browser_cookie_function():
   set_browser_cookie_value = create_uuid_function('b2cooke_')
   return set_browser_cookie_key, set_browser_cookie_value
 # ------------------------ individual function start ------------------------
+
+# ------------------------ individual function start ------------------------
+def redis_logout_all_other_signins_function(input_id):
+  try:
+    # ------------------------ connect to redis start ------------------------
+    redis_connection = redis_connect_to_database_function()
+    redis_keys = redis_connection.keys()
+    # ------------------------ connect to redis end ------------------------
+    # ------------------------ loop through start ------------------------
+    for key in redis_keys:
+      redis_value = redis_connection.get(key).decode('utf-8')
+      if redis_value == input_id:
+        redis_connection.delete(key.decode('utf-8'))
+    # ------------------------ loop through end ------------------------
+  except:
+    pass
+  return True
+# ------------------------ individual function start ------------------------

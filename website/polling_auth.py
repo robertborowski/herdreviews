@@ -15,7 +15,7 @@ from website import db
 from flask_login import login_user, login_required, logout_user, current_user
 from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
 from website.backend.candidates.user_inputs import sanitize_email_function, sanitize_password_function
-from website.backend.candidates.redis import redis_check_if_cookie_exists_function, redis_connect_to_database_function
+from website.backend.candidates.redis import redis_check_if_cookie_exists_function, redis_connect_to_database_function, redis_logout_all_other_signins_function
 from backend.utils.uuid_and_timestamp.create_timestamp import create_timestamp_function
 from website.backend.candidates.send_emails import send_email_template_function
 import os
@@ -180,6 +180,13 @@ def polling_login_function(url_redirect_code=None):
 @polling_auth.route('/logout/')
 @login_required
 def polling_logout_function():
+  # ------------------------ loop through redis and logout all signed in cookies start ------------------------
+  try:
+    redis_logout_all_other_signins_function(current_user.id)
+  except Exception as e:
+    localhost_print_function(e)
+    pass
+  # ------------------------ loop through redis and logout all signed in cookies end ------------------------
   logout_user()
   # ------------------------ auto sign in with cookie start ------------------------
   get_cookie_value_from_browser = redis_check_if_cookie_exists_function()
@@ -187,7 +194,8 @@ def polling_logout_function():
   if get_cookie_value_from_browser != None:
     try:
       redis_connection.delete(get_cookie_value_from_browser)
-    except:
+    except Exception as e:
+      localhost_print_function(e)
       pass
   # ------------------------ auto sign in with cookie end ------------------------
   return redirect(url_for('polling_auth.polling_login_function'))
