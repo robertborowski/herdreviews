@@ -1278,6 +1278,9 @@
 .custom-pb-100 {
   padding-bottom: 100px;
 }
+.custom-pb-150 {
+  padding-bottom: 150px;
+}
 .custom-pb-200 {
   padding-bottom: 200px;
 }
@@ -1887,6 +1890,9 @@
 }
 .custom-width-100-px {
   width: 100px;
+}
+.custom-width-150-px {
+  width: 150px;
 }
 .custom-width-175-px {
   width: 175px;

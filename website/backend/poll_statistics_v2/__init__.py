@@ -173,11 +173,18 @@ def get_create_show_chart_colors_function(page_dict):
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
-def get_chart_title_function(stat_name, show_name_title):
-  chart_title = stat_name
-  chart_title = chart_title.replace('_', ' ')
-  chart_title = chart_title.title()
-  return chart_title + ' | ' + show_name_title + ' listeners'
+def get_chart_title_function(stat_name, show_name_title, title_type):
+  chart_title = ''
+  if title_type == 'normal':
+    chart_title = stat_name
+    chart_title = chart_title.replace('_', ' ')
+    chart_title = chart_title.title()
+    chart_title = chart_title + ' | ' + show_name_title + ' listeners'
+  if title_type == 'short':
+    chart_title = stat_name
+    chart_title = chart_title.replace('_', ' ')
+    chart_title = chart_title.title()
+  return chart_title
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -208,7 +215,8 @@ def get_chart_info_function(page_dict, stat_name, passed_current_user_obj):
   # ------------------------ check if answered attritbutes end ------------------------
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['status'] = 'visible'
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['id'] = 'id-chart_' + stat_name
-  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['title'] = get_chart_title_function(stat_name, page_dict['db_show_dict']['name_title'])
+  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['title'] = get_chart_title_function(stat_name, page_dict['db_show_dict']['name_title'], 'normal')
+  page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['title_short'] = get_chart_title_function(stat_name, page_dict['db_show_dict']['name_title'], 'short')
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict'] = {}
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['labels_arr'] = []
   page_dict['poll_statistics_v2_dict'][stat_name]['chart_dict']['js_dict']['values_arr'] = []

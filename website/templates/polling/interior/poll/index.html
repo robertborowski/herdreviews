@@ -78,7 +78,7 @@
         {% endif %}
         {% if page_dict_to_html['current_user_is_anonymous'] == true %}
           <div class="custom-mt-25">
-            <a href="/signup" class="btn btn-lg btn-danger custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
+            <a href="/signup" class="btn btn-lg btn-light custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
           </div>
         {% endif %}
         <!-- ------------------------------------- divider start ------------------------------------- -->
@@ -199,6 +199,14 @@
         {% else %}
         <!-- ------------------------------------- restate q/a start ------------------------------------- -->
         <div class="custom-border-white-opacity-25 custom-br-15 custom-p-15 custom-color-white custom-header-12 custom-mtb-25">
+          <!-- ----------------------------------- alert start ----------------------------------- -->
+          {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == true %}
+            <p class="custom-m-0 custom-mb-10 custom-color-white">Note: Your response was not recorded because you are not logged in.</p>
+            <div class="custom-mb-20">
+              <a href="/signup" class="btn btn-light btn-sm custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
+            </div>
+          {% endif %}
+          <!-- ----------------------------------- alert end ----------------------------------- -->
           <p class="custom-m-0 custom-mb-10">Q: {{ page_dict_to_html['poll_dict']['question'] }}</p>
           {% for k,v in page_dict_to_html['poll_dict']['answer_choices_dict_letters_only'].items() %}
             {% if v == page_dict_to_html['poll_answered_dict']['poll_answer_submitted'] %}
@@ -223,13 +231,23 @@
                   {% endif %}
                 </div>
               {% else %}
+                <!-- ------------------------------------- blurb start ------------------------------------- -->
                 <div class="custom-pt-25">
+                  <h3 class="custom-m-0 custom-mb-5 custom-color-white custom-header-25">{{ v['chart_dict']['title_short'] }}</h3>
                   {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                    <p class="custom-m-0 custom-header-15 custom-color-white custom-ml-25">{{ v['all_response_objs_len'] }} votes on <a href="/{{ page_dict_to_html['db_show_dict']['reference_name'] }}" class="custom-a-white custom-a-white-underline">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a></p>
+                    <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white">{{ v['all_response_objs_len'] }} votes on <a href="/{{ page_dict_to_html['db_show_dict']['reference_name'] }}" class="custom-a-white custom-a-white-underline">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/signup" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-10 custom-border-white-opacity-75 custom-a-white-underline">Change URL</a></p>
                   {% else %}
-                    <p class="custom-m-0 custom-header-15 custom-color-white custom-ml-25">{{ v['all_response_objs_len'] }} votes on HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</p>
+                    <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white">{{ v['all_response_objs_len'] }} votes on <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-a-white custom-a-white-underline">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-10 custom-border-white-opacity-75 custom-a-white-underline">Change URL</a></p>
                   {% endif %}
+                  <!-- ------------------------------------- for each distribution string start ------------------------------------- -->
+                  <div class="custom-display-flex custom-f-wrap custom-mb-10 custom-mt-10">
+                    {% for k2,v22 in page_dict_to_html['poll_statistics_v2_dict'][k]['poll_answer_submitted_dict']['count_dict'].items() %}
+                      <p class="custom-color-white custom-border-white-opacity-50 custom-p-5 custom-br-25 custom-m-5 custom-header-12">{{ k2 }} | {{ v22 }} | {{ page_dict_to_html['poll_statistics_v2_dict'][k]['poll_answer_submitted_dict']['percent_dict'][k2] }}</p>
+                    {% endfor %}
+                  </div>
+                  <!-- ------------------------------------- for each distribution string end ------------------------------------- -->  
                 </div>
+                <!-- ------------------------------------- blurb end ------------------------------------- -->
                 <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25 custom-height-500-px" id="{{ v['chart_dict']['id'] }}_height">
                   <canvas id="{{ v['chart_dict']['id'] }}"></canvas>
                 </div>
@@ -308,12 +326,43 @@
                   // elementToChangeHeight.style.height = jquery_chart_size_to_change.toString() + 'px';
                   // ----------------------------- adjust chart height based on id end -----------------------------
                 </script>
-                <div class="custom-mb-50 custom-mt-5 custom-tar">
-                  {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                    <a href="/signup" class="custom-mr-25 custom-m-0 custom-header-15 custom-opacity-75 custom-a-white custom-a-white-underline">See more details <i class="fa-solid fa-angle-right"></i></a>
-                  {% else %}
-                    <span class="custom-mr-25 custom-m-0 custom-header-15 custom-opacity-75 custom-a-white custom-hover-1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Host verification required. See verification process below.">Detailed insights and trends <i class="fa-solid fa-plus"></i></span>
-                  {% endif %}
+                <div class="custom-display-flex custom-jc-around custom-mb-100">
+                  <!-- ------------------------------------- start ------------------------------------- -->
+                  <div class="custom-br-10 custom-p-10 custom-border-white-opacity-50 custom-m-25 custom-width-100-px text-center">
+                    <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white">Poll on/off</p>
+                    <div class="form-switch custom-br-25 custom-bg-white">
+                      {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                      {% else %}
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <!-- ------------------------------------- end ------------------------------------- -->
+                  <!-- ------------------------------------- start ------------------------------------- -->
+                  <div class="custom-br-10 custom-p-10 custom-border-white-opacity-50 custom-m-25 custom-width-100-px text-center">
+                    {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+                      <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white">Show color</p>
+                      <input type="color" class="form-control form-control-color mx-auto" id="exampleColorInput" value="{{ page_dict_to_html['show_colors_dict']['show_color_primary'] }}" title="Choose your color" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">
+                    {% else %}
+                      <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white">Show color</p>
+                      <input type="color" class="form-control form-control-color mx-auto" id="exampleColorInput" value="{{ page_dict_to_html['show_colors_dict']['show_color_primary'] }}" title="Choose your color" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below">
+                    {% endif %}
+                  </div>
+                  <!-- ------------------------------------- end ------------------------------------- -->
+                  <!-- ------------------------------------- start ------------------------------------- -->
+                  <div class="custom-br-10 custom-p-10 custom-border-white-opacity-50 custom-m-25 custom-width-100-px text-center">
+                    {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+                      <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white"><a href="/signup" class="custom-a-white-none" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">More filters</a></p>
+                      <p class="custom-m-0 custom-mb-5 custom-header-25 custom-color-white"><a href="/signup" class="custom-a-white-none"><i class="fa-solid fa-chevron-right" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings"></i></a></p>
+                    {% else %}
+                      <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white"><a href="/signup" class="custom-a-white-none" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below">More filters</a></p>
+                      <p class="custom-m-0 custom-mb-5 custom-header-25 custom-color-white"><a href="/signup" class="custom-a-white-none"><i class="fa-solid fa-chevron-right" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below"></i></a></p>
+                    {% endif %}
+                  </div>
+                  <!-- ------------------------------------- end ------------------------------------- -->
                 </div>
               {% endif %}
             {% else %}
@@ -323,16 +372,6 @@
         {% endif %}
       </div>
       <!-- ------------------------------------- poll statistics end ------------------------------------- -->
-      <!-- ----------------------------------- alert start ----------------------------------- -->
-      {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == true %}
-      <div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container" role="alert">
-        {{ page_dict_to_html['alert_message_dict']['message'] }}
-      </div>
-      <div class="custom-mb-15">
-        <a href="/signup" class="btn btn-light custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
-      </div>
-    {% endif %}
-    <!-- ----------------------------------- alert end ----------------------------------- -->
       <!-- ------------------------------------- divider start ------------------------------------- -->
       <div class="custom-border-white-opacity-25 custom-mtb-100 custom-width-100 mx-auto"></div>
       <!-- ------------------------------------- divider end ------------------------------------- -->
@@ -370,7 +409,7 @@
         </div>
       {% else %}
         <div class="mx-auto">
-          <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-30 custom-pb-25">Verified podcasts get access to their audience feedback</p>
+          <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-30 custom-pb-25">Verified podcasts get full access to show settings + feedback</p>
           <div class="custom-display-flex">
             <div>
               <img src="{{ page_dict_to_html['db_show_dict']['platform_image_small'] }}" alt="show logo" class="custom-mr-1 custom-br-5 custom-border-white-opacity-75">
