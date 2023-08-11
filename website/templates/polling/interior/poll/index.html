@@ -90,7 +90,7 @@
       <!-- ------------------------------------- question start ------------------------------------- -->
       <div class="custom-mt-50 mx-auto">
         <div class="custom-display-flex custom-header-20 custom-color-white custom-jc-between">
-          <p class="custom-m-0 custom-pb-5">Poll</span></p>
+          <p class="custom-m-0 custom-pb-5 custom-opacity-75">Poll</span></p>
           <div>
             <!-- ------------------------------------- radio upvote start ------------------------------------- -->
             <input type="radio" class="btn-check" id="id-ui_vote_question_up" name="ui_vote_question" value="up" autocomplete="off">
@@ -190,33 +190,36 @@
       <!-- ------------------------------------- divider end ------------------------------------- -->
       <!-- ------------------------------------- poll statistics start ------------------------------------- -->
       <div class="mx-auto">
-        <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-30">Poll statistics</p>
+        <p class="custom-color-white custom-m-0 custom-header-30">Poll statistics</p>
         <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-10 custom-pb-10">Only the verified '{{ page_dict_to_html['db_show_dict']['name_title'] }}' host can see your direct feedback. Your feedback and privacy will always be hidden from the public poll statistics.</p>
         {% if page_dict_to_html['poll_answered'] == false %}
           <div class="custom-br-15 custom-border-white-opacity-25 custom-p-15">
             <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">You must first answer this poll in order to see the community statistics.</p>
           </div>
         {% else %}
-        <!-- ------------------------------------- restate q/a start ------------------------------------- -->
-        <div class="custom-border-white-opacity-25 custom-br-15 custom-p-15 custom-color-white custom-header-12 custom-mtb-25">
-          <!-- ----------------------------------- alert start ----------------------------------- -->
-          {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == true %}
-            <p class="custom-m-0 custom-mb-10 custom-color-white">Note: Your response was not recorded because you are not logged in.</p>
-            <div class="custom-mb-20">
-              <a href="/signup" class="btn btn-light btn-sm custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
-            </div>
-          {% endif %}
-          <!-- ----------------------------------- alert end ----------------------------------- -->
-          <p class="custom-m-0 custom-mb-10">Q: {{ page_dict_to_html['poll_dict']['question'] }}</p>
-          {% for k,v in page_dict_to_html['poll_dict']['answer_choices_dict_letters_only'].items() %}
-            {% if v == page_dict_to_html['poll_answered_dict']['poll_answer_submitted'] %}
-              <p class="custom-m-0"><i class="fa-solid fa-arrow-right"></i> (You voted) {{ k }}: {{ v }}</p>
-            {% else %}
-              <p class="custom-m-0 custom-opacity-50 custom-p-10">{{ k }}: {{ v }}</p>
+          <!-- ------------------------------------- search bar start ------------------------------------- -->
+          <div class="custom-mt-10 custom-mb-25">
+            <p class="custom-color-white custom-m-0 custom-mb-5 custom-opacity-75">Search statistic</p>
+            <input type="text" class="form-control" id="ui_search_show_name" name="ui_search_show_name" placeholder="e.g. income, music, hobbies, etc.">
+          </div>
+          <!-- ------------------------------------- search bar end ------------------------------------- -->
+          <!-- ------------------------------------- restate q/a start ------------------------------------- -->
+          <div class="custom-border-white-opacity-25 custom-br-15 custom-p-15 custom-color-white custom-header-12 custom-mtb-25 uiSearchItem">
+            <!-- ----------------------------------- alert start ----------------------------------- -->
+            {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == true %}
+              <p class="custom-m-0 custom-mb-10 custom-color-white">Note: Your response was not recorded because you are not logged in <a href="/signup" class="custom-ml-5 btn btn-light btn-sm">Create account <i class="fa-solid fa-user"></i></a></p>
             {% endif %}
-          {% endfor %}
-        </div>
-        <!-- ------------------------------------- restate q/a end ------------------------------------- -->
+            <!-- ----------------------------------- alert end ----------------------------------- -->
+            <p class="custom-m-0 custom-mb-10">Q: {{ page_dict_to_html['poll_dict']['question'] }}</p>
+            {% for k,v in page_dict_to_html['poll_dict']['answer_choices_dict_letters_only'].items() %}
+              {% if v == page_dict_to_html['poll_answered_dict']['poll_answer_submitted'] %}
+                <p class="custom-m-0"><i class="fa-solid fa-arrow-right"></i> (You voted) {{ k }}: {{ v }}</p>
+              {% else %}
+                <p class="custom-m-0 custom-opacity-50 custom-p-10">{{ k }}: {{ v }}</p>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <!-- ------------------------------------- restate q/a end ------------------------------------- -->
           <!-- ------------------------------------- charts start ------------------------------------- -->
           {% for k,v in page_dict_to_html['poll_statistics_v2_dict'].items() %}
             {% if k in page_dict_to_html['poll_statistics_v2_dict']['define_dict_arr'] %}
@@ -231,137 +234,139 @@
                   {% endif %}
                 </div>
               {% else %}
-                <!-- ------------------------------------- blurb start ------------------------------------- -->
-                <div class="custom-pt-25">
-                  <h3 class="custom-m-0 custom-mb-5 custom-color-white custom-header-25">{{ v['chart_dict']['title_short'] }}</h3>
-                  {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                    <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white">{{ v['all_response_objs_len'] }} votes on <a href="/{{ page_dict_to_html['db_show_dict']['reference_name'] }}" class="custom-a-white custom-a-white-underline">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/signup" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
-                  {% else %}
-                    <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white">{{ v['all_response_objs_len'] }} votes on <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-a-white custom-a-white-underline">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
-                  {% endif %}
-                  <!-- ------------------------------------- for each distribution string start ------------------------------------- -->
-                  <div class="custom-display-flex custom-f-wrap custom-mb-10 custom-mt-10">
-                    {% for k2,v22 in page_dict_to_html['poll_statistics_v2_dict'][k]['poll_answer_submitted_dict']['count_dict'].items() %}
-                      <p class="custom-color-white custom-border-white-opacity-50 custom-ptb-5 custom-plr-10 custom-br-25 custom-m-5 custom-header-10">{{ k2 }} | {{ v22 }} | {{ page_dict_to_html['poll_statistics_v2_dict'][k]['poll_answer_submitted_dict']['percent_dict'][k2] }}</p>
-                    {% endfor %}
+                <div class="uiSearchItem">
+                  <!-- ------------------------------------- blurb start ------------------------------------- -->
+                  <div class="custom-pt-25">
+                    <h3 class="custom-m-0 custom-mb-5 custom-color-white custom-header-25"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v2_white.png" alt="HerdReviews logo, Vecteezy.com" class="custom-img-size-35 custom-mt-negative-5"> {{ v['chart_dict']['title_short'] }}</h3>
+                    {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+                      <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white">{{ v['all_response_objs_len'] }} votes on <a href="/{{ page_dict_to_html['db_show_dict']['reference_name'] }}" class="custom-a-white custom-a-white-underline">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/signup" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
+                    {% else %}
+                      <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white">{{ v['all_response_objs_len'] }} votes on <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-a-white custom-a-white-underline">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
+                    {% endif %}
+                    <!-- ------------------------------------- for each distribution string start ------------------------------------- -->
+                    <div class="custom-display-flex custom-f-wrap custom-mb-10 custom-mt-10">
+                      {% for k2,v22 in page_dict_to_html['poll_statistics_v2_dict'][k]['poll_answer_submitted_dict']['count_dict'].items() %}
+                        <p class="custom-color-white custom-border-white-opacity-50 custom-ptb-5 custom-plr-10 custom-br-25 custom-m-5 custom-header-10">{{ k2 }} | {{ v22 }} | {{ page_dict_to_html['poll_statistics_v2_dict'][k]['poll_answer_submitted_dict']['percent_dict'][k2] }}</p>
+                      {% endfor %}
+                    </div>
+                    <!-- ------------------------------------- for each distribution string end ------------------------------------- -->  
                   </div>
-                  <!-- ------------------------------------- for each distribution string end ------------------------------------- -->  
-                </div>
-                <!-- ------------------------------------- blurb end ------------------------------------- -->
-                <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25 custom-height-500-px" id="{{ v['chart_dict']['id'] }}_height">
-                  <canvas id="{{ v['chart_dict']['id'] }}"></canvas>
-                </div>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <script>
-                  // ----------------------------- set variables start -----------------------------
-                  // for chart
-                  var jquery_id = {{ v['chart_dict']['id']|tojson }};
-                  var jquery_title = {{ v['chart_dict']['title']|tojson }};
-                  var jquery_labels_array = {{ v['chart_dict']['js_dict']['labels_arr']|tojson }};
-                  var jquery_values_array = {{ v['chart_dict']['js_dict']['values_arr']|tojson }};
-                  var jquery_chart_colors_array = {{ v['chart_dict']['js_dict']['chart_colors_arr']|tojson }};
-                  var jquery_text_colors_array = {{ v['chart_dict']['js_dict']['text_colors_arr']|tojson }};
-                  // ----------------------------- set variables end -----------------------------
-                  // ----------------------------- i chart start -----------------------------
-                  var ctx = document.getElementById(jquery_id);
-                  try {
-                    new Chart(ctx, {
-                      type: 'bar',
-                      data: {
-                        labels: jquery_labels_array,
-                        datasets: [{
-                          label: '# votes: ',
-                          data: jquery_values_array,
-                          backgroundColor: jquery_chart_colors_array,
-                          barThickness: 20,
-                          borderRadius: 7
-                        }]
-                      },
-                      options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        // indexAxis: 'y',
-                        scales: {
-                          y: {
-                            beginAtZero: true,
-                            ticks: {
-                              color: jquery_text_colors_array
+                  <!-- ------------------------------------- blurb end ------------------------------------- -->
+                  <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25 custom-height-500-px" id="{{ v['chart_dict']['id'] }}_height">
+                    <canvas id="{{ v['chart_dict']['id'] }}"></canvas>
+                  </div>
+                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                  <script>
+                    // ----------------------------- set variables start -----------------------------
+                    // for chart
+                    var jquery_id = {{ v['chart_dict']['id']|tojson }};
+                    var jquery_title = {{ v['chart_dict']['title']|tojson }};
+                    var jquery_labels_array = {{ v['chart_dict']['js_dict']['labels_arr']|tojson }};
+                    var jquery_values_array = {{ v['chart_dict']['js_dict']['values_arr']|tojson }};
+                    var jquery_chart_colors_array = {{ v['chart_dict']['js_dict']['chart_colors_arr']|tojson }};
+                    var jquery_text_colors_array = {{ v['chart_dict']['js_dict']['text_colors_arr']|tojson }};
+                    // ----------------------------- set variables end -----------------------------
+                    // ----------------------------- i chart start -----------------------------
+                    var ctx = document.getElementById(jquery_id);
+                    try {
+                      new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                          labels: jquery_labels_array,
+                          datasets: [{
+                            label: '# votes: ',
+                            data: jquery_values_array,
+                            backgroundColor: jquery_chart_colors_array,
+                            barThickness: 20,
+                            borderRadius: 7
+                          }]
+                        },
+                        options: {
+                          responsive: true,
+                          maintainAspectRatio: false,
+                          // indexAxis: 'y',
+                          scales: {
+                            y: {
+                              beginAtZero: true,
+                              ticks: {
+                                color: jquery_text_colors_array
+                              }
+                            },
+                            x: {
+                              beginAtZero: true,
+                              ticks: {
+                                color: jquery_text_colors_array,
+                                maxRotation: 60,
+                                minRotation: 60
+                              }
                             }
                           },
-                          x: {
-                            beginAtZero: true,
-                            ticks: {
-                              color: jquery_text_colors_array,
-                              maxRotation: 60,
-                              minRotation: 60
-                            }
-                          }
-                        },
-                        plugins: {
-                          legend: {display: false},
-                          title: {
-                            display: true,
-                            text: jquery_title,
-                            color: 'white',
-                            padding: {top: 0, left: 0, right: 0, bottom: 30},
-                            font: {
-                              size: 20
+                          plugins: {
+                            legend: {display: false},
+                            title: {
+                              display: true,
+                              text: jquery_title,
+                              color: 'white',
+                              padding: {top: 0, left: 0, right: 0, bottom: 30},
+                              font: {
+                                size: 20
+                              }
                             }
                           }
                         }
-                      }
-                    });
-                  } catch (error) {
-                    console.log('ERROR')
-                    console.log(error)
-                  }
-                  // ----------------------------- i chart end -----------------------------
-                </script>
-                <script>
-                  // ----------------------------- adjust chart height based on id start -----------------------------
-                  // for chart height
-                  // var jquery_id_height = {{ v['chart_dict']['id']|tojson }} + '_height';
-                  // var jquery_chart_size_to_change = {{ v['chart_dict']['change_chart_size_to']|tojson }};
-                  // var elementToChangeHeight = document.getElementById(jquery_id_height);
-                  // elementToChangeHeight.style.height = jquery_chart_size_to_change.toString() + 'px';
-                  // ----------------------------- adjust chart height based on id end -----------------------------
-                </script>
-                <div class="custom-display-flex custom-jc-around custom-mb-100">
-                  <!-- ------------------------------------- start ------------------------------------- -->
-                  <div class="custom-br-10 custom-p-10 custom-border-white-opacity-50 custom-m-25 custom-width-100-px text-center">
-                    <p class="custom-m-0 custom-mb-10 custom-header-12 custom-color-white">Poll on/off</p>
-                    <div class="form-switch custom-br-25 custom-bg-white">
+                      });
+                    } catch (error) {
+                      console.log('ERROR')
+                      console.log(error)
+                    }
+                    // ----------------------------- i chart end -----------------------------
+                  </script>
+                  <script>
+                    // ----------------------------- adjust chart height based on id start -----------------------------
+                    // for chart height
+                    // var jquery_id_height = {{ v['chart_dict']['id']|tojson }} + '_height';
+                    // var jquery_chart_size_to_change = {{ v['chart_dict']['change_chart_size_to']|tojson }};
+                    // var elementToChangeHeight = document.getElementById(jquery_id_height);
+                    // elementToChangeHeight.style.height = jquery_chart_size_to_change.toString() + 'px';
+                    // ----------------------------- adjust chart height based on id end -----------------------------
+                  </script>
+                  <div class="custom-display-flex custom-jc-around custom-mb-100">
+                    <!-- ------------------------------------- start ------------------------------------- -->
+                    <div class="custom-br-10 custom-p-10 custom-border-white-opacity-50 custom-m-25 custom-width-100-px text-center">
+                      <p class="custom-m-0 custom-mb-10 custom-header-12 custom-color-white">Poll on/off</p>
+                      <div class="form-switch custom-br-25 custom-bg-white">
+                        {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+                          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings" checked>
+                          <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                        {% else %}
+                          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below" checked>
+                          <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <!-- ------------------------------------- end ------------------------------------- -->
+                    <!-- ------------------------------------- start ------------------------------------- -->
+                    <div class="custom-br-10 custom-p-10 custom-border-white-opacity-50 custom-m-25 custom-width-100-px text-center">
+                      <p class="custom-m-0 custom-mb-5 custom-header-12 custom-color-white">Show color</p>
                       {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings" checked>
-                        <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                        <input type="color" class="form-control form-control-color mx-auto" id="exampleColorInput" value="{{ page_dict_to_html['show_colors_dict']['show_color_primary_to_hex'] }}" title="Choose your color" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">
                       {% else %}
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below" checked>
-                        <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                        <input type="color" class="form-control form-control-color mx-auto" id="exampleColorInput" value="{{ page_dict_to_html['show_colors_dict']['show_color_primary_to_hex'] }}" title="Choose your color" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below">
                       {% endif %}
                     </div>
+                    <!-- ------------------------------------- end ------------------------------------- -->
+                    <!-- ------------------------------------- start ------------------------------------- -->
+                    <div class="custom-br-10 custom-p-10 custom-border-white-opacity-50 custom-m-25 custom-width-100-px text-center">
+                      {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+                        <p class="custom-m-0 custom-mb-5 custom-header-12 custom-color-white"><a href="/signup" class="custom-a-white-none" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">More filters</a></p>
+                        <p class="custom-m-0 custom-mb-5 custom-header-25 custom-color-white"><a href="/signup" class="custom-a-white-none"><i class="fa-solid fa-chevron-right" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings"></i></a></p>
+                      {% else %}
+                        <p class="custom-m-0 custom-mb-5 custom-header-12 custom-color-white"><a href="#" class="custom-a-white-none" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below">More filters</a></p>
+                        <p class="custom-m-0 custom-mb-5 custom-header-25 custom-color-white"><a href="#" class="custom-a-white-none"><i class="fa-solid fa-chevron-right" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below"></i></a></p>
+                      {% endif %}
+                    </div>
+                    <!-- ------------------------------------- end ------------------------------------- -->
                   </div>
-                  <!-- ------------------------------------- end ------------------------------------- -->
-                  <!-- ------------------------------------- start ------------------------------------- -->
-                  <div class="custom-br-10 custom-p-10 custom-border-white-opacity-50 custom-m-25 custom-width-100-px text-center">
-                    <p class="custom-m-0 custom-mb-5 custom-header-12 custom-color-white">Show color</p>
-                    {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                      <input type="color" class="form-control form-control-color mx-auto" id="exampleColorInput" value="{{ page_dict_to_html['show_colors_dict']['show_color_primary_to_hex'] }}" title="Choose your color" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">
-                    {% else %}
-                      <input type="color" class="form-control form-control-color mx-auto" id="exampleColorInput" value="{{ page_dict_to_html['show_colors_dict']['show_color_primary_to_hex'] }}" title="Choose your color" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below">
-                    {% endif %}
-                  </div>
-                  <!-- ------------------------------------- end ------------------------------------- -->
-                  <!-- ------------------------------------- start ------------------------------------- -->
-                  <div class="custom-br-10 custom-p-10 custom-border-white-opacity-50 custom-m-25 custom-width-100-px text-center">
-                    {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                      <p class="custom-m-0 custom-mb-5 custom-header-12 custom-color-white"><a href="/signup" class="custom-a-white-none" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">More filters</a></p>
-                      <p class="custom-m-0 custom-mb-5 custom-header-25 custom-color-white"><a href="/signup" class="custom-a-white-none"><i class="fa-solid fa-chevron-right" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings"></i></a></p>
-                    {% else %}
-                      <p class="custom-m-0 custom-mb-5 custom-header-12 custom-color-white"><a href="#" class="custom-a-white-none" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below">More filters</a></p>
-                      <p class="custom-m-0 custom-mb-5 custom-header-25 custom-color-white"><a href="#" class="custom-a-white-none"><i class="fa-solid fa-chevron-right" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below"></i></a></p>
-                    {% endif %}
-                  </div>
-                  <!-- ------------------------------------- end ------------------------------------- -->
                 </div>
               {% endif %}
             {% else %}
@@ -389,7 +394,7 @@
       {% else %}
       {% endif %}
       <div class="mx-auto">
-        <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-30">Create poll for this community</p>
+        <p class="custom-color-white custom-m-0 custom-header-30">Create poll for this community</p>
         <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-10 custom-pb-25">The verified '{{ page_dict_to_html['db_show_dict']['name_title'] }}' host has final approval before your poll can be seen by others in the community.</p>
         {% if page_dict_to_html['current_user_is_anonymous'] == true %}
           <a href="/signup" class="custom-width-100 btn btn-outline-warning">Create poll for this community <i class="fa-solid fa-plus"></i></a>
@@ -408,7 +413,7 @@
         </div>
       {% else %}
         <div class="mx-auto">
-          <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-30 custom-pb-25">Verified podcasts get full access to show settings + feedback</p>
+          <p class="custom-color-white custom-m-0 custom-header-30 custom-pb-25">Verified podcasts get full access to show settings & fan feedback</p>
           <div class="custom-display-flex">
             <div>
               <img src="{{ page_dict_to_html['db_show_dict']['platform_image_small'] }}" alt="show logo" class="custom-mr-1 custom-br-5 custom-border-white-opacity-75">
