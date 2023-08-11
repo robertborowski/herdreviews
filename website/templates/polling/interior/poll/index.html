@@ -345,9 +345,9 @@
                   <div class="custom-br-10 custom-p-10 custom-border-white-opacity-50 custom-m-25 custom-width-100-px text-center">
                     <p class="custom-m-0 custom-mb-5 custom-header-12 custom-color-white">Show color</p>
                     {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                      <input type="color" class="form-control form-control-color mx-auto" id="exampleColorInput" value="{{ page_dict_to_html['show_colors_dict']['show_color_primary'] }}" title="Choose your color" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">
+                      <input type="color" class="form-control form-control-color mx-auto" id="exampleColorInput" value="{{ page_dict_to_html['show_colors_dict']['show_color_primary_to_hex'] }}" title="Choose your color" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">
                     {% else %}
-                      <input type="color" class="form-control form-control-color mx-auto" id="exampleColorInput" value="{{ page_dict_to_html['show_colors_dict']['show_color_primary'] }}" title="Choose your color" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below">
+                      <input type="color" class="form-control form-control-color mx-auto" id="exampleColorInput" value="{{ page_dict_to_html['show_colors_dict']['show_color_primary_to_hex'] }}" title="Choose your color" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="See verification details below">
                     {% endif %}
                   </div>
                   <!-- ------------------------------------- end ------------------------------------- -->

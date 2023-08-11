@@ -1,7 +1,7 @@
 # ------------------------ imports start ------------------------
 from backend.utils.localhost_print_utils.localhost_print import localhost_print_function
 from website.backend.sql_statements.select import select_general_function
-from website.backend.get_create_obj import get_starting_arr_function, get_alphabet_arr_function, default_chart_colors_function, get_percent_mins_dict_function
+from website.backend.get_create_obj import get_starting_arr_function, get_alphabet_arr_function, default_chart_colors_function, get_percent_mins_dict_function, rgb_to_hex_function
 import pprint
 from website.models import PollsObj, PollsStandInObj, ShowsAttributesObj, PollsAnsweredObj
 from website import db
@@ -210,6 +210,9 @@ def get_create_show_chart_colors_function(page_dict):
     pass
   end_dict['show_color_primary'] = db_show_attributes_obj_primary.attribute_value
   end_dict['show_color_secondary'] = db_show_attributes_obj_secondary.attribute_value
+  # ------------------------ convert rgb to hex start ------------------------
+  end_dict['show_color_primary_to_hex'] = rgb_to_hex_function(end_dict['show_color_primary'])
+  # ------------------------ convert rgb to hex end ------------------------
   # ------------------------ defaults start ------------------------
   db_words_faded_obj = ShowsAttributesObj.query.filter_by(fk_show_id='admin_default',attribute_key='text_faded').order_by(ShowsAttributesObj.created_timestamp.desc()).first()
   db_words_correct_obj = ShowsAttributesObj.query.filter_by(fk_show_id='admin_default',attribute_key='text_correct').order_by(ShowsAttributesObj.created_timestamp.desc()).first()

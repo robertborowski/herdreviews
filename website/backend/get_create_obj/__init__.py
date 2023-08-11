@@ -3,6 +3,7 @@ from website.models import UserObj, ShowsFollowingObj, PlatformsObj, ShowsObj, P
 from website.backend.sql_statements.select import select_general_function
 from datetime import datetime, date
 import random
+import re
 # ------------------------ imports end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -265,4 +266,13 @@ def get_percent_mins_dict_function(url_show_id):
     'Tennis': {url_show_id: float(0.07)}
   }
   return limits_dict
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
+def rgb_to_hex_function(input_rgb_str):
+  # rgb(220 53 69)
+  numbers = re.findall(r'\d+', input_rgb_str)
+  if len(numbers) == 3:
+    r, g, b = map(int, numbers)
+  return "#{:02x}{:02x}{:02x}".format(r, g, b)
 # ------------------------ individual function end ------------------------
