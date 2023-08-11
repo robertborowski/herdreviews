@@ -237,19 +237,21 @@
                 <div class="uiSearchItem">
                   <!-- ------------------------------------- blurb start ------------------------------------- -->
                   <div class="custom-pt-25">
-                    <h3 class="custom-m-0 custom-mb-5 custom-color-white custom-header-25"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v2_white.png" alt="HerdReviews logo, Vecteezy.com" class="custom-img-size-35 custom-mt-negative-5"> {{ v['chart_dict']['title_short'] }}</h3>
-                    {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                      <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white">{{ v['all_response_objs_len'] }} votes on <a href="/{{ page_dict_to_html['db_show_dict']['reference_name'] }}" class="custom-a-white custom-a-white-underline">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/signup" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
-                    {% else %}
-                      <p class="custom-m-0 custom-mb-5 custom-header-15 custom-color-white">{{ v['all_response_objs_len'] }} votes on <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-a-white custom-a-white-underline">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
-                    {% endif %}
+                    <h3 class="custom-m-0 custom-mb-15 custom-color-white custom-header-30"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v2_white.png" alt="HerdReviews logo, Vecteezy.com" class="custom-img-size-35 custom-mt-negative-5"> {{ v['chart_dict']['title_short'] }} <span class="custom-header-15 custom-opacity-75">(based on main poll above)</span></h3>
                     <!-- ------------------------------------- for each distribution string start ------------------------------------- -->
-                    <div class="custom-display-flex custom-f-wrap custom-mb-10 custom-mt-10">
+                    <div class="custom-display-flex custom-f-wrap custom-mb-10">
                       {% for k2,v22 in page_dict_to_html['poll_statistics_v2_dict'][k]['poll_answer_submitted_dict']['count_dict'].items() %}
                         <p class="custom-color-white custom-border-white-opacity-50 custom-ptb-5 custom-plr-10 custom-br-25 custom-m-5 custom-header-10">{{ k2 }} | {{ v22 }} | {{ page_dict_to_html['poll_statistics_v2_dict'][k]['poll_answer_submitted_dict']['percent_dict'][k2] }}</p>
                       {% endfor %}
                     </div>
                     <!-- ------------------------------------- for each distribution string end ------------------------------------- -->  
+                    <!-- ------------------------------------- total votes start ------------------------------------- -->  
+                    {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+                      <p class="custom-m-0 custom-mb-10 custom-header-15 custom-color-white custom-ml-10">{{ v['all_response_objs_len'] }} votes on <a href="/{{ page_dict_to_html['db_show_dict']['reference_name'] }}" class="custom-a-white-underline-on">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/signup" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
+                    {% else %}
+                      <p class="custom-m-0 custom-mb-10 custom-header-15 custom-color-white custom-ml-10">{{ v['all_response_objs_len'] }} votes on <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-a-white-underline-on">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
+                    {% endif %}
+                    <!-- ------------------------------------- total votes end ------------------------------------- -->  
                   </div>
                   <!-- ------------------------------------- blurb end ------------------------------------- -->
                   <div class="custom-p-25 custom-border-white-opacity-50 custom-br-25 custom-height-500-px" id="{{ v['chart_dict']['id'] }}_height">

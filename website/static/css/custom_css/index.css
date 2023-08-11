@@ -62,6 +62,10 @@
   color: white;
   text-decoration: underline;
 }
+.custom-a-white-underline-on {
+  color: white;
+  text-decoration: underline;
+}
 .custom-a-info-underline {
   color: var(--custom-color-info);
   text-decoration: none;
