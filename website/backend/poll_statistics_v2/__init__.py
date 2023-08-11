@@ -1,7 +1,7 @@
 # ------------------------ imports start ------------------------
 from backend.utils.localhost_print_utils.localhost_print import localhost_print_function
 from website.backend.sql_statements.select import select_general_function
-from website.backend.get_create_obj import get_starting_arr_function, get_alphabet_arr_function
+from website.backend.get_create_obj import get_starting_arr_function, get_alphabet_arr_function, default_chart_colors_function, get_percent_mins_dict_function
 import pprint
 from website.models import PollsObj, PollsStandInObj, ShowsAttributesObj, PollsAnsweredObj
 from website import db
@@ -9,9 +9,52 @@ import random
 from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
 from backend.utils.uuid_and_timestamp.create_timestamp import create_timestamp_function
 import json
-from website.backend.get_create_obj import default_chart_colors_function
 from website.backend.dict_manipulation import get_answers_shortened_v2_function
 # ------------------------ imports end ------------------------
+
+# ------------------------ individual function start ------------------------
+def create_fake_redistribution_function(page_dict, current_choices_arr, vote_distribution_dict, limits_dict):
+  # ------------------------ set variables start ------------------------
+  ignore_redistribution_arr = []
+  ignore_redistribution_dict = {}
+  remainder_value_per_choice = float(0)
+  total_value_to_redistribute = float(0)
+  # ------------------------ set variables end ------------------------
+  # ------------------------ loop through to force reassign and get total remainder start ------------------------
+  for k_answer,v_dict in limits_dict.items():
+    try:
+      max_value = float(v_dict[page_dict['url_show_id']])
+      for i in range(len(current_choices_arr)):
+        if current_choices_arr[i] == k_answer:
+          ignore_redistribution_arr.append(current_choices_arr[i])
+          ignore_redistribution_dict[current_choices_arr[i]] = max_value
+          if float(vote_distribution_dict[current_choices_arr[i]]) <= max_value:
+            pass
+          else:
+            remainder_value = float(float(vote_distribution_dict[current_choices_arr[i]]) - float(max_value))
+            total_value_to_redistribute += remainder_value
+    except Exception as e:
+      pass
+  # ------------------------ loop through to force reassign and get total remainder end ------------------------
+  # ------------------------ reassign variables start ------------------------
+  remainder_total_options = len(current_choices_arr) - len(ignore_redistribution_arr)
+  remainder_value_per_choice = float(float(total_value_to_redistribute) / float(remainder_total_options))
+  # ------------------------ reassign variables end ------------------------
+  # ------------------------ apply remainders to non forced variables start ------------------------
+  for k,v in vote_distribution_dict.items():
+    if k in ignore_redistribution_arr:
+      try:
+        vote_distribution_dict[k] = ignore_redistribution_dict[k]
+      except:
+        pass
+    else:
+      try:
+        vote_distribution_dict[k] = round(float(float(v) + float(remainder_value_per_choice)),4)
+      except:
+        pass
+  # ------------------------ apply remainders to non forced variables end ------------------------
+  return vote_distribution_dict
+# ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
 def create_fake_count_stats_function(page_dict, stat_name, col_name, exception_v1_trues_falses_nones=False):
@@ -44,6 +87,10 @@ def create_fake_count_stats_function(page_dict, stat_name, col_name, exception_v
       vote_distribution_dict[current_choices_arr[i]] = round(float(float(percentages_arr[i])/float(100)),4)
     # ------------------------ format fake array to decimal/percents end ------------------------
     # ------------------------ first pre insert matchup/assign random end ------------------------
+    # ------------------------ redistribute percentages - general start ------------------------
+    limits_dict = get_percent_mins_dict_function(page_dict['url_show_id'])
+    vote_distribution_dict = create_fake_redistribution_function(page_dict, current_choices_arr, vote_distribution_dict, limits_dict)
+    # ------------------------ redistribute percentages - general end ------------------------
     # ------------------------ insert to db start ------------------------
     try:
       new_row = PollsStandInObj(

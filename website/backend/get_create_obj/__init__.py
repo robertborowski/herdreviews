@@ -230,3 +230,39 @@ def default_chart_colors_function():
 def get_alphabet_arr_function():
   return ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 # ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
+def get_percent_mins_dict_function(url_show_id):
+  limits_dict = {
+    'Male': {
+      'show_f467c480-b3ca-42cb-bfde-e27a3e49e285': float(0.20)
+    },
+    'Female': {
+      'show_dbfdbe75-4d63-470a-83b4-bbbb161a55d6': float(0.27),
+      'show_10553fd3-dbf4-48ad-bcea-3bbcb4b4f0c3': float(0.12)
+    },
+    'Other': {url_show_id: float(0.05)},
+    'Other (please specify)': {url_show_id: float(0.05)},
+    "I skipped/didn't like this episode (why?)": {url_show_id: float(0.05)},
+    '$0k-$50k': {url_show_id: float(0.04)},
+    '$201k-$250k':{url_show_id: float(0.05)},
+    '$251k-$300k':{url_show_id: float(0.03)},
+    '$300k+': {url_show_id: float(0.02)},
+    'Blue collar ': {
+      'show_10553fd3-dbf4-48ad-bcea-3bbcb4b4f0c3': float(0.25)
+    },
+    'No for religious reasons': {url_show_id: float(0.075)},
+    'Ph. D.': {url_show_id: float(0.04)},
+    'No formal education': {url_show_id: float(0.04)},
+    'Student': {url_show_id: float(0.19)},
+    'Retired': {url_show_id: float(0.01)},
+    'Unemployed': {url_show_id: float(0.06)},
+    'Silent': {url_show_id: float(0.01)},
+    'Gen Alpha': {url_show_id: float(0.01)},
+    'Boomers': {url_show_id: float(0.07)},
+    'Living with parents or relatives': {url_show_id: float(0.08)},
+    'Widowed': {url_show_id: float(0.05)},
+    'Tennis': {url_show_id: float(0.07)}
+  }
+  return limits_dict
+# ------------------------ individual function end ------------------------
