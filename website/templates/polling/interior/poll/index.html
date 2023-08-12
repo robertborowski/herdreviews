@@ -203,23 +203,26 @@
             <input type="text" class="form-control" id="ui_search_show_name" name="ui_search_show_name" placeholder="e.g. income, music, hobbies, etc.">
           </div>
           <!-- ------------------------------------- search bar end ------------------------------------- -->
-          <!-- ------------------------------------- restate q/a start ------------------------------------- -->
-          <div class="custom-border-white-opacity-25 custom-br-15 custom-p-15 custom-color-white custom-header-12 custom-mtb-25 uiSearchItem">
-            <!-- ----------------------------------- alert start ----------------------------------- -->
-            {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == true %}
-              <p class="custom-m-0 custom-mb-10 custom-color-white">Note: Your response was not recorded because you are not logged in <a href="/signup" class="custom-ml-5 btn btn-light btn-sm">Create account <i class="fa-solid fa-user"></i></a></p>
-            {% endif %}
-            <!-- ----------------------------------- alert end ----------------------------------- -->
-            <p class="custom-m-0 custom-mb-10">Q: {{ page_dict_to_html['poll_dict']['question'] }}</p>
-            {% for k,v in page_dict_to_html['poll_dict']['answer_choices_dict_letters_only'].items() %}
-              {% if v == page_dict_to_html['poll_answered_dict']['poll_answer_submitted'] %}
-                <p class="custom-m-0"><i class="fa-solid fa-arrow-right"></i> (You voted) {{ k }}: {{ v }}</p>
-              {% else %}
-                <p class="custom-m-0 custom-opacity-50 custom-p-10">{{ k }}: {{ v }}</p>
+          {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+          {% else %}
+            <!-- ------------------------------------- restate q/a start ------------------------------------- -->
+            <div class="custom-border-white-opacity-25 custom-br-15 custom-p-15 custom-color-white custom-header-12 custom-mtb-25 uiSearchItem">
+              <!-- ----------------------------------- alert start ----------------------------------- -->
+              {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == true %}
+                <p class="custom-m-0 custom-mb-10 custom-color-white">Note: Your response was not recorded because you are not logged in <a href="/signup" class="custom-ml-5 btn btn-light btn-sm">Create account <i class="fa-solid fa-user"></i></a></p>
               {% endif %}
-            {% endfor %}
-          </div>
-          <!-- ------------------------------------- restate q/a end ------------------------------------- -->
+              <!-- ----------------------------------- alert end ----------------------------------- -->
+              <p class="custom-m-0 custom-mb-10">Q: {{ page_dict_to_html['poll_dict']['question'] }}</p>
+              {% for k,v in page_dict_to_html['poll_dict']['answer_choices_dict_letters_only'].items() %}
+                {% if v == page_dict_to_html['poll_answered_dict']['poll_answer_submitted'] %}
+                  <p class="custom-m-0"><i class="fa-solid fa-arrow-right"></i> (You voted) {{ k }}: {{ v }}</p>
+                {% else %}
+                  <p class="custom-m-0 custom-opacity-50 custom-p-10">{{ k }}: {{ v }}</p>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <!-- ------------------------------------- restate q/a end ------------------------------------- -->
+          {% endif %}
           <!-- ------------------------------------- charts start ------------------------------------- -->
           {% for k,v in page_dict_to_html['poll_statistics_v2_dict'].items() %}
             {% if k in page_dict_to_html['poll_statistics_v2_dict']['define_dict_arr'] %}
