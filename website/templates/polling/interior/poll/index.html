@@ -165,17 +165,17 @@
       <!-- ------------------------------------- email + anonymous option start ------------------------------------- -->
       <div class="custom-mt-25 mx-auto">
         {% if page_dict_to_html['current_user_email'] == 'robjborowski@gmail.com' or page_dict_to_html['current_user_is_anonymous'] == true %}
-          <p class="custom-m-0 custom-color-white custom-opacity-75 custom-header-15">Feedback from #1 fan: <span id="id-user_email">jackdoe@gmail.com</span></p>
+          <p class="custom-m-0 custom-color-white custom-opacity-75 custom-header-15">Feedback from #1 fan: <span id="id-user_email" class="custom-blur-1 custom-transition-05">jackdoe@gmail.com</span></p>
         {% else %}
-          <p class="custom-m-0 custom-color-white custom-opacity-75 custom-header-15">Feedback from #1 fan: <span id="id-user_email">{{ page_dict_to_html['current_user_email'] }}</span></p>
+          <p class="custom-m-0 custom-color-white custom-opacity-75 custom-header-15">Feedback from #1 fan: <span id="id-user_email" class="custom-blur-1 custom-transition-05">{{ page_dict_to_html['current_user_email'] }}</span></p>
         {% endif %}
         <div class="form-check custom-color-white custom-header-15 custom-mt-10">
-          {% if page_dict_to_html['poll_answered_dict']['status_answer_anonymous'] == true %}
-            <input class="form-check-input" type="checkbox" value="ui_checked" name="ui_anonymous_check" id="id-flexCheckDefault" onchange="handleCheckboxChange()" checked>
+          {% if page_dict_to_html['poll_answered_dict']['status_answer_anonymous'] == false %}
+            <input class="form-check-input custom-border-white-important custom-opacity-75-hover" type="checkbox" value="ui_checked" name="ui_anonymous_check" id="id-flexCheckDefault" onchange="handleCheckboxChange()">
           {% else %}
-            <input class="form-check-input" type="checkbox" value="ui_checked" name="ui_anonymous_check" id="id-flexCheckDefault" onchange="handleCheckboxChange()">
+            <input class="form-check-input custom-border-white-important custom-opacity-75-hover" type="checkbox" value="ui_checked" name="ui_anonymous_check" id="id-flexCheckDefault" onchange="handleCheckboxChange()" checked>
           {% endif %}
-          <label class="form-check-label custom-opacity-75-hover custom-hover-1 custom-line-height-12" for="id-flexCheckDefault">Poll anonymously <span class="custom-color-white custom-m-0 custom-opacity-75 custom-header-10 custom-line-height-12">Only the verified '{{ page_dict_to_html['db_show_dict']['name_title'] }}' host can see your direct feedback. Check this box to hide your email from the verified '{{ page_dict_to_html['db_show_dict']['name_title'] }}' host for this poll.</span></label>
+          <label class="form-check-label custom-opacity-75-hover custom-hover-1 custom-line-height-12" for="id-flexCheckDefault">Poll anonymously <span class="custom-color-white custom-m-0 custom-opacity-75 custom-header-10 custom-line-height-12">Only the verified '{{ page_dict_to_html['db_show_dict']['name_title'] }}' host can see your direct feedback.</span></label>
         </div>
       </div>
       <!-- ------------------------------------- email + anonymous option end ------------------------------------- -->

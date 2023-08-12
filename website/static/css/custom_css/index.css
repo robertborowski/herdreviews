@@ -363,6 +363,7 @@
 .custom-border-9 {border: 1px solid rgb(0 0 0 / 10%);}
 .custom-border-see-through {border: 1px solid rgba(255, 255, 255, 0);}
 .custom-border-white {border: 1px solid rgb(255, 255, 255);}
+.custom-border-white-important {border: 1px solid rgb(255, 255, 255) !important;}
 .custom-border-white-opacity-10 {border: 1px solid rgba(255, 255, 255, 0.100);}
 .custom-border-white-opacity-15 {border: 1px solid rgba(255, 255, 255, 0.150);}
 .custom-border-white-opacity-20 {border: 1px solid rgba(255, 255, 255, 0.200);}
