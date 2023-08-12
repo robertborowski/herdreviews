@@ -5,10 +5,6 @@ from website.models import UserAttributesObj
 
 # ------------------------ individual function start ------------------------
 def onboarding_checks_v2_function(current_user):
-  # ------------------------ check if email verified start ------------------------
-  if current_user.verified_email == False:
-    return 'verify'
-  # ------------------------ check if email verified end ------------------------
   # ------------------------ check all attributes table start ------------------------
   attribute_arr = ['attribute_marketing']
   for i_attribute in attribute_arr:
@@ -16,5 +12,9 @@ def onboarding_checks_v2_function(current_user):
     if attribute_obj == None or attribute_obj == []:
       return i_attribute
   # ------------------------ check all attributes table end ------------------------
+  # ------------------------ check if email verified start ------------------------
+  if current_user.verified_email == False:
+    return 'verify'
+  # ------------------------ check if email verified end ------------------------
   return False
 # ------------------------ individual function end ------------------------

@@ -57,11 +57,13 @@ def create_app_function():
   # ------------------------ stripe api environment end ------------------------
   # ------------------------ views/auths/routes imports start ------------------------
   from .polling_auth import polling_auth
+  from .polling_views_admin import polling_views_admin
   from .polling_views_exterior import polling_views_exterior
   from .polling_views_interior import polling_views_interior
   # ------------------------ views/auths/routes imports end ------------------------
   # ------------------------ views/auths/routes register blueprints start ------------------------
   app.register_blueprint(polling_auth, url_prefix='/')
+  app.register_blueprint(polling_views_admin, url_prefix='/')
   app.register_blueprint(polling_views_exterior, url_prefix='/')
   app.register_blueprint(polling_views_interior, url_prefix='/')
   # ------------------------ views/auths/routes register blueprints end ------------------------

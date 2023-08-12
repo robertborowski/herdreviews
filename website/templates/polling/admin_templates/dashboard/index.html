@@ -1,0 +1,17 @@
+{% extends "polling/aaa_base/base2_interior.html" %}
+<!-- head tag block content -->
+{% block title %}
+  <title>Admin - HerdReviews</title>
+{% endblock %}
+{% block contentBodyExceptNavbarAndFooter %}
+<!-- ----------------------------------- start ----------------------------------- -->
+{% if page_dict_to_html['alert_message_dict']['message'] != '' %}
+<div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container custom-mt-25 custom-width-800" role="alert">
+  {{ page_dict_to_html['alert_message_dict']['message'] }}
+</div>
+{% endif %}
+<!-- ----------------------------------- end ----------------------------------- -->
+<!-- ------------------------------------- section start ------------------------------------- -->
+<h1>hello admin</h1>
+<!-- ------------------------------------- section end ------------------------------------- -->
+{% endblock %}

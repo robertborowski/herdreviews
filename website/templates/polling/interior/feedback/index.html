@@ -35,7 +35,7 @@
         {% elif page_dict_to_html['feedback_request'] == 'attribute_birthday' %}
           <h1 class="custom-color-white">Age demographic</h1>
         {% elif page_dict_to_html['feedback_request'] == 'attribute_marketing' %}
-          <h1 class="custom-color-white">How did you hear about HerdReviews?</h1>
+          <!-- <h1 class="custom-color-white">How did you hear about HerdReviews?</h1> -->
         {% endif %}
       </div>
     </div>
@@ -132,8 +132,8 @@
         <div class="custom-width-400 mx-auto">
           <!-- ------------------------------------- dropdown start ------------------------------------- -->
           <div class="dropdown">
-            <label class="custom-color-white custom-mb-5">How did you find us?</label>
-            <button class="btn custom-bg-white-always dropdown-toggle custom-tal custom-width-100" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="id-general">Select</button>
+            <label class="custom-color-white custom-mb-25 custom-header-20">How did you hear about HerdReviews?</label>
+            <button class="btn custom-bg-white-always dropdown-toggle custom-tal custom-width-100 custom-ptb-25" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="id-general">Select</button>
             <ul class="dropdown-menu custom-width-100">
               {% for i in page_dict_to_html['marketing_list_index'] %}
                 <li>
@@ -144,7 +144,7 @@
             </ul>
           </div>
           <!-- ------------------------------------- dropdown end ------------------------------------- -->
-          <button type="submit" class="btn btn-lg btn-success custom-width-100 custom-mt-25">Continue <i class="fa-solid fa-angle-right"></i></button>
+          <button type="submit" class="btn btn-lg btn-success custom-width-100 custom-mt-25 custom-ptb-25">Continue <i class="fa-solid fa-angle-right"></i></button>
         </div>
       </form>
       <!-- ------------------------------------- section - marketing end ------------------------------------- -->

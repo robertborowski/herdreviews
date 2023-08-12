@@ -59,13 +59,6 @@ def polling_dashboard_function(url_redirect_code=None, url_show_id=None):
     localhost_print_function('user logged out and redirecting to login product - polling')
     return redirect(url_for('polling_auth.polling_login_function'))
   # ------------------------ product login check end ------------------------
-  # ------------------------ onboarding checks start ------------------------
-  onbaording_status = onboarding_checks_v2_function(current_user)
-  if onbaording_status == 'verify':
-    return redirect(url_for('polling_views_interior.verify_email_function'))
-  if onbaording_status == 'attribute_marketing':
-    return redirect(url_for('polling_views_interior.polling_feedback_function', url_feedback_code=onbaording_status))
-  # ------------------------ onboarding checks end ------------------------
   # ------------------------ page dict start ------------------------
   if url_redirect_code == None:
     try:
@@ -76,6 +69,13 @@ def polling_dashboard_function(url_redirect_code=None, url_show_id=None):
   page_dict = {}
   page_dict['alert_message_dict'] = alert_message_dict
   # ------------------------ page dict end ------------------------
+  # ------------------------ onboarding checks start ------------------------
+  onbaording_status = onboarding_checks_v2_function(current_user)
+  if onbaording_status == 'verify':
+    page_dict['verified_email_status'] = False
+  if onbaording_status == 'attribute_marketing':
+    return redirect(url_for('polling_views_interior.polling_feedback_function', url_feedback_code=onbaording_status))
+  # ------------------------ onboarding checks end ------------------------
   # ------------------------ navbar variable start ------------------------
   page_dict['current_user_email'] = current_user.email
   # ------------------------ navbar variable end ------------------------
