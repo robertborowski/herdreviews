@@ -236,7 +236,8 @@ def get_alphabet_arr_function():
 def get_percent_mins_dict_function(url_show_id):
   limits_dict = {
     'Male': {
-      'show_f467c480-b3ca-42cb-bfde-e27a3e49e285': float(0.20)
+      'show_f467c480-b3ca-42cb-bfde-e27a3e49e285': float(0.20),
+      'show_e2d3b89c-68dd-45cf-8b21-d25c24fa067e': float(0.20)
     },
     'Female': {
       'show_dbfdbe75-4d63-470a-83b4-bbbb161a55d6': float(0.27),
