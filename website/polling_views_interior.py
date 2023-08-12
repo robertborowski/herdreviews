@@ -678,6 +678,8 @@ def polling_add_show_function(url_redirect_code=None, url_step_code='1', url_pla
       ui_search_show_name = None
       if current_user.is_anonymous == True:
         ui_search_show_name = page_dict['url_searched_value']
+        if ui_search_show_name == None or ui_search_show_name == '':
+          ui_search_show_name = request.form.get('ui_search_show_name')
       else:
         ui_search_show_name = request.form.get('ui_search_show_name')
       # ------------------------ get user inputs end ------------------------
