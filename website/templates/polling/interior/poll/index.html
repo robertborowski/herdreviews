@@ -52,12 +52,12 @@
       {% if page_dict_to_html['poll_answered'] == true %}
         {% if page_dict_to_html['db_show_dict']['name_title'] != 'HerdReviews.com' %}
           <!-- ----------------------------------- host thank you message start ----------------------------------- -->
-          <div class="custom-border-white custom-br-15 custom-p-25 custom-display-flex">
+          <div class="custom-border-white custom-br-15 custom-p-25 custom-display-flex custom-mt-100 custom-mb-100">
             <img src="{{ page_dict_to_html['db_show_dict']['platform_image_medium'] }}" alt="show logo" class="custom-img-size-100 custom-mr-1 custom-br-5 custom-border-white-opacity-50">
             <div class="custom-ml-10">
-              <p class="fw-bold custom-header-25 custom-color-white custom-m-0 fst-italic"><i class="fa-solid fa-quote-left"></i> Really appreciate your feedback on the pod! <i class="fa-solid fa-quote-right"></i><a href="/signup" class="custom-ml-10 custom-header-15 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change thank you message</a></p>
-              <p class="fw-bold custom-header-15 custom-color-white custom-m-0 custom-mt-10"><span class="fst-italic custom-mr-1">- {{ page_dict_to_html['db_show_dict']['name'] }}</span> [podcast host not verified]</p>
-              <p class="fw-bold custom-header-15 custom-color-white custom-m-0 custom-opacity-75-hover" id="id-general_autoscroll_click_2"><i class="fa-solid fa-angle-down"></i> Podcast verification details below</p>
+              <p class="fw-bold custom-header-25 custom-color-white custom-m-0 fst-italic"><i class="fa-solid fa-quote-left"></i> Really appreciate your feedback on the pod! <i class="fa-solid fa-quote-right"></i><a href="/signup" class="custom-ml-10 custom-header-15 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">Change thank you message</a></p>
+              <p class="fw-bold custom-header-15 custom-color-white custom-m-0 custom-mt-10"><span class="custom-mr-1">- {{ page_dict_to_html['db_show_dict']['name'] }} [podcast host not verified]</span></p>
+              <p class="fw-bold custom-header-15 custom-color-white custom-m-0 custom-mt-5 custom-opacity-75-hover" id="id-general_autoscroll_click_2"><i class="fa-solid fa-angle-down"></i> Podcast verification details below</p>
             </div>
           </div>
           <!-- ----------------------------------- host thank you message end ----------------------------------- -->
@@ -75,11 +75,6 @@
           {% else %}
             <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-p-25 btn btn-success btn-lg custom-width-100 custom-mt-25 custom-header-30">Next poll <i class="fa-solid fa-angle-right"></i></a>
           {% endif %}
-        {% endif %}
-        {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-          <div class="custom-mt-25">
-            <a href="/signup" class="btn btn-lg btn-light custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
-          </div>
         {% endif %}
         <!-- ------------------------------------- divider start ------------------------------------- -->
         <div class="custom-border-white-opacity-25 custom-mtb-50 custom-width-100 mx-auto"></div>
@@ -190,6 +185,12 @@
       <!-- ------------------------------------- divider end ------------------------------------- -->
       <!-- ------------------------------------- poll statistics start ------------------------------------- -->
       <div class="mx-auto">
+        {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+          <div class="custom-mb-25 text-center">
+            <a href="/signup" class="btn btn-sm btn-outline-light custom-width-100">Create account <i class="fa-solid fa-user"></i></a>
+            <a href="/login" class="custom-a-white custom-opacity-75-hover custom-header-12 custom-mt-15 fw-bold">Login</a>
+          </div>
+        {% endif %}
         <p class="custom-color-white custom-m-0 custom-header-30">Poll statistics</p>
         <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-10 custom-pb-10">Only the verified '{{ page_dict_to_html['db_show_dict']['name_title'] }}' host can see your direct feedback. Your feedback and privacy will always be hidden from the public poll statistics.</p>
         {% if page_dict_to_html['poll_answered'] == false %}
