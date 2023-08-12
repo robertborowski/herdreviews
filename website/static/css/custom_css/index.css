@@ -274,6 +274,9 @@
 .custom-color-primary-darker {
   color: var(--custom-color-primary-darker);
 }
+.custom-color-secondary {
+  color: var(--custom-color-secondary);
+}
 .custom-color-success {
   color: var(--custom-color-success);
 }
