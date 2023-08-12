@@ -62,7 +62,7 @@
   color: white;
   text-decoration: underline;
 }
-.custom-a-white-underline-on {
+.custom-a-white-underline-on, .custom-a-white-underline-on:hover, .custom-a-white-underline-on:visited {
   color: white;
   text-decoration: underline;
 }
@@ -779,10 +779,12 @@
 }
 .custom-opacity-75-hover {
   opacity: 0.75;
+  transition: 0.5s;
 }
 .custom-opacity-1-hover:hover, .custom-opacity-75-hover:hover, .custom-opacity-50-hover:hover {
   opacity: 1;
-  transition: 0.3s;
+  transition: 0.5s;
+  cursor: pointer;
 }
 .custom-opacity-2 {
   opacity: 0.75;

@@ -18,9 +18,9 @@
       <!-- ------------------------------------- progress bar end ------------------------------------- -->
       <nav class="container navbar navbar-expand-md navbar-light custom-display-flex custom-jc-between">
         <div class="custom-display-flex">
-          <a href="/dashboard"><img src="{{ page_dict_to_html['db_show_dict']['platform_image_small'] }}" alt="show logo" class="custom-img-size-50 custom-mr-1 custom-br-5 custom-border-white-opacity-50"></a>
+          <a href="/dashboard"><img src="{{ page_dict_to_html['db_show_dict']['platform_image_small'] }}" alt="show logo" class="custom-img-size-50 custom-mr-1 custom-br-5 custom-border-white-opacity-50" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Podcast host not verified"></a>
           <div>
-            <a href="/dashboard" class="fw-bold custom-header-15 custom-a-white-none custom-display-block">{{ page_dict_to_html['db_show_dict']['name_title'] }} <i class="fa-solid fa-circle-check custom-color-secondary"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Inviting verification from host/team."></i></a>
+            <a href="/dashboard" class="fw-bold custom-header-15 custom-a-white-none custom-display-block" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Podcast host not verified">{{ page_dict_to_html['db_show_dict']['name_title'] }} <i class="fa-solid fa-circle-check custom-color-secondary"></i></a>
             {% if page_dict_to_html['db_show_dict']['name_title'] == 'HerdReviews.com' %}
             {% else %}
               <a href="/dashboard" class="fw-bold custom-header-15 custom-a-white-none custom-display-block"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v2_white.png" alt="HerdReviews logo, Vecteezy.com" class="custom-img-size-30">HerdReviews.com</a>
@@ -55,9 +55,9 @@
           <div class="custom-border-white custom-br-15 custom-p-25 custom-display-flex">
             <img src="{{ page_dict_to_html['db_show_dict']['platform_image_medium'] }}" alt="show logo" class="custom-img-size-100 custom-mr-1 custom-br-5 custom-border-white-opacity-50">
             <div class="custom-ml-10">
-              <p class="fw-bold custom-header-25 custom-color-white custom-m-0 fst-italic"><i class="fa-solid fa-quote-left"></i> Really appreciate your feedback on the pod! <i class="fa-solid fa-quote-right"></i></p>
-              <p class="fw-bold custom-header-12 custom-color-white custom-m-0"><span class="fst-italic custom-mr-1">{{ page_dict_to_html['db_show_dict']['name'] }}</span> [unofficial]</p>
-              <p class="fw-bold custom-header-10 custom-color-white custom-m-0 custom-mt-10 custom-opacity-50 custom-hover-1" id="id-general_autoscroll_click_2"><i class="fa-solid fa-angle-down"></i> Podcast verification details below</p>
+              <p class="fw-bold custom-header-25 custom-color-white custom-m-0 fst-italic"><i class="fa-solid fa-quote-left"></i> Really appreciate your feedback on the pod! <i class="fa-solid fa-quote-right"></i><a href="/signup" class="custom-ml-10 custom-header-15 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change thank you message</a></p>
+              <p class="fw-bold custom-header-15 custom-color-white custom-m-0 custom-mt-10"><span class="fst-italic custom-mr-1">- {{ page_dict_to_html['db_show_dict']['name'] }}</span> [podcast host not verified]</p>
+              <p class="fw-bold custom-header-15 custom-color-white custom-m-0 custom-opacity-75-hover" id="id-general_autoscroll_click_2"><i class="fa-solid fa-angle-down"></i> Podcast verification details below</p>
             </div>
           </div>
           <!-- ----------------------------------- host thank you message end ----------------------------------- -->
@@ -240,20 +240,23 @@
                 <div class="uiSearchItem">
                   <!-- ------------------------------------- blurb start ------------------------------------- -->
                   <div class="custom-pt-25">
-                    <h3 class="custom-m-0 custom-mb-15 custom-color-white custom-header-30"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v2_white.png" alt="HerdReviews logo, Vecteezy.com" class="custom-img-size-35 custom-mt-negative-5"> {{ v['chart_dict']['title_short'] }} <span class="custom-header-15 custom-opacity-75">(based on main poll above)</span></h3>
+                    <h3 class="custom-m-0 custom-color-white custom-header-30"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v2_white.png" alt="HerdReviews logo, Vecteezy.com" class="custom-img-size-35 custom-mt-negative-5"> {{ v['chart_dict']['title_short'] }} <span class="custom-header-15 custom-opacity-75">audience insights</span></h3>
                     <!-- ------------------------------------- for each distribution string start ------------------------------------- -->
-                    <div class="custom-display-flex custom-f-wrap custom-mb-10">
+                    <div class="custom-display-flex custom-f-wrap custom-mb-10 custom-mt-15">
+                      <span class="custom-color-white custom-opacity-75-hover custom-ml-10 custom-header-20">Breakdown</span>
                       {% for k2,v22 in page_dict_to_html['poll_statistics_v2_dict'][k]['poll_answer_submitted_dict']['count_dict'].items() %}
-                        <p class="custom-color-white custom-border-white-opacity-50 custom-ptb-5 custom-plr-10 custom-br-25 custom-m-5 custom-header-10">{{ k2 }} | {{ v22 }} | {{ page_dict_to_html['poll_statistics_v2_dict'][k]['poll_answer_submitted_dict']['percent_dict'][k2] }}</p>
+                        <p class="custom-color-white custom-opacity-75-hover custom-border-white-opacity-50 custom-ptb-5 custom-plr-10 custom-br-25 custom-m-5 custom-header-10">{{ k2 }} | {{ v22 }} | {{ page_dict_to_html['poll_statistics_v2_dict'][k]['poll_answer_submitted_dict']['percent_dict'][k2] }}</p>
                       {% endfor %}
                     </div>
                     <!-- ------------------------------------- for each distribution string end ------------------------------------- -->  
                     <!-- ------------------------------------- total votes start ------------------------------------- -->  
-                    {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                      <p class="custom-m-0 custom-mb-10 custom-header-15 custom-color-white custom-ml-10">{{ v['all_response_objs_len'] }} votes on <a href="/{{ page_dict_to_html['db_show_dict']['reference_name'] }}" class="custom-a-white-underline-on">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/signup" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
-                    {% else %}
-                      <p class="custom-m-0 custom-mb-10 custom-header-15 custom-color-white custom-ml-10">{{ v['all_response_objs_len'] }} votes on <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-a-white-underline-on">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
-                    {% endif %}
+                    <div class="custom-mt-15">
+                      {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+                        <p class="custom-m-0 custom-mb-10 custom-header-15 custom-color-white custom-opacity-75-hover custom-ml-10"><span class="custom-header-20">Votes {{ v['all_response_objs_len'] }}</span> from fans of the show on <a href="/{{ page_dict_to_html['db_show_dict']['reference_name'] }}" class="custom-a-white custom-a-white-underline-on">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/signup" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
+                      {% else %}
+                        <p class="custom-m-0 custom-mb-10 custom-header-15 custom-color-white custom-opacity-75-hover custom-ml-10"><span class="custom-header-20">Votes {{ v['all_response_objs_len'] }}</span> from fans of the show on <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-a-white custom-a-white-underline-on">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
+                      {% endif %}
+                    </div>
                     <!-- ------------------------------------- total votes end ------------------------------------- -->  
                   </div>
                   <!-- ------------------------------------- blurb end ------------------------------------- -->
