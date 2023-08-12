@@ -17,6 +17,7 @@ from website.backend.candidates.redis import redis_check_if_cookie_exists_functi
 from website import db
 from website.backend.candidates.user_inputs import alert_message_default_function_v2
 import os
+from website.backend.selenium_script import reddit_scrape_function
 # ------------------------ imports end ------------------------
 
 # ------------------------ function start ------------------------
@@ -46,6 +47,14 @@ def polling_dashboard_function(url_redirect_code=None):
   page_dict = {}
   page_dict['alert_message_dict'] = alert_message_dict
   # ------------------------ page dict end ------------------------
+  # ------------------------ submission start ------------------------
+  if request.method == 'POST':
+    # ------------------------ get ui start ------------------------
+    ui_reddit_button = request.form.get('ui_reddit_button')
+    # ------------------------ get ui end ------------------------
+    if ui_reddit_button == 'on':
+      reddit_scrape_function()
+  # ------------------------ submission end ------------------------    
   localhost_print_function(' ------------- 100-admin start ------------- ')
   page_dict = dict(sorted(page_dict.items(),key=lambda x:x[0]))
   for k,v in page_dict.items():
