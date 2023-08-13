@@ -68,8 +68,13 @@ def pull_create_update_reddit_post_function(data_captured_dict, element_all_post
     db.session.commit()
     # ------------------------ insert to db end ------------------------
     db_obj = RedditPostsObj.query.filter_by(community=data_captured_dict[element_all_posts_arr[i_post]]['reddit_community'],title=data_captured_dict[element_all_posts_arr[i_post]]['reddit_title']).order_by(RedditPostsObj.created_timestamp.desc()).first()
-  db_dict = arr_of_dict_all_columns_single_item_function(db_obj)
-  return db_dict
+  else:
+    # ------------------------ update existing if change in total votes start ------------------------
+    if int(db_obj.total_votes) != int(data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_votes']):
+      db_obj.total_votes = int(data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_votes'])
+      db.session.commit()
+    # ------------------------ update existing if change in total votes end ------------------------
+  return db_obj
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -110,7 +115,7 @@ def reddit_scrape_function():
       data_captured_dict[element_all_posts_arr[i_post]]['reddit_title'] = get_title_function(driver, i_post)
       # ------------------------ pull/assign variables end ------------------------
       # ------------------------ pull/create reddit post from db start ------------------------
-      db_reddit_post_dict = pull_create_update_reddit_post_function(data_captured_dict, element_all_posts_arr, i_post)
+      db_reddit_post_obj = pull_create_update_reddit_post_function(data_captured_dict, element_all_posts_arr, i_post)
       # ------------------------ pull/create reddit post from db end ------------------------
     # ------------------------ TESTING ONLY fail safe start ------------------------
     if len(element_all_posts_arr) >= 20:
