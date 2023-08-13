@@ -211,7 +211,7 @@ class ShowsQueueObj(db.Model):
   fk_platform_id = db.Column(db.String(150))
   platform_reference_id = db.Column(db.String(150))
   name = db.Column(db.String(150))
-  description = db.Column(db.String(300))
+  description = db.Column(db.String(1000))
   img_large = db.Column(db.String(150))
   img_medium = db.Column(db.String(150))
   img_small = db.Column(db.String(150))

@@ -53,7 +53,7 @@ def polling_dashboard_function(url_redirect_code=None):
     ui_reddit_button = request.form.get('ui_reddit_button')
     # ------------------------ get ui end ------------------------
     if ui_reddit_button == 'on':
-      reddit_scrape_function()
+      reddit_scrape_run = reddit_scrape_function()
   # ------------------------ submission end ------------------------    
   localhost_print_function(' ------------- 100-admin start ------------- ')
   page_dict = dict(sorted(page_dict.items(),key=lambda x:x[0]))
