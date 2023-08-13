@@ -1,10 +1,6 @@
 # ------------------------ imports start ------------------------
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from backend.utils.localhost_print_utils.localhost_print import localhost_print_function
 from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
 from backend.utils.uuid_and_timestamp.create_timestamp import create_timestamp_function
@@ -43,18 +39,20 @@ def get_general_info_function(element_all_posts_arr, i_post):
   except:
     pass
   # ------------------------ get title end ------------------------
-  # ------------------------ get votes count if available start ------------------------
+  # ------------------------ get count if available - votes start ------------------------
   try:
     element_i_post_media_container_arr = element_all_posts_arr[i_post].find_elements(By.CSS_SELECTOR,'[slot="post-media-container"]') # type: list
     element_i_post_faceplate_number_arr = element_i_post_media_container_arr[0].find_elements(By.TAG_NAME,'faceplate-number') # type: list
     reddit_total_votes = int(element_i_post_faceplate_number_arr[0].text)
   except:
     pass
-  # ------------------------ get votes count if available end ------------------------
-  # ------------------------ get comments count if available start ------------------------
-  # print(' ------------- 1 ------------- ')
-  # print(' ------------- 1 ------------- ')
-  # ------------------------ get comments count if available end ------------------------
+  # ------------------------ get count if available - votes end ------------------------
+  # ------------------------ get count if available - comments start ------------------------
+  shadow_root = element_all_posts_arr[i_post].shadow_root
+  element_button = shadow_root.find_elements(By.CSS_SELECTOR,'button[name="comments-action-button"]')
+  element_i_post_faceplate_number_arr = element_button[0].find_elements(By.TAG_NAME,'faceplate-number')
+  reddit_total_comments = int(element_i_post_faceplate_number_arr[0].text)
+  # ------------------------ get count if available - comments end ------------------------
   return reddit_community, reddit_posted_time_ago, reddit_title, reddit_total_votes, reddit_total_comments
 # ------------------------ individual function end ------------------------
 
@@ -126,7 +124,7 @@ def reddit_scrape_function():
       data_captured_dict[element_all_posts_arr[i_post]]['reddit_community'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_title'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_votes'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_comments'] = get_general_info_function(element_all_posts_arr, i_post)
       # ------------------------ pull/assign variables end ------------------------
       # ------------------------ pull/create reddit post from db start ------------------------
-      # db_reddit_post_obj = pull_create_update_reddit_post_function(data_captured_dict, element_all_posts_arr, i_post)
+      db_reddit_post_obj = pull_create_update_reddit_post_function(data_captured_dict, element_all_posts_arr, i_post)
       # ------------------------ pull/create reddit post from db end ------------------------
     # ------------------------ TESTING ONLY fail safe start ------------------------
     if len(element_all_posts_arr) >= 20:
