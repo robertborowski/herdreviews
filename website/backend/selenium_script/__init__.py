@@ -88,6 +88,28 @@ def pull_create_update_reddit_post_function(data_captured_dict, element_all_post
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
+def get_all_comments_from_post_function(data_captured_dict, element_all_posts_arr, i_post, driver):
+  # ------------------------ commentary per post start ------------------------
+  data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'] = {}
+  # ------------------------ commentary per post end ------------------------
+  # ------------------------ scroll to bottom of the page start ------------------------
+  driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+  time.sleep(2)
+  # ------------------------ scroll to bottom of the page end ------------------------
+  element_comment_tree_arr = driver.find_elements(By.CSS_SELECTOR,'[id="comment-tree"]')
+  element_all_comments_arr = element_comment_tree_arr[0].find_elements(By.TAG_NAME,'shreddit-comment')
+  for i in range(len(element_all_comments_arr)):
+    author = element_all_comments_arr[i].get_attribute("author")
+    comment_element = element_all_comments_arr[i].find_elements(By.TAG_NAME,'p')
+    comment = comment_element[0].text
+    if author not in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments']:
+      data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author] = []
+    if comment not in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author]:
+      data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author].append(comment)
+  return data_captured_dict
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
 def reddit_scrape_function():
   # ------------------------ webdriver open start ------------------------
   # ------------------------ incognito start ------------------------
@@ -126,6 +148,17 @@ def reddit_scrape_function():
       # ------------------------ pull/create reddit post from db start ------------------------
       db_reddit_post_obj = pull_create_update_reddit_post_function(data_captured_dict, element_all_posts_arr, i_post)
       # ------------------------ pull/create reddit post from db end ------------------------
+      # ------------------------ if new comments not captured start ------------------------
+      new_commentary_db_check = True
+      if new_commentary_db_check == True:
+        post_link = 'https://www.reddit.com' + element_all_posts_arr[i_post].get_attribute("permalink")
+        driver.get(post_link)
+        # ------------------------ TESTING ONLY fail safe start ------------------------
+        driver.close()
+        return False
+        # ------------------------ TESTING ONLY fail safe end ------------------------
+        # ------------------------ collect all comments from post end ------------------------
+      # ------------------------ if new comments not captured end ------------------------
     # ------------------------ TESTING ONLY fail safe start ------------------------
     if len(element_all_posts_arr) >= 20:
       break
