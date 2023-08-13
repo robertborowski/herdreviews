@@ -218,3 +218,13 @@ class ShowsQueueObj(db.Model):
   show_url = db.Column(db.String(150))
   fk_show_id = db.Column(db.String(150))
 # ------------------------ individual model end ------------------------
+
+# ------------------------ individual model start ------------------------
+class RedditPostsObj(db.Model):
+  id = db.Column(db.String(150), primary_key=True)
+  created_timestamp = db.Column(db.DateTime(timezone=True))
+  community = db.Column(db.String(100))
+  title = db.Column(db.String(300))
+  total_votes = db.Column(db.Integer)
+  total_comments = db.Column(db.Integer)
+# ------------------------ individual model end ------------------------
