@@ -1,9 +1,13 @@
 # ------------------------ imports start ------------------------
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from backend.utils.localhost_print_utils.localhost_print import localhost_print_function
 from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
 from backend.utils.uuid_and_timestamp.create_timestamp import create_timestamp_function
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 import time
 from website.models import RedditPostsObj
 from website import db
@@ -47,6 +51,10 @@ def get_general_info_function(element_all_posts_arr, i_post):
   except:
     pass
   # ------------------------ get votes count if available end ------------------------
+  # ------------------------ get comments count if available start ------------------------
+  # print(' ------------- 1 ------------- ')
+  # print(' ------------- 1 ------------- ')
+  # ------------------------ get comments count if available end ------------------------
   return reddit_community, reddit_posted_time_ago, reddit_title, reddit_total_votes, reddit_total_comments
 # ------------------------ individual function end ------------------------
 
@@ -87,10 +95,10 @@ def reddit_scrape_function():
   # ------------------------ incognito start ------------------------
   options = webdriver.ChromeOptions()
   options.add_argument("--incognito")
+  options.add_argument("start-maximized")
   # ------------------------ incognito end ------------------------
   driver = webdriver.Chrome(options=options)
   driver.get('https://www.reddit.com/user/smile-thank-you')
-  driver.maximize_window()
   # ------------------------ webdriver open end ------------------------
   # ------------------------ set variables start ------------------------
   data_captured_dict = {}
@@ -118,7 +126,7 @@ def reddit_scrape_function():
       data_captured_dict[element_all_posts_arr[i_post]]['reddit_community'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_title'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_votes'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_comments'] = get_general_info_function(element_all_posts_arr, i_post)
       # ------------------------ pull/assign variables end ------------------------
       # ------------------------ pull/create reddit post from db start ------------------------
-      db_reddit_post_obj = pull_create_update_reddit_post_function(data_captured_dict, element_all_posts_arr, i_post)
+      # db_reddit_post_obj = pull_create_update_reddit_post_function(data_captured_dict, element_all_posts_arr, i_post)
       # ------------------------ pull/create reddit post from db end ------------------------
     # ------------------------ TESTING ONLY fail safe start ------------------------
     if len(element_all_posts_arr) >= 20:
