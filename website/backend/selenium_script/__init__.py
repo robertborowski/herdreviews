@@ -15,7 +15,9 @@ def get_general_info_function(element_all_posts_arr, i_post):
   # ------------------------ init variables start ------------------------
   reddit_community = ''
   reddit_posted_time_ago = ''
+  reddit_title = ''
   reddit_total_votes = int(0)
+  reddit_total_comments = int(0)
   # ------------------------ init variables end ------------------------
   # ------------------------ get community and time ago start ------------------------
   element_i_post_credits_arr = element_all_posts_arr[i_post].find_elements(By.CSS_SELECTOR,'[slot="credit-bar"]') # type: list
@@ -30,6 +32,13 @@ def get_general_info_function(element_all_posts_arr, i_post):
     except:
       pass
   # ------------------------ get community and time ago end ------------------------
+  # ------------------------ get title start ------------------------
+  try:
+    element_i_post_title_arr = element_all_posts_arr[i_post].find_elements(By.CSS_SELECTOR, "[id^='post-title-']")
+    reddit_title = element_i_post_title_arr[0].text
+  except:
+    pass
+  # ------------------------ get title end ------------------------
   # ------------------------ get votes count if available start ------------------------
   try:
     element_i_post_media_container_arr = element_all_posts_arr[i_post].find_elements(By.CSS_SELECTOR,'[slot="post-media-container"]') # type: list
@@ -38,23 +47,7 @@ def get_general_info_function(element_all_posts_arr, i_post):
   except:
     pass
   # ------------------------ get votes count if available end ------------------------
-  return reddit_community, reddit_posted_time_ago, reddit_total_votes
-# ------------------------ individual function end ------------------------
-
-# ------------------------ individual function start ------------------------
-def get_title_comments_function(driver, i_post):
-  # ------------------------ init variables start ------------------------
-  reddit_title = ''
-  reddit_total_comments = int(0)
-  # ------------------------ init variables end ------------------------
-  # ------------------------ get title start ------------------------
-  try:
-    element_i_post_title_arr = driver.find_elements(By.XPATH, "//div[starts-with(@id, 'post-title-')]")
-    reddit_title = element_i_post_title_arr[i_post].text
-  except:
-    pass
-  # ------------------------ get title end ------------------------
-  return reddit_title, reddit_total_comments
+  return reddit_community, reddit_posted_time_ago, reddit_title, reddit_total_votes, reddit_total_comments
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -63,7 +56,7 @@ def pull_create_update_reddit_post_function(data_captured_dict, element_all_post
   if db_obj == None or db_obj == []:
     # ------------------------ insert to db start ------------------------
     new_row = RedditPostsObj(
-      id=create_uuid_function('vote_'),
+      id=create_uuid_function('reddit_post_'),
       created_timestamp=create_timestamp_function(),
       community=data_captured_dict[element_all_posts_arr[i_post]]['reddit_community'],
       title=data_captured_dict[element_all_posts_arr[i_post]]['reddit_title'],
@@ -122,8 +115,7 @@ def reddit_scrape_function():
         data_captured_dict[element_all_posts_arr[i_post]] = {}
       # ------------------------ check in/add to dict end ------------------------
       # ------------------------ pull/assign variables start ------------------------
-      data_captured_dict[element_all_posts_arr[i_post]]['reddit_community'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_votes'] = get_general_info_function(element_all_posts_arr, i_post)
-      data_captured_dict[element_all_posts_arr[i_post]]['reddit_title'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_comments'] = get_title_comments_function(driver, i_post)
+      data_captured_dict[element_all_posts_arr[i_post]]['reddit_community'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_title'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_votes'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_comments'] = get_general_info_function(element_all_posts_arr, i_post)
       # ------------------------ pull/assign variables end ------------------------
       # ------------------------ pull/create reddit post from db start ------------------------
       db_reddit_post_obj = pull_create_update_reddit_post_function(data_captured_dict, element_all_posts_arr, i_post)
