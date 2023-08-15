@@ -234,8 +234,6 @@ class RedditCommentsObj(db.Model):
   id = db.Column(db.String(150), primary_key=True)
   created_timestamp = db.Column(db.DateTime(timezone=True))
   fk_reddit_post_id = db.Column(db.String(150))
-  community = db.Column(db.String(100))
-  title = db.Column(db.String(300))
   author = db.Column(db.String(150))
   comment = db.Column(db.String(1000))
 # ------------------------ individual model end ------------------------
