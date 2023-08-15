@@ -120,12 +120,20 @@ def get_all_comments_from_post_function(data_captured_dict, element_all_posts_ar
     element_all_comments_arr = element_comment_tree_arr[0].find_elements(By.TAG_NAME,'shreddit-comment')
     for i in range(len(element_all_comments_arr)):
       author = element_all_comments_arr[i].get_attribute("author")
-      comment_element = element_all_comments_arr[i].find_elements(By.TAG_NAME,'p')
-      comment = comment_element[0].text
+      comment_elements = element_all_comments_arr[i].find_elements(By.TAG_NAME,'p')
+      # ------------------------ combine all p lines in 1 comment start ------------------------
+      comment_str = ''
+      for i_p_tag in comment_elements:
+        comment_str += i_p_tag.text
+      # ------------------------ combine all p lines in 1 comment end ------------------------
+      # ------------------------ cut off start ------------------------
+      if len(comment_str) > 1000:
+        comment_str = comment_str[:1000]
+      # ------------------------ cut off end ------------------------
       if author not in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments']:
         data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author] = []
-      if comment not in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author]:
-        data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author].append(comment)
+      if comment_str not in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author]:
+        data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author].append(comment_str)
   except:
     pass
   return data_captured_dict
