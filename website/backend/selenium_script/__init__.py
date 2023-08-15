@@ -188,11 +188,13 @@ def reddit_scrape_function():
       # ------------------------ check in/add to dict end ------------------------
       # ------------------------ pull/assign variables start ------------------------
       data_captured_dict[element_all_posts_arr[i_post]]['reddit_community'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_title'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_votes'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_comments'] = get_general_info_function(element_all_posts_arr, i_post)
+      # ------------------------ pull/assign variables end ------------------------
+      # ------------------------ cutooff check start ------------------------
       if 'days ago' in data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago']:
         num_days = int(data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago'].replace(' days ago', ''))
         if num_days >= 4:
           running_check = False
-      # ------------------------ pull/assign variables end ------------------------
+      # ------------------------ cutooff check end ------------------------
       # ------------------------ pull/create reddit post from db start ------------------------
       db_reddit_post_obj = pull_create_update_reddit_post_function(data_captured_dict, element_all_posts_arr, i_post)
       # ------------------------ pull/create reddit post from db end ------------------------
