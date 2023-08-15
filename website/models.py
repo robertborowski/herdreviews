@@ -227,6 +227,7 @@ class RedditPostsObj(db.Model):
   title = db.Column(db.String(300))
   total_votes = db.Column(db.Integer)
   total_comments = db.Column(db.Integer)
+  post_url = db.Column(db.String(300))
 # ------------------------ individual model end ------------------------
 
 # ------------------------ individual model start ------------------------
@@ -236,4 +237,5 @@ class RedditCommentsObj(db.Model):
   fk_reddit_post_id = db.Column(db.String(150))
   author = db.Column(db.String(150))
   comment = db.Column(db.String(1000))
+  upvotes = db.Column(db.Integer)
 # ------------------------ individual model end ------------------------

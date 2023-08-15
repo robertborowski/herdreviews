@@ -53,7 +53,8 @@ def get_general_info_function(element_all_posts_arr, i_post):
   element_i_post_faceplate_number_arr = element_button[0].find_elements(By.TAG_NAME,'faceplate-number')
   reddit_total_comments = int(element_i_post_faceplate_number_arr[0].text)
   # ------------------------ get count if available - comments end ------------------------
-  return reddit_community, reddit_posted_time_ago, reddit_title, reddit_total_votes, reddit_total_comments
+  reddit_post_url = 'https://www.reddit.com' + element_all_posts_arr[i_post].get_attribute("permalink")
+  return reddit_community, reddit_posted_time_ago, reddit_title, reddit_total_votes, reddit_total_comments, reddit_post_url
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -67,7 +68,8 @@ def pull_create_update_reddit_post_function(data_captured_dict, element_all_post
       community=data_captured_dict[element_all_posts_arr[i_post]]['reddit_community'],
       title=data_captured_dict[element_all_posts_arr[i_post]]['reddit_title'],
       total_votes=data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_votes'],
-      total_comments=data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_comments']
+      total_comments=data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_comments'],
+      post_url=data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_url']
     )
     db.session.add(new_row)
     db.session.commit()
@@ -107,6 +109,7 @@ def get_all_comments_from_post_function(data_captured_dict, element_all_posts_ar
         if all_spans_arr[i].text == 'View more comments':
           found_count += 1
           all_spans_arr[i].click()
+          time.sleep(2)
       except:
         pass
     if found_count == 0:
@@ -130,11 +133,21 @@ def get_all_comments_from_post_function(data_captured_dict, element_all_posts_ar
       if len(comment_str) > 1000:
         comment_str = comment_str[:1000]
       # ------------------------ cut off end ------------------------
+      # ------------------------ get upvote count start ------------------------
+      upvote_count = 0
+      element_comment_action_arr = element_all_comments_arr[i].find_elements(By.TAG_NAME,'shreddit-comment-action-row')
+      shadow_root = element_comment_action_arr[0].shadow_root
+      element_i_post_votes_arr = shadow_root.find_elements(By.CSS_SELECTOR,'[slot="vote-button"]')
+      str_multi_line = element_i_post_votes_arr[0].text
+      str_lines_arr = str_multi_line.splitlines()
+      upvote_count = str_lines_arr[1]
+      # ------------------------ get upvote count end ------------------------
       if author not in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments']:
-        data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author] = []
+        data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author] = {}
       if comment_str not in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author]:
-        data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author].append(comment_str)
-  except:
+        data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author][comment_str] = upvote_count
+  except Exception as e:
+    localhost_print_function(f'e: {e}')
     pass
   return data_captured_dict
 # ------------------------ individual function end ------------------------
@@ -143,8 +156,9 @@ def get_all_comments_from_post_function(data_captured_dict, element_all_posts_ar
 def add_commentary_to_db_function(data_captured_dict, element_all_posts_arr, i_post, db_reddit_post_obj):
   for k,v in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'].items():
     i_author = k
-    i_comments_arr = v
-    for i_comment in i_comments_arr:
+    for k2,v2 in v.items():
+      i_comment = k2
+      i_upvotes = v2
       db_obj = RedditCommentsObj.query.filter_by(fk_reddit_post_id=db_reddit_post_obj.id,author=i_author,comment=i_comment).order_by(RedditCommentsObj.created_timestamp.desc()).first()
       if db_obj == None or db_obj == []:
         # ------------------------ insert to db start ------------------------
@@ -153,7 +167,8 @@ def add_commentary_to_db_function(data_captured_dict, element_all_posts_arr, i_p
           created_timestamp=create_timestamp_function(),
           fk_reddit_post_id=db_reddit_post_obj.id,
           author=i_author,
-          comment=i_comment
+          comment=i_comment,
+          upvotes=i_upvotes
         )
         db.session.add(new_row)
         db.session.commit()
@@ -178,7 +193,6 @@ def reddit_scrape_function():
   run_count = -1
   # ------------------------ set variables end ------------------------
   # ------------------------ recurring start ------------------------
-  print(' ------------- 0 ------------- ')
   while running_check == True:
     run_count += 1
     # ------------------------ scroll to bottom of the page start ------------------------
@@ -195,13 +209,14 @@ def reddit_scrape_function():
         data_captured_dict[element_all_posts_arr[i_post]] = {}
       # ------------------------ check in/add to dict end ------------------------
       # ------------------------ pull/assign variables start ------------------------
-      data_captured_dict[element_all_posts_arr[i_post]]['reddit_community'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_title'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_votes'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_comments'] = get_general_info_function(element_all_posts_arr, i_post)
+      data_captured_dict[element_all_posts_arr[i_post]]['reddit_community'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_title'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_votes'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_total_comments'], data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_url'] = get_general_info_function(element_all_posts_arr, i_post)
       # ------------------------ pull/assign variables end ------------------------
       # ------------------------ cutooff check start ------------------------
       if 'days ago' in data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago']:
         num_days = int(data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago'].replace(' days ago', ''))
         if num_days >= 4:
           running_check = False
+          break
       # ------------------------ cutooff check end ------------------------
       # ------------------------ pull/create reddit post from db start ------------------------
       db_reddit_post_obj = pull_create_update_reddit_post_function(data_captured_dict, element_all_posts_arr, i_post)
@@ -214,8 +229,7 @@ def reddit_scrape_function():
       # ------------------------ new commentary check end ------------------------
       # ------------------------ get new comments start ------------------------
       if new_commentary_db_check == True:
-        post_link = 'https://www.reddit.com' + element_all_posts_arr[i_post].get_attribute("permalink")
-        driver.get(post_link)
+        driver.get(data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_url'])
         data_captured_dict = get_all_comments_from_post_function(data_captured_dict, element_all_posts_arr, i_post, driver)
         # ------------------------ collect all comments from post end ------------------------
         # ------------------------ add to db start ------------------------
@@ -225,7 +239,6 @@ def reddit_scrape_function():
         time.sleep(3)
         break
       # ------------------------ get new comments end ------------------------
-  print(' ------------- 0 ------------- ')
   # ------------------------ recurring end ------------------------
   # ------------------------ webdriver close start ------------------------
   driver.close()
