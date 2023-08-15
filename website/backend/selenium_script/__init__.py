@@ -5,7 +5,7 @@ from backend.utils.localhost_print_utils.localhost_print import localhost_print_
 from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
 from backend.utils.uuid_and_timestamp.create_timestamp import create_timestamp_function
 import time
-from website.models import RedditPostsObj
+from website.models import RedditPostsObj, RedditCommentsObj
 from website import db
 from website.backend.dict_manipulation import arr_of_dict_all_columns_single_item_function
 # ------------------------ imports end ------------------------
@@ -89,24 +89,70 @@ def pull_create_update_reddit_post_function(data_captured_dict, element_all_post
 
 # ------------------------ individual function start ------------------------
 def get_all_comments_from_post_function(data_captured_dict, element_all_posts_arr, i_post, driver):
+  view_more_comments_button = True
+  while view_more_comments_button == True:
+    # ------------------------ scroll to bottom of the page start ------------------------
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(1)
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(1)
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(1)
+    # ------------------------ scroll to bottom of the page end ------------------------
+    # ------------------------ check if view more comments button exists start ------------------------
+    all_spans_arr = driver.find_elements(By.TAG_NAME,'span')
+    found_count = 0
+    for i in range(len(all_spans_arr) -1, -1, -1):
+      try:
+        if all_spans_arr[i].text == 'View more comments':
+          found_count += 1
+          all_spans_arr[i].click()
+      except:
+        pass
+    if found_count == 0:
+      view_more_comments_button = False
+    # ------------------------ check if view more comments button exists end ------------------------
   # ------------------------ commentary per post start ------------------------
   data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'] = {}
   # ------------------------ commentary per post end ------------------------
-  # ------------------------ scroll to bottom of the page start ------------------------
-  driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-  time.sleep(2)
-  # ------------------------ scroll to bottom of the page end ------------------------
   element_comment_tree_arr = driver.find_elements(By.CSS_SELECTOR,'[id="comment-tree"]')
-  element_all_comments_arr = element_comment_tree_arr[0].find_elements(By.TAG_NAME,'shreddit-comment')
-  for i in range(len(element_all_comments_arr)):
-    author = element_all_comments_arr[i].get_attribute("author")
-    comment_element = element_all_comments_arr[i].find_elements(By.TAG_NAME,'p')
-    comment = comment_element[0].text
-    if author not in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments']:
-      data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author] = []
-    if comment not in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author]:
-      data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author].append(comment)
+  try:
+    element_all_comments_arr = element_comment_tree_arr[0].find_elements(By.TAG_NAME,'shreddit-comment')
+    for i in range(len(element_all_comments_arr)):
+      author = element_all_comments_arr[i].get_attribute("author")
+      comment_element = element_all_comments_arr[i].find_elements(By.TAG_NAME,'p')
+      comment = comment_element[0].text
+      if author not in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments']:
+        data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author] = []
+      if comment not in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author]:
+        data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author].append(comment)
+  except:
+    pass
   return data_captured_dict
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
+def add_commentary_to_db_function(data_captured_dict, element_all_posts_arr, i_post, db_reddit_post_obj):
+  for k,v in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'].items():
+    i_author = k
+    i_comments_arr = v
+    for i_comment in i_comments_arr:
+      db_obj = RedditCommentsObj.query.filter_by(fk_reddit_post_id=db_reddit_post_obj.id,community=data_captured_dict[element_all_posts_arr[i_post]]['reddit_community'],title=data_captured_dict[element_all_posts_arr[i_post]]['reddit_title'],author=i_author,comment=i_comment).order_by(RedditCommentsObj.created_timestamp.desc()).first()
+      if db_obj == None or db_obj == []:
+        # ------------------------ insert to db start ------------------------
+        new_row = RedditCommentsObj(
+          id=create_uuid_function('reddit_comment_'),
+          created_timestamp=create_timestamp_function(),
+          fk_reddit_post_id=db_reddit_post_obj.id,
+          community=data_captured_dict[element_all_posts_arr[i_post]]['reddit_community'],
+          title=data_captured_dict[element_all_posts_arr[i_post]]['reddit_title'],
+          author=i_author,
+          comment=i_comment
+        )
+        db.session.add(new_row)
+        db.session.commit()
+        # ------------------------ insert to db end ------------------------
+  return True
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -118,7 +164,7 @@ def reddit_scrape_function():
   options.add_argument("start-maximized")
   # ------------------------ incognito end ------------------------
   driver = webdriver.Chrome(options=options)
-  driver.get('https://www.reddit.com/user/smile-thank-you')
+  driver.get('https://www.reddit.com/user/smile-thank-you/submitted/')
   # ------------------------ webdriver open end ------------------------
   # ------------------------ set variables start ------------------------
   data_captured_dict = {}
@@ -148,17 +194,25 @@ def reddit_scrape_function():
       # ------------------------ pull/create reddit post from db start ------------------------
       db_reddit_post_obj = pull_create_update_reddit_post_function(data_captured_dict, element_all_posts_arr, i_post)
       # ------------------------ pull/create reddit post from db end ------------------------
-      # ------------------------ if new comments not captured start ------------------------
-      new_commentary_db_check = True
+      # ------------------------ new commentary check start ------------------------
+      new_commentary_db_check = False
+      db_comments_obj = RedditCommentsObj.query.filter_by(fk_reddit_post_id=db_reddit_post_obj.id).all()
+      if len(db_comments_obj) < int(db_reddit_post_obj.total_comments):
+        new_commentary_db_check = True
+      # ------------------------ new commentary check end ------------------------
+      # ------------------------ get new comments start ------------------------
       if new_commentary_db_check == True:
         post_link = 'https://www.reddit.com' + element_all_posts_arr[i_post].get_attribute("permalink")
         driver.get(post_link)
-        # ------------------------ TESTING ONLY fail safe start ------------------------
-        driver.close()
-        return False
-        # ------------------------ TESTING ONLY fail safe end ------------------------
+        data_captured_dict = get_all_comments_from_post_function(data_captured_dict, element_all_posts_arr, i_post, driver)
         # ------------------------ collect all comments from post end ------------------------
-      # ------------------------ if new comments not captured end ------------------------
+        # ------------------------ add to db start ------------------------
+        add_commentary_to_db_function(data_captured_dict, element_all_posts_arr, i_post, db_reddit_post_obj)
+        # ------------------------ add to db end ------------------------
+        driver.get('https://www.reddit.com/user/smile-thank-you/submitted/')
+        time.sleep(3)
+        break
+      # ------------------------ get new comments end ------------------------
     # ------------------------ TESTING ONLY fail safe start ------------------------
     if len(element_all_posts_arr) >= 20:
       break
