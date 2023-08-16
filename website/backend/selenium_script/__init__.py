@@ -44,6 +44,13 @@ def get_general_info_function(element_all_posts_arr, i_post):
     element_i_post_media_container_arr = element_all_posts_arr[i_post].find_elements(By.CSS_SELECTOR,'[slot="post-media-container"]') # type: list
     element_i_post_faceplate_number_arr = element_i_post_media_container_arr[0].find_elements(By.TAG_NAME,'faceplate-number') # type: list
     reddit_total_votes = int(element_i_post_faceplate_number_arr[0].text)
+    try:
+      reddit_total_votes = int(element_i_post_faceplate_number_arr[0].text)
+    except:
+      text_with_letter = element_i_post_faceplate_number_arr[0].text
+      text_with_letter = text_with_letter.replace('K','')
+      text_as_float = int(float(text_with_letter) * float(1000))
+      reddit_total_votes = text_as_float
   except:
     pass
   # ------------------------ get count if available - votes end ------------------------
@@ -51,7 +58,13 @@ def get_general_info_function(element_all_posts_arr, i_post):
   shadow_root = element_all_posts_arr[i_post].shadow_root
   element_button = shadow_root.find_elements(By.CSS_SELECTOR,'button[name="comments-action-button"]')
   element_i_post_faceplate_number_arr = element_button[0].find_elements(By.TAG_NAME,'faceplate-number')
-  reddit_total_comments = int(element_i_post_faceplate_number_arr[0].text)
+  try:
+    reddit_total_comments = int(element_i_post_faceplate_number_arr[0].text)
+  except:
+    text_with_letter = element_i_post_faceplate_number_arr[0].text
+    text_with_letter = text_with_letter.replace('K','')
+    text_as_float = int(float(text_with_letter) * float(1000))
+    reddit_total_comments = text_as_float
   # ------------------------ get count if available - comments end ------------------------
   reddit_post_url = 'https://www.reddit.com' + element_all_posts_arr[i_post].get_attribute("permalink")
   return reddit_community, reddit_posted_time_ago, reddit_title, reddit_total_votes, reddit_total_comments, reddit_post_url
