@@ -91,6 +91,7 @@ def pull_create_update_reddit_post_function(data_captured_dict, element_all_post
 
 # ------------------------ individual function start ------------------------
 def get_all_comments_from_post_function(data_captured_dict, element_all_posts_arr, i_post, driver):
+  # ------------------------ ensure scroll to bottom of page start ------------------------
   view_more_comments_button = True
   while view_more_comments_button == True:
     # ------------------------ scroll to bottom of the page start ------------------------
@@ -115,6 +116,24 @@ def get_all_comments_from_post_function(data_captured_dict, element_all_posts_ar
     if found_count == 0:
       view_more_comments_button = False
     # ------------------------ check if view more comments button exists end ------------------------
+  # ------------------------ ensure scroll to bottom of page end ------------------------
+  # ------------------------ ensure all hidden comments are present start ------------------------
+  view_more_replies_button = True
+  while view_more_replies_button == True:
+    # ------------------------ check if view more comments button exists start ------------------------
+    all_spans_arr = driver.find_elements(By.TAG_NAME,'span')
+    found_count = 0
+    for i in range(len(all_spans_arr)):
+      try:
+        if (' more reply' in all_spans_arr[i].text or ' more replies' in all_spans_arr[i].text) and '4 more replies' not in all_spans_arr[i].text:
+          found_count += 1
+          all_spans_arr[i].click()
+      except:
+        pass
+    if found_count == 0:
+      view_more_replies_button = False
+    # ------------------------ check if view more comments button exists end ------------------------
+  # ------------------------ ensure all hidden comments are present end ------------------------
   # ------------------------ commentary per post start ------------------------
   data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'] = {}
   # ------------------------ commentary per post end ------------------------
@@ -123,20 +142,30 @@ def get_all_comments_from_post_function(data_captured_dict, element_all_posts_ar
     element_all_comments_arr = element_comment_tree_arr[0].find_elements(By.TAG_NAME,'shreddit-comment')
     for i in range(len(element_all_comments_arr)):
       author = element_all_comments_arr[i].get_attribute("author")
-      comment_elements = element_all_comments_arr[i].find_elements(By.CSS_SELECTOR,'[slot="comment"]')
-      comment_str = comment_elements[0].text
+      comment_str = ''
+      try:
+        comment_elements = element_all_comments_arr[i].find_elements(By.CSS_SELECTOR,'[slot="comment"]')
+        comment_str = comment_elements[0].text
+      except:
+        comment_str = 'deleted'
       # ------------------------ cut off start ------------------------
       if len(comment_str) > 1000:
         comment_str = comment_str[:1000]
       # ------------------------ cut off end ------------------------
       # ------------------------ get upvote count start ------------------------
       upvote_count = 0
-      element_comment_action_arr = element_all_comments_arr[i].find_elements(By.TAG_NAME,'shreddit-comment-action-row')
-      shadow_root = element_comment_action_arr[0].shadow_root
-      element_i_post_votes_arr = shadow_root.find_elements(By.CSS_SELECTOR,'[slot="vote-button"]')
-      str_multi_line = element_i_post_votes_arr[0].text
-      str_lines_arr = str_multi_line.splitlines()
-      upvote_count = str_lines_arr[1]
+      try:
+        if comment_str == 'deleted':
+          pass
+        else:
+          element_comment_action_arr = element_all_comments_arr[i].find_elements(By.TAG_NAME,'shreddit-comment-action-row')
+          shadow_root = element_comment_action_arr[0].shadow_root
+          element_i_post_votes_arr = shadow_root.find_elements(By.CSS_SELECTOR,'[slot="vote-button"]')
+          str_multi_line = element_i_post_votes_arr[0].text
+          str_lines_arr = str_multi_line.splitlines()
+          upvote_count = str_lines_arr[1]
+      except:
+        pass
       # ------------------------ get upvote count end ------------------------
       if author not in data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments']:
         data_captured_dict[element_all_posts_arr[i_post]]['reddit_post_comments'][author] = {}
