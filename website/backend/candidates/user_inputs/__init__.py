@@ -484,6 +484,11 @@ def alert_message_default_function_v2(redirect_var=None):
       'message':'You must create an account to contribute your vote',
       'type':'danger'
     }
+  elif redirect_var == 'e45':
+    alert_message_dict = {
+      'message':'Already mapped',
+      'type':'danger'
+    }
   # ------------------------ errors end ------------------------
   # ------------------------ success start ------------------------
   elif redirect_var == 's1':

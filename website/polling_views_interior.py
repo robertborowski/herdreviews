@@ -33,6 +33,7 @@ from website.backend.dict_manipulation import arr_of_dict_all_columns_single_ite
 from website.backend.show_utils import shows_following_arr_of_dict_function, follow_user_polls_show_function, follow_show_function
 from website.backend.sql_statements.select import select_general_function
 from website.backend.poll_statistics_v2 import get_poll_statistics_v2_function, get_create_show_chart_colors_function
+from website.backend.reddit_statistics import get_reddit_statistics_function
 from datetime import datetime
 # ------------------------ imports end ------------------------
 
@@ -925,6 +926,10 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
     page_dict['show_colors_dict'] = get_create_show_chart_colors_function(page_dict)
     page_dict = get_poll_statistics_v2_function(page_dict, current_user)
   # ------------------------ get poll statistics end ------------------------
+  # ------------------------ get reddit statistics start ------------------------
+  if page_dict['poll_answered'] == True:
+    page_dict = get_reddit_statistics_function(page_dict, current_user)
+  # ------------------------ get reddit statistics end ------------------------
   if request.method == 'POST':
     if current_user.is_anonymous == True:
       return redirect(url_for('polling_views_interior.polling_show_function', url_show_id=url_show_id, url_poll_id=page_dict['poll_dict']['id'], url_redirect_code='e44', url_anonymous_code='submitted'))

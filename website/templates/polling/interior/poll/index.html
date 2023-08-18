@@ -52,7 +52,7 @@
       {% if page_dict_to_html['poll_answered'] == true %}
         {% if page_dict_to_html['db_show_dict']['name_title'] != 'HerdReviews.com' %}
           <!-- ----------------------------------- host thank you message start ----------------------------------- -->
-          <div class="custom-border-white custom-br-15 custom-p-25 custom-display-flex custom-mt-100 custom-mb-100">
+          <div class="custom-border-white custom-br-15 custom-p-25 custom-display-flex custom-mt-100 custom-mb-50">
             <img src="{{ page_dict_to_html['db_show_dict']['platform_image_medium'] }}" alt="show logo" class="custom-img-size-100 custom-mr-1 custom-br-5 custom-border-white-opacity-50">
             <div class="custom-ml-10">
               <p class="fw-bold custom-header-25 custom-color-white custom-m-0 fst-italic"><i class="fa-solid fa-quote-left"></i> Really appreciate your feedback on the pod! <i class="fa-solid fa-quote-right"></i><a href="/signup" class="custom-ml-10 custom-header-15 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">Change thank you message</a></p>
@@ -386,6 +386,9 @@
             {% endif %}
           {% endfor %}
           <!-- ------------------------------------- charts end ------------------------------------- -->
+          <!-- ------------------------------------- reddit mapping data start ------------------------------------- -->
+          <!-- To be added -->
+          <!-- ------------------------------------- reddit mapping data end ------------------------------------- -->
         {% endif %}
       </div>
       <!-- ------------------------------------- poll statistics end ------------------------------------- -->

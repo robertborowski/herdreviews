@@ -356,8 +356,8 @@ def get_poll_statistics_v2_function(page_dict, passed_current_user_obj):
     # ------------------------ chart information start ------------------------
     page_dict = get_chart_info_function(page_dict, k, passed_current_user_obj)
     # ------------------------ chart information end ------------------------
-  localhost_print_function(' ------------- 50 ------------- ')
-  localhost_print_function(pprint.pformat(page_dict, indent=2))
-  localhost_print_function(' ------------- 50 ------------- ')
+  # localhost_print_function(' ------------- 50 ------------- ')
+  # localhost_print_function(pprint.pformat(page_dict, indent=2))
+  # localhost_print_function(' ------------- 50 ------------- ')
   return page_dict
 # ------------------------ individual function end ------------------------

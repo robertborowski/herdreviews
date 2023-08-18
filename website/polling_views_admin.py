@@ -64,17 +64,23 @@ def admin_function(url_redirect_code=None):
       obj_reddit = RedditPostsObj.query.filter_by(id=ui_reddit_input).first()
       obj_poll = PollsObj.query.filter_by(id=ui_poll_input).first()
       if obj_reddit != None and obj_reddit != [] and obj_poll != None and obj_poll != []:
-        # ------------------------ insert to db start ------------------------
-        new_row = RedditMappingObj(
-          id=create_uuid_function('map_'),
-          created_timestamp=create_timestamp_function(),
-          fk_poll_id=ui_poll_input,
-          fk_reddit_post_id=ui_reddit_input
-        )
-        db.session.add(new_row)
-        db.session.commit()
-        # ------------------------ insert to db end ------------------------
-        return redirect(url_for('polling_views_admin.admin_function', url_redirect_code='s21'))
+        # ------------------------ check if already mapped start ------------------------
+        obj_map = RedditMappingObj.query.filter_by(fk_poll_id=ui_poll_input,fk_reddit_post_id=ui_reddit_input).first()
+        if obj_map != None and ui_reddit_input != []:
+          return redirect(url_for('polling_views_admin.admin_function', url_redirect_code='e45'))
+        # ------------------------ check if already mapped end ------------------------
+        else:
+          # ------------------------ insert to db start ------------------------
+          new_row = RedditMappingObj(
+            id=create_uuid_function('map_'),
+            created_timestamp=create_timestamp_function(),
+            fk_poll_id=ui_poll_input,
+            fk_reddit_post_id=ui_reddit_input
+          )
+          db.session.add(new_row)
+          db.session.commit()
+          # ------------------------ insert to db end ------------------------
+          return redirect(url_for('polling_views_admin.admin_function', url_redirect_code='s21'))
     # ------------------------ reddit poll mapping end ------------------------
   # ------------------------ submission end ------------------------    
   localhost_print_function(' ------------- 100-admin start ------------- ')
