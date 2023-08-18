@@ -12,26 +12,28 @@
 {% endif %}
 <!-- ----------------------------------- end ----------------------------------- -->
 <!-- ------------------------------------- section start ------------------------------------- -->
-<div class="container custom-border-2">
+<div class="container custom-width-600 mx-auto custom-mt-50">
   <h1>Admin</h1>
   <!-- ------------------------------------- reddit start ------------------------------------- -->
-  <form method="POST" enctype="multipart/form-data" class="custom-border-2" onsubmit="return clickSubmitButtonOnce()">
+  <form method="POST" enctype="multipart/form-data" class="custom-border-black-opacity-25 custom-br-10 custom-p-25 shadow-sm" onsubmit="return clickSubmitButtonOnce()">
     <div class="custom-width-400 mx-auto">
-      <label for="id-reddit_button" class="form-label">Reddit</label>
+      <label for="id-reddit_button" class="form-label">Reddit Scraper</label>
       <input type="text" class="form-control" id="id-reddit_button" name="ui_reddit_button" value="on" required>
       <button type="submit" class="btn btn-lg btn-success custom-width-100 custom-mt-25">Run function</button>
     </div>
   </form>
   <!-- ------------------------------------- reddit end ------------------------------------- -->
-  <!-- ------------------------------------- test start ------------------------------------- -->
-  <form method="POST" enctype="multipart/form-data" class="custom-border-2" onsubmit="return clickSubmitButtonOnce()">
+  <!-- ------------------------------------- mapping start ------------------------------------- -->
+  <form method="POST" enctype="multipart/form-data" class="custom-border-black-opacity-25 custom-br-10 custom-p-25 shadow-sm custom-mt-50" onsubmit="return clickSubmitButtonOnce()">
     <div class="custom-width-400 mx-auto">
-      <label for="id-test2_button" class="form-label">ActionTest2</label>
-      <input type="text" class="form-control" id="id-test2_button" name="ui_test2_button" value="off" required>
-      <button type="submit" class="btn btn-lg btn-success custom-width-100 custom-mt-25">Run function</button>
+      <label for="id-reddit_input" class="form-label">fk_reddit_id</label>
+      <input type="text" class="form-control" id="id-reddit_input" name="ui_reddit_input" value="" required>
+      <label for="id-poll_input" class="form-label custom-mt-10">fk_poll_id</label>
+      <input type="text" class="form-control" id="id-poll_input" name="ui_poll_input" value="" required>
+      <button type="submit" class="btn btn-lg btn-success custom-width-100 custom-mt-25">Sync</button>
     </div>
   </form>
-  <!-- ------------------------------------- test end ------------------------------------- -->
+  <!-- ------------------------------------- mapping end ------------------------------------- -->
 </div>
 <!-- ------------------------------------- section end ------------------------------------- -->
 {% endblock %}

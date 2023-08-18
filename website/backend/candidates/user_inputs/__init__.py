@@ -586,6 +586,11 @@ def alert_message_default_function_v2(redirect_var=None):
       'message':'You have already submitted this poll.',
       'type':'success'
     }
+  elif redirect_var == 's21':
+    alert_message_dict = {
+      'message':'Success',
+      'type':'success'
+    }
   # ------------------------ success end ------------------------
   # ------------------------ info end ------------------------
   elif redirect_var == 'i1':

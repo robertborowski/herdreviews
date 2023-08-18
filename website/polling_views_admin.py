@@ -18,6 +18,7 @@ from website import db
 from website.backend.candidates.user_inputs import alert_message_default_function_v2
 import os
 from website.backend.selenium_script import reddit_scrape_function
+from website.models import RedditPostsObj, PollsObj, RedditMappingObj
 # ------------------------ imports end ------------------------
 
 # ------------------------ function start ------------------------
@@ -32,7 +33,7 @@ redis_connection = redis_connect_to_database_function()
 @polling_views_admin.route('/admin/', methods=['GET', 'POST'])
 @polling_views_admin.route('/admin/<url_redirect_code>', methods=['GET', 'POST'])
 @login_required
-def polling_dashboard_function(url_redirect_code=None):
+def admin_function(url_redirect_code=None):
   # ------------------------ check admin status start ------------------------
   if current_user.email != os.environ.get('RUN_TEST_EMAIL'):
     return redirect(url_for('polling_views_interior.polling_dashboard_function'))
@@ -51,9 +52,30 @@ def polling_dashboard_function(url_redirect_code=None):
   if request.method == 'POST':
     # ------------------------ get ui start ------------------------
     ui_reddit_button = request.form.get('ui_reddit_button')
+    ui_reddit_input = request.form.get('ui_reddit_input')
+    ui_poll_input = request.form.get('ui_poll_input')
     # ------------------------ get ui end ------------------------
+    # ------------------------ reddit scrape start ------------------------
     if ui_reddit_button == 'on':
       reddit_scrape_run = reddit_scrape_function()
+    # ------------------------ reddit scrape end ------------------------
+    # ------------------------ reddit poll mapping start ------------------------
+    if ui_reddit_input != None and ui_poll_input != None:
+      obj_reddit = RedditPostsObj.query.filter_by(id=ui_reddit_input).first()
+      obj_poll = PollsObj.query.filter_by(id=ui_poll_input).first()
+      if obj_reddit != None and obj_reddit != [] and obj_poll != None and obj_poll != []:
+        # ------------------------ insert to db start ------------------------
+        new_row = RedditMappingObj(
+          id=create_uuid_function('map_'),
+          created_timestamp=create_timestamp_function(),
+          fk_poll_id=ui_poll_input,
+          fk_reddit_post_id=ui_reddit_input
+        )
+        db.session.add(new_row)
+        db.session.commit()
+        # ------------------------ insert to db end ------------------------
+        return redirect(url_for('polling_views_admin.admin_function', url_redirect_code='s21'))
+    # ------------------------ reddit poll mapping end ------------------------
   # ------------------------ submission end ------------------------    
   localhost_print_function(' ------------- 100-admin start ------------- ')
   page_dict = dict(sorted(page_dict.items(),key=lambda x:x[0]))

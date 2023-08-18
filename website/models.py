@@ -240,3 +240,11 @@ class RedditCommentsObj(db.Model):
   comment = db.Column(db.String(1000))
   upvotes = db.Column(db.Integer)
 # ------------------------ individual model end ------------------------
+
+# ------------------------ individual model start ------------------------
+class RedditMappingObj(db.Model):
+  id = db.Column(db.String(150), primary_key=True)
+  created_timestamp = db.Column(db.DateTime(timezone=True))
+  fk_poll_id = db.Column(db.String(150))
+  fk_reddit_post_id = db.Column(db.String(150))
+# ------------------------ individual model end ------------------------
