@@ -31,11 +31,18 @@ def get_reddit_statistics_function(page_dict, passed_current_user_obj):
     # ------------------------ reddit post information end ------------------------
     # ------------------------ reddit post comments information start ------------------------
     page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['all_comments_dict'] = {}
+    page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['all_comments_limit'] = 10
     if page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['total_comments'] == 0:
       page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['all_comments_dict'] = None
+      page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['all_comments_dict_len'] = 0
     else:
       obj_reddit_comments = RedditCommentsObj.query.filter_by(fk_reddit_post_id=obj_reddit_post.id).order_by(RedditCommentsObj.upvotes.desc()).all()
+      page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['all_comments_dict_len'] = int(len(obj_reddit_comments))
+      current_comment_count = 0
       for i_comment_obj in obj_reddit_comments:
+        current_comment_count += 1
+        if current_comment_count == (page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['all_comments_limit'] + 1):
+          break
         page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['all_comments_dict'][i_comment_obj.id] = {}
         page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['all_comments_dict'][i_comment_obj.id]['author'] = i_comment_obj.author
         page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['all_comments_dict'][i_comment_obj.id]['comment'] = i_comment_obj.comment

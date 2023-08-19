@@ -724,6 +724,9 @@
 .custom-img-size-10 {
   max-height: 60px;
 }
+.custom-img-size-15 {
+  max-height: 15px;
+}
 .custom-img-size-20 {
   max-height: 20px;
 }

@@ -415,13 +415,13 @@
             {% for k_post,v_post in page_dict_to_html['poll_reddit_dict'].items() %}
               <div class="custom-color-white custom-mb-25 custom-border-white-opacity-50 custom-br-25 custom-p-25">
                 <a href="{{ v_post['post_url'] }}" target="_blank" class="custom-header-15 custom-m-0 custom-p-10 custom-br-10 custom-bg-color-reddit custom-a-white-underline">{{ v_post['community'] }} <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                <p class="custom-header-15 custom-m-0 custom-ml-10 custom-mt-25">Post</p>
+                <p class="custom-header-15 custom-m-0 custom-ml-10 custom-mt-25"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/reddit_logo.png" alt="show logo" class="custom-img-size-20 custom-mb-5"> Post</p>
                 <div class="custom-mb-25 custom-border-white-opacity-25 custom-br-25 custom-p-10">
                   <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-10">"{{ v_post['title'] }}"</p>
                   <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-10">Votes: {{ v_post['total_votes'] }}</p>
                   <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-10">Comments: {{ v_post['total_comments'] }}</p>
                 </div>
-                <p class="custom-header-15 custom-m-0 custom-ml-10 custom-mt-10">Top comments</p>
+                <p class="custom-header-15 custom-m-0 custom-ml-10 custom-mt-10"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/reddit_logo.png" alt="show logo" class="custom-img-size-20 custom-mb-5"> Top comments</p>
                 {% if v_post['all_comments_dict'] == none %}
                   <div class="custom-mb-15 custom-border-white-opacity-25 custom-br-25 custom-p-10">
                     <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25 fst-italic">No comments on reddit post yet.</p>
@@ -429,9 +429,14 @@
                 {% else %}
                   {% for k_comment,v_comment in v_post['all_comments_dict'].items() %}
                     <div class="custom-mb-15 custom-border-white-opacity-25 custom-br-25 custom-p-10">
-                      <p class="custom-header-18 custom-m-0 custom-mb-5 custom-ml-25">"{{ v_comment['comment'] }}" <span class="custom-ml-5 custom-header-15 custom-ptb-5 custom-plr-10 custom-bg-white custom-color-black custom-br-5 custom-inline-block">by: {{ v_comment['author'] }}</span><span class="custom-ml-5 custom-header-15 custom-ptb-5 custom-plr-10 custom-bg-white custom-color-black custom-br-5 custom-inline-block"><i class="fa-regular fa-thumbs-up"></i> {{ v_comment['upvotes'] }}</span></p>
+                      <p class="custom-header-18 custom-m-0 custom-ml-25"><span class="custom-header-12 custom-ptb-5 custom-plr-10 custom-bg-white custom-color-black custom-br-5 custom-inline-block">{{ v_comment['author'] }}</span><span class="custom-ml-5 custom-mr-5 custom-header-12 custom-ptb-5 custom-plr-10 custom-bg-white custom-color-black custom-br-5 custom-inline-block"><i class="fa-regular fa-thumbs-up"></i> {{ v_comment['upvotes'] }}</span> "{{ v_comment['comment'] }}"</p>
                     </div>
                   {% endfor %}
+                  {% if v_post['all_comments_dict_len'] > v_post['all_comments_limit'] %}
+                    <div class="custom-tar">
+                      <span class="custom-hover-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Podcast host only">More comment analysis <i class="fa-solid fa-chevron-right"></i></span>
+                    </div>
+                  {% endif %}
                 {% endif %}
               </div>
             {% endfor %}
