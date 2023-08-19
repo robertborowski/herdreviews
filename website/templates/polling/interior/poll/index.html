@@ -55,7 +55,7 @@
           <div class="custom-border-white custom-br-15 custom-p-25 custom-display-flex custom-mt-100 custom-mb-50">
             <img src="{{ page_dict_to_html['db_show_dict']['platform_image_medium'] }}" alt="show logo" class="custom-img-size-100 custom-mr-1 custom-br-5 custom-border-white-opacity-50">
             <div class="custom-ml-10">
-              <p class="fw-bold custom-header-25 custom-color-white custom-m-0 fst-italic"><i class="fa-solid fa-quote-left"></i> Really appreciate your feedback on the pod! <i class="fa-solid fa-quote-right"></i><a href="/signup" class="custom-ml-10 custom-header-15 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">Change thank you message</a></p>
+              <p class="fw-bold custom-header-25 custom-color-white custom-m-0 fst-italic"><i class="fa-solid fa-quote-left"></i> Really appreciate your feedback on the pod! <i class="fa-solid fa-quote-right"></i><a href="/signup" class="custom-ml-10 custom-header-15 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-inline-block" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">Change thank you message</a></p>
               <p class="fw-bold custom-header-15 custom-color-white custom-m-0 custom-mt-10"><span class="custom-mr-1"><i class="fa-solid fa-circle-check custom-color-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Podcast host not verified"></i> {{ page_dict_to_html['db_show_dict']['name'] }} | Podcast host not verified</span></p>
               <p class="fw-bold custom-header-15 custom-color-white custom-m-0 custom-mt-5 custom-opacity-75-hover" id="id-general_autoscroll_click_2"><i class="fa-solid fa-angle-down"></i> Podcast verification details below</p>
             </div>
@@ -250,9 +250,9 @@
                     <!-- ------------------------------------- total votes start ------------------------------------- -->  
                     <div class="custom-mt-15">
                       {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                        <p class="custom-m-0 custom-mb-10 custom-header-15 custom-color-white custom-opacity-75-hover custom-ml-10"><span class="custom-header-20">Votes {{ v['all_response_objs_len'] }}</span> from fans of the show on <a href="/{{ page_dict_to_html['db_show_dict']['reference_name'] }}" class="custom-a-white custom-a-white-underline-on">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/signup" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
+                        <p class="custom-m-0 custom-mb-10 custom-header-15 custom-color-white custom-opacity-75-hover custom-ml-10"><span class="custom-header-20">Votes {{ v['all_response_objs_len'] }}</span> from fans of the show on <a href="/{{ page_dict_to_html['db_show_dict']['reference_name'] }}" class="custom-a-white custom-a-white-underline-on">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/signup" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-inline-block">Change URL</a></p>
                       {% else %}
-                        <p class="custom-m-0 custom-mb-10 custom-header-15 custom-color-white custom-opacity-75-hover custom-ml-10"><span class="custom-header-20">Votes {{ v['all_response_objs_len'] }}</span> from fans of the show on <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-a-white custom-a-white-underline-on">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-f-nowrap">Change URL</a></p>
+                        <p class="custom-m-0 custom-mb-10 custom-header-15 custom-color-white custom-opacity-75-hover custom-ml-10"><span class="custom-header-20">Votes {{ v['all_response_objs_len'] }}</span> from fans of the show on <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-a-white custom-a-white-underline-on">HerdReviews.com/{{ page_dict_to_html['db_show_dict']['reference_name'] }}</a> <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-ml-10 custom-header-12 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-inline-block">Change URL</a></p>
                       {% endif %}
                     </div>
                     <!-- ------------------------------------- total votes end ------------------------------------- -->  
@@ -399,12 +399,12 @@
       <div class="mx-auto">
         <p class="custom-color-white custom-m-0 custom-header-30"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/reddit_logo.png" alt="show logo" class="custom-img-size-35 custom-mb-10"> Reddit statistics</p>
         {% if page_dict_to_html['poll_answered'] == false %}
-          <div class="custom-br-15 custom-border-white-opacity-25 custom-p-15">
+          <div class="custom-br-15 custom-border-white-opacity-50 custom-p-15">
             <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">You must first answer this poll in order to see the reddit statistics.</p>
           </div>
         {% else %}
           {% if page_dict_to_html['poll_reddit_dict'] == none %}
-            <div class="custom-br-15 custom-border-white-opacity-25 custom-p-15">
+            <div class="custom-br-15 custom-border-white-opacity-50 custom-p-15">
               {% if page_dict_to_html['current_user_is_anonymous'] == true %}
                 <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">You must <a href="/signup" class="custom-a-white-underline-on">create an account</a> to see the reddit post statistics.</p>
               {% else %}
@@ -413,15 +413,15 @@
             </div>
           {% else %}
             {% for k_post,v_post in page_dict_to_html['poll_reddit_dict'].items() %}
-              <div class="custom-color-white custom-mb-25 custom-border-white-opacity-25 custom-br-25 custom-p-25">
-                <p class="custom-header-25 custom-m-0 custom-mb-10">{{ v_post['community'] }}</p>
-                <p class="custom-header-20 custom-m-0 custom-ml-10 custom-mt-10">Post</p>
+              <div class="custom-color-white custom-mb-25 custom-border-white-opacity-50 custom-br-25 custom-p-25">
+                <a href="{{ v_post['post_url'] }}" target="_blank" class="custom-header-15 custom-m-0 custom-p-10 custom-br-10 custom-bg-color-reddit custom-a-white-underline">{{ v_post['community'] }} <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                <p class="custom-header-15 custom-m-0 custom-ml-10 custom-mt-25">Post</p>
                 <div class="custom-mb-25 custom-border-white-opacity-25 custom-br-25 custom-p-10">
                   <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-10">"{{ v_post['title'] }}"</p>
                   <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-10">Votes: {{ v_post['total_votes'] }}</p>
                   <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-10">Comments: {{ v_post['total_comments'] }}</p>
                 </div>
-                <p class="custom-header-20 custom-m-0 custom-ml-10 custom-mt-10">Top comments</p>
+                <p class="custom-header-15 custom-m-0 custom-ml-10 custom-mt-10">Top comments</p>
                 {% if v_post['all_comments_dict'] == none %}
                   <div class="custom-mb-15 custom-border-white-opacity-25 custom-br-25 custom-p-10">
                     <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25 fst-italic">No comments on reddit post yet.</p>
@@ -429,15 +429,10 @@
                 {% else %}
                   {% for k_comment,v_comment in v_post['all_comments_dict'].items() %}
                     <div class="custom-mb-15 custom-border-white-opacity-25 custom-br-25 custom-p-10">
-                      <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25 fst-italic">{{ v_comment['author'] }}</p>
-                      <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25">"{{ v_comment['comment'] }}"</p>
-                      <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25">Upvotes: {{ v_comment['upvotes'] }}</p>
+                      <p class="custom-header-18 custom-m-0 custom-mb-5 custom-ml-25">"{{ v_comment['comment'] }}" <span class="custom-ml-5 custom-header-15 custom-ptb-5 custom-plr-10 custom-bg-white custom-color-black custom-br-5 custom-inline-block">by: {{ v_comment['author'] }}</span><span class="custom-ml-5 custom-header-15 custom-ptb-5 custom-plr-10 custom-bg-white custom-color-black custom-br-5 custom-inline-block"><i class="fa-regular fa-thumbs-up"></i> {{ v_comment['upvotes'] }}</span></p>
                     </div>
                   {% endfor %}
                 {% endif %}
-                <div class="custom-tar">
-                  <a href="{{ v_post['post_url'] }}" target="_blank" class="custom-a-white-underline">View post <i class="fa-solid fa-chevron-right"></i></a>
-                </div>
               </div>
             {% endfor %}
           {% endif %}

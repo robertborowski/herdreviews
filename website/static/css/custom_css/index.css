@@ -938,6 +938,11 @@
   line-height: 40px;
 }
 /* ------------------- list style end ------------------- */
+/* ------------------- line break start ------------------- */
+.custom-inline-block {
+  display: inline-block;
+}
+/* ------------------- line break end ------------------- */
 /* ------------------- loading screen start ------------------- */
 .custom-loading-screen {
   display: block;
