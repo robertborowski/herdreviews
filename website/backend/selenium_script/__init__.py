@@ -254,7 +254,7 @@ def reddit_scrape_function():
       # ------------------------ cutooff check start ------------------------
       if 'days ago' in data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago']:
         num_days = int(data_captured_dict[element_all_posts_arr[i_post]]['reddit_posted_time_ago'].replace(' days ago', ''))
-        if num_days >= 100:
+        if num_days >= 20:
           running_check = False
           break
       # ------------------------ cutooff check end ------------------------
