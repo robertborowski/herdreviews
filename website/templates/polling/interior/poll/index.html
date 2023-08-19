@@ -157,9 +157,9 @@
         <!-- ------------------------------------- ui written response start ------------------------------------- -->
         <!-- <label for="ui_written_feedback" class="custom-m-0"></label> -->
         {% if page_dict_to_html['poll_answered'] == true %}
-          <textarea class="form-control" id="ui_written_feedback" name="ui_written_feedback" placeholder="Your previous feedback: '{{ page_dict_to_html['poll_answered_dict']['written_answer_submitted'] }}'" rows="4" onkeyup="CountCharsGeneral150(this);" pattern="{1,150}"></textarea>
+          <textarea class="form-control" id="ui_written_feedback" name="ui_written_feedback" placeholder="Additional feedback...'{{ page_dict_to_html['poll_answered_dict']['written_answer_submitted'] }}'" rows="2" onkeyup="CountCharsGeneral150(this);" pattern="{1,150}"></textarea>
         {% else %}
-          <textarea class="form-control" id="ui_written_feedback" name="ui_written_feedback" placeholder="Additional feedback..." rows="4" onkeyup="CountCharsGeneral150(this);" pattern="{1,150}"></textarea>
+          <textarea class="form-control" id="ui_written_feedback" name="ui_written_feedback" placeholder="Additional feedback..." rows="2" onkeyup="CountCharsGeneral150(this);" pattern="{1,150}"></textarea>
         {% endif %}
         <p id="id-countCharsGeneral150" class="custom-m-0 custom-pt-10 custom-header-12 custom-color-white custom-opacity-75"></p>
         <!-- ------------------------------------- ui written response end ------------------------------------- -->
