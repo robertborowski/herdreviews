@@ -433,10 +433,13 @@
                     </div>
                   {% endfor %}
                   {% if v_post['all_comments_dict_len'] > v_post['all_comments_limit'] %}
-                    <div class="custom-tar">
-                      <span class="custom-hover-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Podcast host only">More comment analysis <i class="fa-solid fa-chevron-right"></i></span>
+                    <div class="custom-tar custom-mb-10">
+                      <a href="{{ v_post['post_url'] }}" target="_blank" class="custom-a-white-underline">View more comments <i class="fa-solid fa-chevron-right"></i></a>
                     </div>
                   {% endif %}
+                  <div class="custom-tar">
+                    <span class="custom-hover-1 custom-a-white-underline" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Podcast host only">View comment analysis <i class="fa-solid fa-chevron-right"></i></span>
+                  </div>
                 {% endif %}
               </div>
             {% endfor %}
