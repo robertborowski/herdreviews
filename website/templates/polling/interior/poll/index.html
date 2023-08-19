@@ -419,13 +419,19 @@
                   <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-10">Comments: {{ v_post['total_comments'] }}</p>
                 </div>
                 <p class="custom-header-20 custom-m-0 custom-ml-10 custom-mt-10">Top comments</p>
-                {% for k_comment,v_comment in v_post['all_comments_dict'].items() %}
+                {% if v_post['all_comments_dict'] == none %}
                   <div class="custom-mb-15 custom-border-white-opacity-25 custom-br-25 custom-p-10">
-                    <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25 fst-italic">{{ v_comment['author'] }}</p>
-                    <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25">"{{ v_comment['comment'] }}"</p>
-                    <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25">Upvotes: {{ v_comment['upvotes'] }}</p>
+                    <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25 fst-italic">No comments on reddit post yet.</p>
                   </div>
-                {% endfor %}
+                {% else %}
+                  {% for k_comment,v_comment in v_post['all_comments_dict'].items() %}
+                    <div class="custom-mb-15 custom-border-white-opacity-25 custom-br-25 custom-p-10">
+                      <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25 fst-italic">{{ v_comment['author'] }}</p>
+                      <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25">"{{ v_comment['comment'] }}"</p>
+                      <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25">Upvotes: {{ v_comment['upvotes'] }}</p>
+                    </div>
+                  {% endfor %}
+                {% endif %}
                 <div class="custom-tar">
                   <a href="{{ v_post['post_url'] }}" target="_blank" class="custom-a-white-underline">View post <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
