@@ -471,6 +471,7 @@
           <a href="/signup" class="custom-width-100 btn btn-outline-warning">Create poll for this community <i class="fa-solid fa-plus"></i></a>
         {% else %}
           <a href="/create/{{ page_dict_to_html['db_show_dict']['id'] }}" class="custom-width-100 btn btn-outline-warning">Create poll for this community <i class="fa-solid fa-plus"></i></a>
+          <a href="/dashboard/{{ page_dict_to_html['db_show_dict']['id'] }}" class="custom-width-100 btn btn-outline-light custom-mt-15">See all show polls</a>
         {% endif %}
       </div>
       <!-- ------------------------------------- create poll end ------------------------------------- -->
