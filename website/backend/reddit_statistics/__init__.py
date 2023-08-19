@@ -34,7 +34,7 @@ def get_reddit_statistics_function(page_dict, passed_current_user_obj):
     if page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['total_comments'] == 0:
       page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['all_comments_dict'] = None
     else:
-      obj_reddit_comments = RedditCommentsObj.query.filter_by(fk_reddit_post_id=obj_reddit_post.id).order_by(RedditCommentsObj.created_timestamp.desc()).all()
+      obj_reddit_comments = RedditCommentsObj.query.filter_by(fk_reddit_post_id=obj_reddit_post.id).order_by(RedditCommentsObj.upvotes.desc()).all()
       for i_comment_obj in obj_reddit_comments:
         page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['all_comments_dict'][i_comment_obj.id] = {}
         page_dict['poll_reddit_dict'][i_map_obj.fk_reddit_post_id]['all_comments_dict'][i_comment_obj.id]['author'] = i_comment_obj.author

@@ -1891,9 +1891,15 @@
 .custom-width-100 {
   width: 100%;
 }
+.custom-width-30-px {
+  max-width: 30px;
+}
 .custom-width-height-40-px {
   max-width: 40px;
   max-height: 40px;
+}
+.custom-width-50-px {
+  max-width: 50px;
 }
 .custom-width-66-px {
   max-width: 66px;

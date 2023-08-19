@@ -185,7 +185,7 @@
       <!-- ------------------------------------- divider end ------------------------------------- -->
       <!-- ------------------------------------- poll statistics start ------------------------------------- -->
       <div class="mx-auto">
-        <p class="custom-color-white custom-m-0 custom-header-30">Poll statistics</p>
+        <p class="custom-color-white custom-m-0 custom-header-30"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v2_white.png" alt="HerdReviews logo, Vecteezy.com" class="custom-img-size-35 custom-mt-negative-5"> Poll statistics</p>
         <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-10 custom-pb-10">Only the verified '{{ page_dict_to_html['db_show_dict']['name_title'] }}' host can see your direct feedback. Your feedback and privacy will always be hidden from the public poll statistics.</p>
         {% if page_dict_to_html['poll_answered'] == false %}
           <div class="custom-br-15 custom-border-white-opacity-25 custom-p-15">
@@ -386,12 +386,55 @@
             {% endif %}
           {% endfor %}
           <!-- ------------------------------------- charts end ------------------------------------- -->
-          <!-- ------------------------------------- reddit mapping data start ------------------------------------- -->
-          <!-- To be added -->
-          <!-- ------------------------------------- reddit mapping data end ------------------------------------- -->
         {% endif %}
       </div>
       <!-- ------------------------------------- poll statistics end ------------------------------------- -->
+      <!-- ------------------------------------- divider start ------------------------------------- -->
+      <div class="custom-border-white-opacity-25 custom-mtb-100 custom-width-100 mx-auto"></div>
+      <!-- ------------------------------------- divider end ------------------------------------- -->
+      <!-- ------------------------------------- reddit mapping data start ------------------------------------- -->
+      <div class="mx-auto">
+        <p class="custom-color-white custom-m-0 custom-header-30"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/reddit_logo.png" alt="show logo" class="custom-img-size-35 custom-mb-10"> Reddit statistics</p>
+        {% if page_dict_to_html['poll_answered'] == false %}
+          <div class="custom-br-15 custom-border-white-opacity-25 custom-p-15">
+            <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">You must first answer this poll in order to see the reddit statistics.</p>
+          </div>
+        {% else %}
+          {% if page_dict_to_html['poll_reddit_dict'] == none %}
+            <div class="custom-br-15 custom-border-white-opacity-25 custom-p-15">
+              {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+                <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">You must <a href="/signup" class="custom-a-white-underline-on">create an account</a> to see the reddit post statistics.</p>
+              {% else %}
+                <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">There are no reddit posts associated with this poll yet.</p>
+              {% endif %}
+            </div>
+          {% else %}
+            {% for k_post,v_post in page_dict_to_html['poll_reddit_dict'].items() %}
+              <div class="custom-color-white custom-mb-25 custom-border-white-opacity-25 custom-br-25 custom-p-25">
+                <p class="custom-header-25 custom-m-0 custom-mb-10">{{ v_post['community'] }}</p>
+                <p class="custom-header-20 custom-m-0 custom-ml-10 custom-mt-10">Post</p>
+                <div class="custom-mb-25 custom-border-white-opacity-25 custom-br-25 custom-p-10">
+                  <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-10">"{{ v_post['title'] }}"</p>
+                  <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-10">Votes: {{ v_post['total_votes'] }}</p>
+                  <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-10">Comments: {{ v_post['total_comments'] }}</p>
+                </div>
+                <p class="custom-header-20 custom-m-0 custom-ml-10 custom-mt-10">Top comments</p>
+                {% for k_comment,v_comment in v_post['all_comments_dict'].items() %}
+                  <div class="custom-mb-15 custom-border-white-opacity-25 custom-br-25 custom-p-10">
+                    <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25 fst-italic">{{ v_comment['author'] }}</p>
+                    <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25">"{{ v_comment['comment'] }}"</p>
+                    <p class="custom-header-15 custom-m-0 custom-mb-5 custom-ml-25">Upvotes: {{ v_comment['upvotes'] }}</p>
+                  </div>
+                {% endfor %}
+                <div class="custom-tar">
+                  <a href="{{ v_post['post_url'] }}" target="_blank" class="custom-a-white-underline">View post <i class="fa-solid fa-chevron-right"></i></a>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+      </div>
+      <!-- ------------------------------------- reddit mapping data end ------------------------------------- -->
       <!-- ------------------------------------- divider start ------------------------------------- -->
       <div class="custom-border-white-opacity-25 custom-mtb-100 custom-width-100 mx-auto"></div>
       <!-- ------------------------------------- divider end ------------------------------------- -->
