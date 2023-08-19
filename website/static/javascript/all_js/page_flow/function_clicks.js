@@ -70,4 +70,10 @@ $(document).ready(function() {
     element.scrollIntoView({ behavior: 'smooth' });
   });
   // ----------------------------- autoscroll end -----------------------------
+  // ----------------------------- autoscroll start -----------------------------
+  $("#id-general_autoscroll_click_3").click(function() {
+    var element = document.getElementById('id-general_autoscroll_location_3');
+    element.scrollIntoView({ behavior: 'smooth' });
+  });
+  // ----------------------------- autoscroll end -----------------------------
 });

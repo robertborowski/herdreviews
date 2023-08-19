@@ -207,6 +207,12 @@
 .custom-bg-color-16 {
   background-color: var(--custom-color-16);
 }
+.custom-bg-color-reddit {
+  background-color: var(--custom-color-reddit);
+}
+.custom-bg-color-reddit:hover {
+  background-color: var(--custom-color-reddit-hover);
+}
 .custom-back-img-1 {
   background-image: url(https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/custom_shape_1.png);
   background-repeat: no-repeat;
@@ -264,6 +270,8 @@
   --custom-color-15: rgb(245 251 255);
   --custom-color-16: rgb(212, 238, 255);
   --custom-color-17: rgb(97, 127, 145);
+  --custom-color-reddit: rgb(255, 69, 0);
+  --custom-color-reddit-hover: rgb(210, 57, 0);
 }
 .custom-color-light-1 {
   color: var(--custom-color-1);
