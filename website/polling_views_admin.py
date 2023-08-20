@@ -19,6 +19,7 @@ from website.backend.candidates.user_inputs import alert_message_default_functio
 import os
 from website.backend.selenium_script import reddit_scrape_function
 from website.models import RedditPostsObj, PollsObj, RedditMappingObj
+from website.backend.reddit_api import reddit_api_function
 # ------------------------ imports end ------------------------
 
 # ------------------------ function start ------------------------
@@ -54,6 +55,7 @@ def admin_function(url_redirect_code=None):
     ui_reddit_button = request.form.get('ui_reddit_button')
     ui_reddit_input = request.form.get('ui_reddit_input')
     ui_poll_input = request.form.get('ui_poll_input')
+    ui_reddit_api_button = request.form.get('ui_reddit_api_button')
     # ------------------------ get ui end ------------------------
     # ------------------------ reddit scrape start ------------------------
     if ui_reddit_button == 'on':
@@ -82,6 +84,10 @@ def admin_function(url_redirect_code=None):
           # ------------------------ insert to db end ------------------------
           return redirect(url_for('polling_views_admin.admin_function', url_redirect_code='s21'))
     # ------------------------ reddit poll mapping end ------------------------
+    # ------------------------ reddit scrape start ------------------------
+    if ui_reddit_api_button == 'on':
+      reddit_api_run = reddit_api_function()
+    # ------------------------ reddit scrape end ------------------------
   # ------------------------ submission end ------------------------    
   localhost_print_function(' ------------- 100-admin start ------------- ')
   page_dict = dict(sorted(page_dict.items(),key=lambda x:x[0]))
