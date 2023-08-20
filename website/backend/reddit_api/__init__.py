@@ -31,7 +31,8 @@ def reddit_api_function():
   all_posts_dict = {}
   for i_post in submissions:
     # ------------------------ get post info, set/assign variables start ------------------------
-    all_posts_dict[i_post.subreddit.display_name] = {}
+    if i_post.subreddit.display_name not in all_posts_dict:
+      all_posts_dict[i_post.subreddit.display_name] = {}
     all_posts_dict[i_post.subreddit.display_name][i_post.url] = {}
     all_posts_dict[i_post.subreddit.display_name][i_post.url]['title'] = i_post.title
     all_posts_dict[i_post.subreddit.display_name][i_post.url]['num_comments'] = i_post.num_comments
@@ -94,17 +95,17 @@ def reddit_api_function():
         if db_post_obj.title != v2['title']:
           db_post_obj.title = v2['title']
           change_found = True
-        if db_post_obj.total_votes != v2['total_vote_count']:
-          db_post_obj.total_votes = v2['total_vote_count']
+        if int(db_post_obj.total_votes) != int(v2['total_vote_count']):
+          db_post_obj.total_votes = int(v2['total_vote_count'])
           change_found = True
-        if db_post_obj.total_comments != v2['num_comments']:
-          db_post_obj.total_comments = v2['num_comments']
+        if int(db_post_obj.total_comments) != int(v2['num_comments']):
+          db_post_obj.total_comments = int(v2['num_comments'])
           change_found = True
-        if db_post_obj.total_upvotes != v2['ups']:
-          db_post_obj.total_upvotes = v2['ups']
+        if int(db_post_obj.total_upvotes) != int(v2['ups']):
+          db_post_obj.total_upvotes = int(v2['ups'])
           change_found = True
-        if db_post_obj.upvote_ratio != v2['upvote_ratio']:
-          db_post_obj.upvote_ratio = v2['upvote_ratio']
+        if float(db_post_obj.upvote_ratio) != float(v2['upvote_ratio']):
+          db_post_obj.upvote_ratio = float(v2['upvote_ratio'])
           change_found = True
         if db_post_obj.total_views != v2['view_count']:
           db_post_obj.total_views = v2['view_count']
