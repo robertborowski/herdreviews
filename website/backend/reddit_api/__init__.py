@@ -55,6 +55,11 @@ def reddit_api_function():
     except:
       all_posts_dict[i_post.subreddit.display_name][i_post.url]['poll_data_dict'] = None
     # ------------------------ get post poll options text + vote counts end ------------------------
+    # ------------------------ check if post removed start ------------------------
+    all_posts_dict[i_post.subreddit.display_name][i_post.url]['post_removed'] = False
+    if i_post.removed_by_category != None:
+      all_posts_dict[i_post.subreddit.display_name][i_post.url]['post_removed'] = True
+    # ------------------------ check if post removed end ------------------------
     # ------------------------ get post info, set/assign variables end ------------------------
   # ------------------------ get all posts from user end ------------------------
   # ------------------------ loop through posts and insert to db start ------------------------
@@ -79,7 +84,8 @@ def reddit_api_function():
           total_upvotes=v2['ups'],
           upvote_ratio=v2['upvote_ratio'],
           total_views=v2['view_count'],
-          poll_data_obj=json.dumps(v2['poll_data_dict'])
+          poll_data_obj=json.dumps(v2['poll_data_dict']),
+          post_removed=v2['post_removed']
         )
         db.session.add(new_row)
         db.session.commit()
@@ -109,6 +115,9 @@ def reddit_api_function():
           change_found = True
         if db_post_obj.total_views != v2['view_count']:
           db_post_obj.total_views = v2['view_count']
+          change_found = True
+        if db_post_obj.post_removed != v2['post_removed']:
+          db_post_obj.post_removed = v2['post_removed']
           change_found = True
         # ------------------------ compare vote counts start ------------------------
         current_poll_data_dict = None

@@ -232,6 +232,7 @@ class RedditPostsObj(db.Model):
   upvote_ratio = db.Column(db.Float)
   total_views = db.Column(db.Integer)
   poll_data_obj = db.Column(db.String(1000))
+  post_removed = db.Column(db.Boolean)
 # ------------------------ individual model end ------------------------
 
 # ------------------------ individual model start ------------------------
