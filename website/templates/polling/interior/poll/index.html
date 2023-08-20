@@ -469,6 +469,7 @@
         <p class="custom-color-white custom-m-0 custom-opacity-75 custom-header-10 custom-pb-25">The verified '{{ page_dict_to_html['db_show_dict']['name_title'] }}' host has final approval before your poll can be seen by others in the community.</p>
         {% if page_dict_to_html['current_user_is_anonymous'] == true %}
           <a href="/signup" class="custom-width-100 btn btn-outline-warning">Create poll for this community <i class="fa-solid fa-plus"></i></a>
+          <a href="/signup" class="custom-width-100 btn btn-outline-light custom-mt-15">See all show polls</a>
         {% else %}
           <a href="/create/{{ page_dict_to_html['db_show_dict']['id'] }}" class="custom-width-100 btn btn-outline-warning">Create poll for this community <i class="fa-solid fa-plus"></i></a>
           <a href="/dashboard/{{ page_dict_to_html['db_show_dict']['id'] }}" class="custom-width-100 btn btn-outline-light custom-mt-15">See all show polls</a>
