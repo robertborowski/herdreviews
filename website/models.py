@@ -228,7 +228,6 @@ class RedditPostsObj(db.Model):
   total_votes = db.Column(db.Integer)
   total_comments = db.Column(db.Integer)
   post_url = db.Column(db.String(300))
-  total_replies = db.Column(db.Integer)
   total_upvotes = db.Column(db.Integer)
   upvote_ratio = db.Column(db.Float)
   total_views = db.Column(db.Integer)

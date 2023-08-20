@@ -3,6 +3,11 @@ from backend.utils.localhost_print_utils.localhost_print import localhost_print_
 import praw
 import os
 import pprint
+from website.models import RedditPostsObj, RedditCommentsObj
+from website import db
+from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
+from backend.utils.uuid_and_timestamp.create_timestamp import create_timestamp_function
+import json
 # ------------------------ imports end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -22,7 +27,7 @@ def reddit_api_function():
   # ------------------------ connect to reddit end ------------------------
   # ------------------------ get all posts from user start ------------------------
   user = reddit_connection.redditor(reddit_username)
-  submissions = user.submissions.new(limit=3)
+  submissions = user.submissions.new(limit=200)
   all_posts_dict = {}
   for i_post in submissions:
     # ------------------------ get post info, set/assign variables start ------------------------
@@ -51,8 +56,86 @@ def reddit_api_function():
     # ------------------------ get post poll options text + vote counts end ------------------------
     # ------------------------ get post info, set/assign variables end ------------------------
   # ------------------------ get all posts from user end ------------------------
-  localhost_print_function(' ------------- 50 ------------- ')
-  localhost_print_function(pprint.pformat(all_posts_dict, indent=2))
-  localhost_print_function(' ------------- 50 ------------- ')
+  # ------------------------ loop through posts and insert to db start ------------------------
+  for k,v in all_posts_dict.items():
+    # k = community
+    # v = 'url of post' : 'info about post'
+    for k2,v2 in v.items():
+      # k2 = 'url of post'
+      # v2 = 'col key' : 'col val'
+      # ------------------------ check if in db start ------------------------
+      db_post_obj = RedditPostsObj.query.filter_by(post_url=k2).first()
+      if db_post_obj == None or db_post_obj == []:
+        # ------------------------ insert to db start ------------------------
+        new_row = RedditPostsObj(
+          id=create_uuid_function('reddit_post_'),
+          created_timestamp=create_timestamp_function(),
+          community=k,
+          title=v2['title'],
+          total_votes=v2['total_vote_count'],
+          total_comments=v2['num_comments'],
+          post_url=k2,
+          total_upvotes=v2['ups'],
+          upvote_ratio=v2['upvote_ratio'],
+          total_views=v2['view_count'],
+          poll_data_obj=json.dumps(v2['poll_data_dict'])
+        )
+        db.session.add(new_row)
+        db.session.commit()
+        # ------------------------ insert to db end ------------------------
+      # ------------------------ check if in db end ------------------------
+      # ------------------------ check existing reddit post obj start ------------------------
+      else:
+        # ------------------------ compare post data changes start ------------------------
+        change_found = False
+        if db_post_obj.community != k:
+          db_post_obj.community = k
+          change_found = True
+        if db_post_obj.title != v2['title']:
+          db_post_obj.title = v2['title']
+          change_found = True
+        if db_post_obj.total_votes != v2['total_vote_count']:
+          db_post_obj.total_votes = v2['total_vote_count']
+          change_found = True
+        if db_post_obj.total_comments != v2['num_comments']:
+          db_post_obj.total_comments = v2['num_comments']
+          change_found = True
+        if db_post_obj.total_upvotes != v2['ups']:
+          db_post_obj.total_upvotes = v2['ups']
+          change_found = True
+        if db_post_obj.upvote_ratio != v2['upvote_ratio']:
+          db_post_obj.upvote_ratio = v2['upvote_ratio']
+          change_found = True
+        if db_post_obj.total_views != v2['view_count']:
+          db_post_obj.total_views = v2['view_count']
+          change_found = True
+        # ------------------------ compare vote counts start ------------------------
+        current_poll_data_dict = None
+        try:
+          current_poll_data_dict = json.loads(v['poll_data_dict'])
+        except:
+          pass
+        if v2['poll_data_dict'] != None:
+          for k3,v3 in v2['poll_data_dict'].items():
+            # k3 = poll choice title
+            # v3 = poll choice vote count
+            try:
+              if current_poll_data_dict[k3] != v3:
+                db_post_obj.poll_data_obj = json.dumps(v2['poll_data_dict'])
+                change_found = True
+                break
+            except:
+              db_post_obj.poll_data_obj = json.dumps(v2['poll_data_dict'])
+              change_found = True
+              break
+        # ------------------------ compare vote counts end ------------------------
+        if change_found == True:
+          db.session.commit()
+        # ------------------------ compare post data changes end ------------------------
+      # ------------------------ check existing reddit post obj end ------------------------
+  # ------------------------ loop through posts and insert to db end ------------------------
+  # localhost_print_function(' ------------- 50 ------------- ')
+  # localhost_print_function(pprint.pformat(all_posts_dict, indent=2))
+  # localhost_print_function(' ------------- 50 ------------- ')
   return True
 # ------------------------ individual function end ------------------------
