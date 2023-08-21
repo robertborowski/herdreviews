@@ -87,6 +87,7 @@ def admin_function(url_redirect_code=None):
     # ------------------------ reddit scrape start ------------------------
     if ui_reddit_api_button == 'on':
       reddit_api_run = reddit_api_function()
+      return redirect(url_for('polling_views_admin.admin_function', url_redirect_code='s21'))
     # ------------------------ reddit scrape end ------------------------
   # ------------------------ submission end ------------------------    
   localhost_print_function(' ------------- 100-admin start ------------- ')
