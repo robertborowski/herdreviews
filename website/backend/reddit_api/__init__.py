@@ -11,25 +11,7 @@ import json
 # ------------------------ imports end ------------------------
 
 # ------------------------ individual function start ------------------------
-def reddit_api_function():
-  # ------------------------ set variables start ------------------------
-  reddit_username = os.environ.get('REDDIT_USERNAME')
-  reddit_app_id = os.environ.get('REDDIT_APP_ID_WEB_APP')
-  reddit_app_secret = os.environ.get('REDDIT_APP_SECRET_WEB_APP')
-  # ------------------------ set variables end ------------------------
-  # ------------------------ connect to reddit start ------------------------
-  reddit_connection = praw.Reddit(
-    client_id=reddit_app_id,
-    client_secret=reddit_app_secret,
-    user_agent=reddit_username,
-    username=reddit_username,
-  )
-  # ------------------------ connect to reddit end ------------------------
-  # ------------------------ get all posts from user start ------------------------
-  user = reddit_connection.redditor(reddit_username)
-  submissions = user.submissions.new(limit=200)
-  # ------------------------ get all posts from user end ------------------------
-  # ------------------------ create all posts dict start ------------------------
+def reddit_all_posts_dict_function(submissions):
   all_posts_dict = {}
   for i_post in submissions:
     # ------------------------ get post info, set/assign variables start ------------------------
@@ -63,8 +45,11 @@ def reddit_api_function():
       all_posts_dict[i_post.subreddit.display_name][i_post.url]['post_removed'] = True
     # ------------------------ check if post removed end ------------------------
     # ------------------------ get post info, set/assign variables end ------------------------
-  # ------------------------ create all posts dict end ------------------------
-  # ------------------------ loop through posts and insert to db start ------------------------
+  return all_posts_dict
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
+def reddit_all_posts_to_db_function(all_posts_dict):
   for k,v in all_posts_dict.items():
     # k = community
     # v = 'url of post' : 'info about post'
@@ -145,6 +130,33 @@ def reddit_api_function():
           db.session.commit()
         # ------------------------ compare post data changes end ------------------------
       # ------------------------ check existing reddit post obj end ------------------------
+  return True
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
+def reddit_api_function():
+  # ------------------------ set variables start ------------------------
+  reddit_username = os.environ.get('REDDIT_USERNAME')
+  reddit_app_id = os.environ.get('REDDIT_APP_ID_WEB_APP')
+  reddit_app_secret = os.environ.get('REDDIT_APP_SECRET_WEB_APP')
+  # ------------------------ set variables end ------------------------
+  # ------------------------ connect to reddit start ------------------------
+  reddit_connection = praw.Reddit(
+    client_id=reddit_app_id,
+    client_secret=reddit_app_secret,
+    user_agent=reddit_username,
+    username=reddit_username,
+  )
+  # ------------------------ connect to reddit end ------------------------
+  # ------------------------ get all posts from user start ------------------------
+  user = reddit_connection.redditor(reddit_username)
+  submissions = user.submissions.new(limit=200)
+  # ------------------------ get all posts from user end ------------------------
+  # ------------------------ create all posts dict start ------------------------
+  all_posts_dict = reddit_all_posts_dict_function(submissions)
+  # ------------------------ create all posts dict end ------------------------
+  # ------------------------ loop through posts and insert to db start ------------------------
+  reddit_all_posts_to_db_function(all_posts_dict)
   # ------------------------ loop through posts and insert to db end ------------------------
   # localhost_print_function(' ------------- 50 ------------- ')
   # localhost_print_function(pprint.pformat(all_posts_dict, indent=2))
