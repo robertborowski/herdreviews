@@ -8,6 +8,7 @@ from website import db
 from backend.utils.uuid_and_timestamp.create_uuid import create_uuid_function
 from backend.utils.uuid_and_timestamp.create_timestamp import create_timestamp_function
 import json
+from website.backend.dates import unix_timestamp_to_est_function
 # ------------------------ imports end ------------------------
 
 # ------------------------ individual function start ------------------------
@@ -59,9 +60,10 @@ def reddit_all_posts_to_db_function(all_posts_dict):
       # ------------------------ check if in db start ------------------------
       db_post_obj = RedditPostsObj.query.filter_by(post_url=k2).first()
       if db_post_obj == None or db_post_obj == []:
+        fk_reddit_post_id = create_uuid_function('reddit_post_')
         # ------------------------ insert to db start ------------------------
         new_row = RedditPostsObj(
-          id=create_uuid_function('reddit_post_'),
+          id=fk_reddit_post_id,
           created_timestamp=create_timestamp_function(),
           community=k,
           title=v2['title'],
@@ -77,9 +79,11 @@ def reddit_all_posts_to_db_function(all_posts_dict):
         db.session.add(new_row)
         db.session.commit()
         # ------------------------ insert to db end ------------------------
+        all_posts_dict[k][k2]['fk_reddit_post_id'] = fk_reddit_post_id
       # ------------------------ check if in db end ------------------------
       # ------------------------ check existing reddit post obj start ------------------------
       else:
+        all_posts_dict[k][k2]['fk_reddit_post_id'] = db_post_obj.id
         # ------------------------ compare post data changes start ------------------------
         change_found = False
         if db_post_obj.community != k:
@@ -134,6 +138,81 @@ def reddit_all_posts_to_db_function(all_posts_dict):
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
+def reddit_all_post_commentary_function(reddit_connection, all_posts_dict):
+  for k,v in all_posts_dict.items():
+    # k = community
+    # v = 'url of post' : 'info about post'
+    for k2,v2 in v.items():
+      all_posts_dict[k][k2]['comments_dict'] = {}
+      # k2 = 'url of post'
+      # v2 = 'col key' : 'col val'
+      submission = reddit_connection.submission(url=k2)
+      comments = submission.comments
+      for i_comment in comments:
+        # ------------------------ assign variables start ------------------------
+        i_comment_url = 'https://www.reddit.com'
+        try:
+          i_comment_url = 'https://www.reddit.com' + i_comment.permalink
+        except:
+          continue
+        comment_created_at = unix_timestamp_to_est_function(i_comment.created)
+        # ------------------------ assign variables end ------------------------
+        # ------------------------ author exception start ------------------------
+        author_fix = '[deleted]'
+        try:
+          author_fix = i_comment.author.name
+        except:
+          pass
+        # ------------------------ author exception end ------------------------
+        # ------------------------ comment length exception start ------------------------
+        comment_fix = i_comment.body
+        if len(comment_fix) > 1000:
+          comment_fix = comment_fix[:1000]
+        # ------------------------ comment length exception end ------------------------
+        # ------------------------ insert/update db start ------------------------
+        db_comment_obj = RedditCommentsObj.query.filter_by(comment_url=i_comment_url).first()
+        if db_comment_obj == None or db_comment_obj == []:
+          # ------------------------ insert to db start ------------------------
+          new_row = RedditCommentsObj(
+            id=create_uuid_function('reddit_comment_'),
+            created_timestamp=create_timestamp_function(),
+            fk_reddit_post_id=v2['fk_reddit_post_id'],
+            author=author_fix,
+            comment=comment_fix,
+            upvotes=i_comment.ups,
+            downvotes=i_comment.downs,
+            created_at=comment_created_at,
+            comment_url=i_comment_url
+          )
+          db.session.add(new_row)
+          db.session.commit()
+          # ------------------------ insert to db end ------------------------
+        else:
+          # ------------------------ update db start ------------------------
+          change_found = False
+          if db_comment_obj.author != author_fix:
+            db_comment_obj.author = author_fix
+            change_found = True
+          if db_comment_obj.comment != comment_fix:
+            db_comment_obj.comment = comment_fix
+            change_found = True
+          if int(db_comment_obj.upvotes) != int(i_comment.ups):
+            db_comment_obj.upvotes = int(i_comment.ups)
+            change_found = True
+          if int(db_comment_obj.downvotes) != int(i_comment.downs):
+            db_comment_obj.downvotes = int(i_comment.downs)
+            change_found = True
+          if db_comment_obj.created_at != comment_created_at:
+            db_comment_obj.created_at = comment_created_at
+            change_found = True
+          if change_found == True:
+            db.session.commit()
+          # ------------------------ update db end ------------------------
+        # ------------------------ insert/update db end ------------------------
+  return True
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
 def reddit_api_function():
   # ------------------------ set variables start ------------------------
   reddit_username = os.environ.get('REDDIT_USERNAME')
@@ -158,6 +237,9 @@ def reddit_api_function():
   # ------------------------ loop through posts and insert to db start ------------------------
   reddit_all_posts_to_db_function(all_posts_dict)
   # ------------------------ loop through posts and insert to db end ------------------------
+  # ------------------------ get commentary for each post start ------------------------
+  reddit_all_post_commentary_function(reddit_connection, all_posts_dict)
+  # ------------------------ get commentary for each post end ------------------------
   # localhost_print_function(' ------------- 50 ------------- ')
   # localhost_print_function(pprint.pformat(all_posts_dict, indent=2))
   # localhost_print_function(' ------------- 50 ------------- ')

@@ -243,6 +243,9 @@ class RedditCommentsObj(db.Model):
   author = db.Column(db.String(150))
   comment = db.Column(db.String(1000))
   upvotes = db.Column(db.Integer)
+  downvotes = db.Column(db.Integer)
+  created_at = db.Column(db.DateTime(timezone=True))
+  comment_url = db.Column(db.String(300))
 # ------------------------ individual model end ------------------------
 
 # ------------------------ individual model start ------------------------

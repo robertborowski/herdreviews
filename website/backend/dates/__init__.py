@@ -40,3 +40,12 @@ def user_years_old_at_timestamp_function(timestamp_submitted, user_birth_year, u
   year_difference = int(float((submitted_date - birth_date).days // 365))
   return year_difference
 # ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
+def unix_timestamp_to_est_function(unix_timestamp):
+    # Convert Unix timestamp to a datetime object
+    utc_datetime = datetime.utcfromtimestamp(unix_timestamp)
+    # Create a timezone object for EST
+    est_timezone = utc_datetime + timedelta(hours=-4)
+    return est_timezone
+# ------------------------ individual function end ------------------------
