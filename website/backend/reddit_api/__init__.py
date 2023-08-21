@@ -28,6 +28,8 @@ def reddit_api_function():
   # ------------------------ get all posts from user start ------------------------
   user = reddit_connection.redditor(reddit_username)
   submissions = user.submissions.new(limit=200)
+  # ------------------------ get all posts from user end ------------------------
+  # ------------------------ create all posts dict start ------------------------
   all_posts_dict = {}
   for i_post in submissions:
     # ------------------------ get post info, set/assign variables start ------------------------
@@ -61,7 +63,7 @@ def reddit_api_function():
       all_posts_dict[i_post.subreddit.display_name][i_post.url]['post_removed'] = True
     # ------------------------ check if post removed end ------------------------
     # ------------------------ get post info, set/assign variables end ------------------------
-  # ------------------------ get all posts from user end ------------------------
+  # ------------------------ create all posts dict end ------------------------
   # ------------------------ loop through posts and insert to db start ------------------------
   for k,v in all_posts_dict.items():
     # k = community
