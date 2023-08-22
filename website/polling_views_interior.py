@@ -1020,6 +1020,18 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
         db.session.commit()
         # ------------------------ insert to db end ------------------------
       # ------------------------ make sure user is following the show if submitted answer end ------------------------
+      # ------------------------ email self start ------------------------
+      try:
+        output_to_email = os.environ.get('HR_SUPPORT_EMAIL')
+        output_subject = f"Poll answered for '{page_dict['db_show_dict']['name']}' by '{current_user.email}'"
+        output_body = f"<p>{current_user.email} answered a poll for '{page_dict['db_show_dict']['name']}'</p>\
+                        <p>Question: '{page_dict['poll_dict']['question']}'</p>\
+                        <p>Voted: {ui_answer_selected}</p>\
+                        <p>Written: '{ui_written_feedback}'</p>"
+        send_email_template_function(output_to_email, output_subject, output_body)
+      except:
+        pass
+      # ------------------------ email self end ------------------------
       return redirect(url_for('polling_views_interior.polling_show_function', url_show_id=url_show_id, url_poll_id=page_dict['poll_dict']['id']))
   localhost_print_function(' ------------- 100-show poll start ------------- ')
   page_dict = dict(sorted(page_dict.items(),key=lambda x:x[0]))
