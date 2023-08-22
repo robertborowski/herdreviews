@@ -52,15 +52,10 @@ def admin_function(url_redirect_code=None):
   # ------------------------ submission start ------------------------
   if request.method == 'POST':
     # ------------------------ get ui start ------------------------
-    ui_reddit_button = request.form.get('ui_reddit_button')
     ui_reddit_input = request.form.get('ui_reddit_input')
     ui_poll_input = request.form.get('ui_poll_input')
     ui_reddit_api_button = request.form.get('ui_reddit_api_button')
     # ------------------------ get ui end ------------------------
-    # ------------------------ reddit scrape start ------------------------
-    if ui_reddit_button == 'on':
-      reddit_scrape_run = reddit_scrape_function()
-    # ------------------------ reddit scrape end ------------------------
     # ------------------------ reddit poll mapping start ------------------------
     if ui_reddit_input != None and ui_poll_input != None:
       obj_reddit = RedditPostsObj.query.filter_by(id=ui_reddit_input).first()
