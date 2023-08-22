@@ -409,6 +409,7 @@
                 <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">You must <a href="/signup" class="custom-a-white-underline-on">create an account</a> to see the reddit post statistics.</p>
               {% else %}
                 <p class="custom-m-0 custom-header-15 custom-color-white custom-opacity-75">There are no reddit posts associated with this poll yet.</p>
+                <a href="/request/reddit/{{ page_dict_to_html['url_show_id'] }}/{{ page_dict_to_html['url_poll_id'] }}" class="custom-a-white-underline custom-m-0 custom-header-15 custom-opacity-75-hover">Click here to request a reddit post be created.</a>
               {% endif %}
             </div>
           {% else %}

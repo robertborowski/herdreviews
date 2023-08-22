@@ -17,7 +17,7 @@ from website.backend.candidates.redis import redis_check_if_cookie_exists_functi
 from website import db
 from website.backend.candidates.user_inputs import alert_message_default_function_v2
 from website.backend.candidates.browser import browser_response_set_cookie_function_v6
-from website.models import UserObj, EmailSentObj, UserAttributesObj, ShowsFollowingObj, ShowsObj, PollsObj, PollsAnsweredObj, ShowsQueueObj
+from website.models import UserObj, EmailSentObj, UserAttributesObj, ShowsFollowingObj, ShowsObj, PollsObj, PollsAnsweredObj, ShowsQueueObj, RedditPostsRequestedObj
 from website.backend.onboarding import onboarding_checks_v2_function
 from website.backend.login_checks import product_login_checks_function
 from website.backend.candidates.string_manipulation import breakup_email_function
@@ -1173,4 +1173,38 @@ def polling_view_all_created_polls_function(url_redirect_code=None):
     pass
   localhost_print_function(' ------------- 100-created polls end ------------- ')
   return render_template('polling/interior/poll/create/view_all_created/index.html', page_dict_to_html=page_dict)
+# ------------------------ individual route end ------------------------
+
+# ------------------------ individual route start ------------------------
+@polling_views_interior.route('/request/reddit/<url_show_id>/<url_poll_id>', methods=['GET', 'POST'])
+@polling_views_interior.route('/request/reddit/<url_show_id>/<url_poll_id>/', methods=['GET', 'POST'])
+@login_required
+def request_reddit_post_function(url_show_id=None, url_poll_id=None):
+  if url_show_id == None or url_poll_id == None:
+    return redirect(url_for('polling_views_interior.polling_dashboard_function', url_redirect_code='e6'))
+  db_show_obj = ShowsObj.query.filter_by(id=url_show_id).first()
+  db_poll_obj = PollsObj.query.filter_by(id=url_poll_id).first()
+  if db_show_obj == None or db_show_obj == [] or db_poll_obj == None or db_poll_obj == []:
+    return redirect(url_for('polling_views_interior.polling_dashboard_function', url_redirect_code='e6'))
+  else:
+    # ------------------------ check if user already requested start ------------------------
+    db_requested_obj = RedditPostsRequestedObj.query.filter_by(fk_user_id=current_user.id,fk_show_id=url_show_id,fk_poll_id=url_poll_id).first()
+    if db_requested_obj != None and db_requested_obj != []:
+      return redirect(url_for('polling_views_interior.polling_dashboard_function', url_redirect_code='s22'))
+    # ------------------------ check if user already requested end ------------------------
+    # ------------------------ insert email to db start ------------------------
+    try:
+      new_row_email = RedditPostsRequestedObj(
+        id = create_uuid_function('request_'),
+        created_timestamp = create_timestamp_function(),
+        fk_show_id = url_show_id,
+        fk_poll_id = url_poll_id,
+        fk_user_id = current_user.id
+      )
+      db.session.add(new_row_email)
+      db.session.commit()
+    except:
+      pass
+    # ------------------------ insert email to db end ------------------------
+  return redirect(url_for('polling_views_interior.polling_dashboard_function', url_redirect_code='s22'))
 # ------------------------ individual route end ------------------------

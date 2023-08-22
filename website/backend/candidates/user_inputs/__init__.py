@@ -596,6 +596,11 @@ def alert_message_default_function_v2(redirect_var=None):
       'message':'Success',
       'type':'success'
     }
+  elif redirect_var == 's22':
+    alert_message_dict = {
+      'message':'Successfully requested reddit post',
+      'type':'success'
+    }
   # ------------------------ success end ------------------------
   # ------------------------ info end ------------------------
   elif redirect_var == 'i1':
