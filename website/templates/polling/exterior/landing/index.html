@@ -8,32 +8,12 @@
 
 {% block contentBodyExceptNavbarAndFooter %}
 <!-- ----------------------------------- start ----------------------------------- -->
-<div class="container-fluid custom-height-6-mobile custom-bg-black">
-  <div class="container">
-    <div class="float-start custom-pt-100">
-      <div class="custom-width-1">
-        <h1 class="custom-m-0 custom-width-1 custom-header-50 custom-weight-1 custom-color-white">The Premium Podcast Polling Platform <i class="fa-solid fa-chart-column"></i></h1>
-        <h2 class="custom-header-18 custom-mt-25 custom-opacity-75 custom-color-white">Audience relationship management. Share <i>your feedback</i> directly with <i>your favorite</i> podcast hosts.</h2>
-      </div>
-      <!-- ------------------------------------- form start ------------------------------------- -->
-      <form method="POST" enctype="multipart/form-data" onsubmit="return clickSubmitButtonOnce()">
-        <!-- ------------------------------------- search section start ------------------------------------- -->
-        <div class="mx-auto custom-mt-15">
-          <!-- ------------------------------------- search bar start ------------------------------------- -->
-          <label for="ui_search_show_name" class="custom-header-18 form-label custom-color-white custom-opacity-75">Podcast feedback from the die-hard fans <i class="fa-brands fa-spotify"></i> <i class="fa-solid fa-podcast"></i></label>
-          <input type="text" class="form-control custom-ptb-15" id="ui_search_show_name" name="ui_search_show_name" placeholder="Search podcast" required>
-          <!-- ------------------------------------- search bar end ------------------------------------- -->
-          <!-- ------------------------------------- buttons start ------------------------------------- -->
-          <button type="submit" class="btn btn-lg btn-success custom-width-100 custom-mt-10"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
-          <!-- ------------------------------------- buttons end ------------------------------------- -->
-        </div>
-        <!-- ------------------------------------- search section end ------------------------------------- -->
-      </form>
-      <!-- ------------------------------------- form end ------------------------------------- -->
-    </div>
-    <div class="float-end custom-pt-100 custom-width-100-mobile mx-auto text-center">
-      <a href="/show/add"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/model1.png" alt="landing" class="custom-br-25 custom-width-600 custom-hover-1"></a>
-    </div>
+<div class="container-fluid custom-bg-black">
+  <div class="container custom-pt-100 custom-pb-100 text-center custom-color-white">
+    <h1 class="custom-m-0 custom-header-80-mobile">The Premium Podcast Polling Platform</h1>
+    <h2 class="custom-header-25-mobile custom-mt-25 custom-opacity-75">Feedback for your favorite podcast hosts.</h2>
+    <h2 class="custom-header-25-mobile custom-m-0 custom-opacity-75">Audience relationship management.</h2>
+    <a href="/show/add/2/platform001/" class="btn btn-light btn-lg custom-br-50 custom-mt-50 custom-p-20 custom-weight-700">Search podcast <i class="fa-solid fa-chevron-right"></i></a>
   </div>
 </div>
 <!-- ----------------------------------- end ----------------------------------- -->

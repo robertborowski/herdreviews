@@ -591,6 +591,12 @@
 .custom-header-60 {
   font-size: 60px;
 }
+.custom-header-80 {
+  font-size: 80px;
+}
+.custom-header-80-mobile {
+  font-size: 80px;
+}
 .custom-size-18 {
   font-size: 20px;
 }
@@ -1808,6 +1814,12 @@
 /* ------------------- underline end ------------------- */
 /* ------------------- weight start ------------------- */
 .custom-weight-1 {
+  font-weight: 700;
+}
+.custom-weight-500 {
+  font-weight: 500;
+}
+.custom-weight-700 {
   font-weight: 700;
 }
 /* ------------------- weight end ------------------- */
