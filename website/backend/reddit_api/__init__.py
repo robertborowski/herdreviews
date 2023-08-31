@@ -229,7 +229,7 @@ def reddit_api_function():
   # ------------------------ connect to reddit end ------------------------
   # ------------------------ get all posts from user start ------------------------
   user = reddit_connection.redditor(reddit_username)
-  submissions = user.submissions.new(limit=5)
+  submissions = user.submissions.new(limit=200)
   # ------------------------ get all posts from user end ------------------------
   # ------------------------ create all posts dict start ------------------------
   all_posts_dict = reddit_all_posts_dict_function(submissions)
