@@ -160,7 +160,11 @@ def polling_login_function(url_redirect_code=None):
     if ui_password_cleaned == False:
       return redirect(url_for('polling_auth.polling_login_function', url_redirect_code='e2'))
     # ------------------------ sanitize/check user input password end ------------------------
+    # ------------------------ see if user exists start ------------------------
     user = UserObj.query.filter_by(email=ui_email,signup_product='polling').first()
+    if user == None or user == []:
+      return redirect(url_for('polling_auth.polling_signup_function'))
+    # ------------------------ see if user exists end ------------------------
     if user:
       if check_password_hash(user.password, ui_password):
         # ------------------------ keep user logged in start ------------------------

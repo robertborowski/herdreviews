@@ -753,7 +753,6 @@ def polling_add_show_function(url_redirect_code=None, url_step_code='1', url_pla
             pass
           # ------------------------ email self end ------------------------
         return redirect(url_for('polling_views_interior.polling_loading_function', url_platform_reference_id=page_dict['spotify_pulled_arr_of_dict'][int(ui_show_selected_index_value)]['id']))
-        # return redirect(url_for('polling_views_interior.polling_show_function', url_show_id=page_dict['spotify_pulled_arr_of_dict'][int(ui_show_selected_index_value)]['name']))
   localhost_print_function(' ------------- 100-show selection start ------------- ')
   page_dict = dict(sorted(page_dict.items(),key=lambda x:x[0]))
   for k,v in page_dict.items():
