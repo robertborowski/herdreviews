@@ -82,6 +82,14 @@
   color: black;
   text-decoration: none;
 }
+.custom-a-black-underline, .custom-a-black-underline:visited {
+  color: black;
+  text-decoration: none;
+}
+.custom-a-black-underline:hover {
+  color: black;
+  text-decoration: underline;
+}
 /* ------------------- a end ------------------- */
 /* ------------------- background start ------------------- */
 .custom-bg-see-through {
