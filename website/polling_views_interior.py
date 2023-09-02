@@ -744,13 +744,14 @@ def polling_add_show_function(url_redirect_code=None, url_step_code='1', url_pla
           db.session.commit()
           # ------------------------ add to live job queue end ------------------------
           # ------------------------ email self start ------------------------
-          try:
-            output_to_email = os.environ.get('HR_SUPPORT_EMAIL')
-            output_subject = f"New show added to queue: '{page_dict['spotify_pulled_arr_of_dict'][int(ui_show_selected_index_value)]['name']}'"
-            output_body = f"<p>New show added to queue: '{page_dict['spotify_pulled_arr_of_dict'][int(ui_show_selected_index_value)]['name']}'</p>"
-            send_email_template_function(output_to_email, output_subject, output_body)
-          except:
-            pass
+          if current_user.is_anonymous == True or current_user.email != os.environ.get('RUN_TEST_EMAIL'):
+            try:
+              output_to_email = os.environ.get('HR_SUPPORT_EMAIL')
+              output_subject = f"New show added to queue: '{page_dict['spotify_pulled_arr_of_dict'][int(ui_show_selected_index_value)]['name']}'"
+              output_body = f"<p>New show added to queue: '{page_dict['spotify_pulled_arr_of_dict'][int(ui_show_selected_index_value)]['name']}'</p>"
+              send_email_template_function(output_to_email, output_subject, output_body)
+            except:
+              pass
           # ------------------------ email self end ------------------------
         return redirect(url_for('polling_views_interior.polling_loading_function', url_platform_reference_id=page_dict['spotify_pulled_arr_of_dict'][int(ui_show_selected_index_value)]['id']))
   localhost_print_function(' ------------- 100-show selection start ------------- ')
