@@ -52,7 +52,7 @@
       {% if page_dict_to_html['poll_answered'] == true %}
         {% if page_dict_to_html['db_show_dict']['name_title'] != 'HerdReviews.com' %}
           <!-- ----------------------------------- host thank you message start ----------------------------------- -->
-          <div class="custom-border-white custom-br-15 custom-p-25 custom-display-flex custom-mt-100 custom-mb-50">
+          <div class="custom-border-white custom-br-15 custom-p-25 custom-display-flex custom-mt-100">
             <img src="{{ page_dict_to_html['db_show_dict']['platform_image_medium'] }}" alt="show logo" class="custom-img-size-100 custom-mr-1 custom-br-5 custom-border-white-opacity-50">
             <div class="custom-ml-10">
               <p class="fw-bold custom-header-25 custom-color-white custom-m-0 fst-italic"><i class="fa-solid fa-quote-left"></i> Really appreciate your feedback on the pod! <i class="fa-solid fa-quote-right"></i><a href="/signup" class="custom-ml-10 custom-header-15 custom-p-5 custom-br-5 custom-border-white-opacity-75 custom-a-white-underline custom-inline-block" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Create account to edit show settings">Change thank you message</a></p>
@@ -64,6 +64,15 @@
         {% else %}
         {% endif %}
         <!-- ----------------------------------- buttons post poll answered start ----------------------------------- -->
+        <!-- ----------------------------------- button create / view polls start ----------------------------------- -->
+        {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+          <a href="/signup" class="custom-width-100 btn btn-outline-light custom-mt-25 custom-header-25">Create poll for this community <i class="fa-solid fa-plus"></i></a>
+          <a href="/signup" class="custom-width-100 btn btn-outline-light custom-mt-15">See all show polls</a>
+        {% else %}
+          <a href="/create/{{ page_dict_to_html['db_show_dict']['id'] }}" class="custom-width-100 btn btn-outline-light custom-mt-25 custom-header-25">Create poll for this community <i class="fa-solid fa-plus"></i></a>
+          <a href="/dashboard/{{ page_dict_to_html['db_show_dict']['id'] }}" class="custom-width-100 btn btn-outline-light custom-mt-15">See all show polls</a>
+        {% endif %}
+        <!-- ----------------------------------- button create / view polls end ----------------------------------- -->
         <!-- ----------------------------------- button poll stats start ----------------------------------- -->
         <div class="custom-p-25 custom-mt-25 btn btn-warning custom-width-100" id="id-general_autoscroll_click_1">
           <span class="custom-header-30"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v2_black.png" alt="HerdReviews logo, Vecteezy.com" class="custom-img-size-40 custom-mt-negative-10"> See poll statistics <i class="fa-solid fa-angle-down"></i></span>
@@ -74,15 +83,6 @@
           <span class="custom-header-30"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/reddit_logo_transparent.png" alt="show logo" class="custom-img-size-35 custom-mb-10"> See Reddit statistics <i class="fa-solid fa-angle-down"></i></span>
         </div>
         <!-- ----------------------------------- button poll stats reddit end ----------------------------------- -->
-        <!-- ----------------------------------- button create / view polls start ----------------------------------- -->
-        {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-          <a href="/signup" class="custom-width-100 btn btn-outline-light custom-mt-25">Create poll for this community <i class="fa-solid fa-plus"></i></a>
-          <a href="/signup" class="custom-width-100 btn btn-outline-light custom-mt-15">See all show polls</a>
-        {% else %}
-          <a href="/create/{{ page_dict_to_html['db_show_dict']['id'] }}" class="custom-width-100 btn btn-outline-light custom-mt-25">Create poll for this community <i class="fa-solid fa-plus"></i></a>
-          <a href="/dashboard/{{ page_dict_to_html['db_show_dict']['id'] }}" class="custom-width-100 btn btn-outline-light custom-mt-15">See all show polls</a>
-        {% endif %}
-        <!-- ----------------------------------- button create / view polls end ----------------------------------- -->
         <!-- ----------------------------------- button next poll start ----------------------------------- -->
         {% if page_dict_to_html['db_show_dict']['name_title'] == 'HerdReviews.com' %}
           <a href="/show/{{ page_dict_to_html['url_show_id'] }}" class="custom-p-25 btn btn-success btn-lg custom-width-100 custom-mt-25 custom-header-30">Next user poll <i class="fa-solid fa-angle-right"></i></a>
