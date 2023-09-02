@@ -213,7 +213,7 @@ def reddit_all_post_commentary_function(reddit_connection, all_posts_dict):
 # ------------------------ individual function end ------------------------
 
 # ------------------------ individual function start ------------------------
-def reddit_api_function():
+def reddit_api_posts_and_comments_function():
   # ------------------------ set variables start ------------------------
   reddit_username = os.environ.get('REDDIT_USERNAME')
   reddit_app_id = os.environ.get('REDDIT_APP_ID_WEB_APP')
@@ -243,5 +243,34 @@ def reddit_api_function():
   # localhost_print_function(' ------------- 50 ------------- ')
   # localhost_print_function(pprint.pformat(all_posts_dict, indent=2))
   # localhost_print_function(' ------------- 50 ------------- ')
+  return True
+# ------------------------ individual function end ------------------------
+
+# ------------------------ individual function start ------------------------
+def reddit_api_send_messages_function():
+  # ------------------------ set variables start ------------------------
+  reddit_username = os.environ.get('REDDIT_USERNAME')
+  reddit_app_id = os.environ.get('REDDIT_APP_ID_WEB_APP')
+  reddit_app_secret = os.environ.get('REDDIT_APP_SECRET_WEB_APP')
+  # ------------------------ set variables end ------------------------
+  # ------------------------ connect to reddit start ------------------------
+  reddit_connection = praw.Reddit(
+    client_id=reddit_app_id,
+    client_secret=reddit_app_secret,
+    user_agent=reddit_username,
+    username=reddit_username
+  )
+  # ------------------------ connect to reddit end ------------------------
+  # ------------------------ send message start ------------------------
+  recipient_username = 'robfather141'
+  message_subject = 'Hello from PRAW!'
+  message_body = 'This is a test message sent via PRAW.'
+  # Send the message
+  try:
+    reddit_connection.redditor(recipient_username).message(message_subject, message_body)
+    print(f"Message sent to {recipient_username} successfully!")
+  except Exception as e:
+    print(f"An error occurred: {str(e)}")
+  # ------------------------ send message end ------------------------
   return True
 # ------------------------ individual function end ------------------------

@@ -19,7 +19,7 @@ from website.backend.candidates.user_inputs import alert_message_default_functio
 import os
 from website.backend.selenium_script import reddit_scrape_function
 from website.models import RedditPostsObj, PollsObj, RedditMappingObj
-from website.backend.reddit_api import reddit_api_function
+from website.backend.reddit_api import reddit_api_posts_and_comments_function, reddit_api_send_messages_function
 # ------------------------ imports end ------------------------
 
 # ------------------------ function start ------------------------
@@ -54,7 +54,8 @@ def admin_function(url_redirect_code=None):
     # ------------------------ get ui start ------------------------
     ui_reddit_input = request.form.get('ui_reddit_input')
     ui_poll_input = request.form.get('ui_poll_input')
-    ui_reddit_api_button = request.form.get('ui_reddit_api_button')
+    ui_reddit_api_button_posts_and_comments = request.form.get('ui_reddit_api_button_posts_and_comments')
+    ui_reddit_api_button_send_messages = request.form.get('ui_reddit_api_button_send_messages')
     # ------------------------ get ui end ------------------------
     # ------------------------ reddit poll mapping start ------------------------
     if ui_reddit_input != None and ui_poll_input != None:
@@ -79,11 +80,16 @@ def admin_function(url_redirect_code=None):
           # ------------------------ insert to db end ------------------------
           return redirect(url_for('polling_views_admin.admin_function', url_redirect_code='s21'))
     # ------------------------ reddit poll mapping end ------------------------
-    # ------------------------ reddit scrape start ------------------------
-    if ui_reddit_api_button == 'on':
-      reddit_api_run = reddit_api_function()
+    # ------------------------ reddit posts and comments start ------------------------
+    if ui_reddit_api_button_posts_and_comments == 'on':
+      reddit_api_run = reddit_api_posts_and_comments_function()
       return redirect(url_for('polling_views_admin.admin_function', url_redirect_code='s21'))
-    # ------------------------ reddit scrape end ------------------------
+    # ------------------------ reddit posts and comments end ------------------------
+    # # ------------------------ reddit send messages start ------------------------
+    # if ui_reddit_api_button_send_messages == 'on':
+    #   reddit_api_run = reddit_api_send_messages_function()
+    #   return redirect(url_for('polling_views_admin.admin_function', url_redirect_code='s21'))
+    # # ------------------------ reddit send messages end ------------------------
   # ------------------------ submission end ------------------------    
   localhost_print_function(' ------------- 100-admin start ------------- ')
   page_dict = dict(sorted(page_dict.items(),key=lambda x:x[0]))
