@@ -1831,6 +1831,11 @@
 .custom-underline-1 {
   text-decoration: underline;
 }
+.custom-underline-2 {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 1px;
+}
 /* ------------------- underline end ------------------- */
 /* ------------------- weight start ------------------- */
 .custom-weight-1 {
