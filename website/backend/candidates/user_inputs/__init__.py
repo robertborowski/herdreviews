@@ -481,7 +481,7 @@ def alert_message_default_function_v2(redirect_var=None):
     }
   elif redirect_var == 'e44':
     alert_message_dict = {
-      'message':'You must create an account to contribute your vote',
+      'message':'Please login to contribute your vote',
       'type':'danger'
     }
   elif redirect_var == 'e45':

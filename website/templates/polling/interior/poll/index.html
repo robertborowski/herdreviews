@@ -37,8 +37,8 @@
     <!-- ------------------------------------- background start ------------------------------------- -->
     <div class="custom-width-600 mx-auto">
       <!-- ----------------------------------- alert start ----------------------------------- -->
-      {% if page_dict_to_html['alert_message_dict']['message'] != '' and page_dict_to_html['current_user_is_anonymous'] == false %}
-        <div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container" role="alert">
+      {% if page_dict_to_html['alert_message_dict']['message'] != '' %}
+        <div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container custom-mt-25" role="alert">
           {{ page_dict_to_html['alert_message_dict']['message'] }}
         </div>
       {% endif %}
@@ -52,7 +52,7 @@
       {% if page_dict_to_html['poll_answered'] == true %}
         {% if page_dict_to_html['db_show_dict']['name_title'] != 'HerdReviews.com' %}
           <!-- ----------------------------------- host thank you message start ----------------------------------- -->
-          <div class="custom-border-white custom-br-15 custom-p-25 custom-display-flex custom-mt-100">
+          <div class="custom-border-white custom-br-15 custom-p-25 custom-display-flex custom-mt-25">
             <img src="{{ page_dict_to_html['db_show_dict']['platform_image_medium'] }}" alt="show logo" class="custom-img-size-100 custom-mr-1 custom-br-5 custom-border-white-opacity-50">
             <div class="custom-ml-10">
               {% if page_dict_to_html['current_user_is_anonymous'] == true %}
