@@ -123,14 +123,6 @@ def admin_hosts_function(url_redirect_code=None):
   # ------------------------ page dict end ------------------------
   # ------------------------ submission start ------------------------
   if request.method == 'POST':
-    # ------------------------ send emails function start ------------------------
-    try:
-      ui_send_emails = request.form.get('ui_send_emails')
-      if ui_send_emails == 'on':
-        pass
-    except:
-      pass
-    # ------------------------ send emails function end ------------------------
     # ------------------------ add host email start ------------------------
     try:
       # ------------------------ get ui start ------------------------
@@ -166,6 +158,14 @@ def admin_hosts_function(url_redirect_code=None):
     except:
       pass
     # ------------------------ add host email end ------------------------
+    # ------------------------ send emails function start ------------------------
+    try:
+      ui_send_emails = request.form.get('ui_send_emails')
+      if ui_send_emails == 'on':
+        pass
+    except:
+      pass
+    # ------------------------ send emails function end ------------------------
   localhost_print_function(' ------------- 100-admin start ------------- ')
   page_dict = dict(sorted(page_dict.items(),key=lambda x:x[0]))
   for k,v in page_dict.items():
