@@ -123,36 +123,49 @@ def admin_hosts_function(url_redirect_code=None):
   # ------------------------ page dict end ------------------------
   # ------------------------ submission start ------------------------
   if request.method == 'POST':
-    # ------------------------ get ui start ------------------------
-    ui_host_podcast_name = request.form.get('ui_host_podcast_name')
-    ui_host_podcast_email = request.form.get('ui_host_podcast_email')
-    ui_host_podcast_greeting = request.form.get('ui_host_podcast_greeting')
-    # ------------------------ get ui end ------------------------
-    # ------------------------ sanitize inputs start ------------------------
-    sanitize_email_function_check = sanitize_email_function(ui_host_podcast_email)
-    if sanitize_email_function_check == False:
-      return redirect(url_for('polling_views_admin.admin_hosts_function', url_redirect_code='e6'))
-    # ------------------------ sanitize inputs end ------------------------
-    # ------------------------ check if exists start ------------------------
-    db_obj = HostMarketingObj.query.filter_by(host_email=ui_host_podcast_email).first()
-    if db_obj == None or db_obj == []:
-      # ------------------------ add to db start ------------------------
-      try:
-        new_row = HostMarketingObj(
-          id = create_uuid_function('host_'),
-          created_timestamp = create_timestamp_function(),
-          podcast_name = ui_host_podcast_name,
-          host_email = ui_host_podcast_email,
-          greeting_name = ui_host_podcast_greeting,
-          unsubscribed = False
-        )
-        db.session.add(new_row)
-        db.session.commit()
-        return redirect(url_for('polling_views_admin.admin_hosts_function', url_redirect_code='s10'))
-      except:
+    # ------------------------ send emails function start ------------------------
+    try:
+      ui_send_emails = request.form.get('ui_send_emails')
+      if ui_send_emails == 'on':
         pass
-      # ------------------------ add to db end ------------------------
-    # ------------------------ check if exists end ------------------------
+    except:
+      pass
+    # ------------------------ send emails function end ------------------------
+    # ------------------------ add host email start ------------------------
+    try:
+      # ------------------------ get ui start ------------------------
+      ui_host_podcast_name = request.form.get('ui_host_podcast_name')
+      ui_host_podcast_email = request.form.get('ui_host_podcast_email')
+      ui_host_podcast_greeting = request.form.get('ui_host_podcast_greeting')
+      # ------------------------ get ui end ------------------------
+      # ------------------------ sanitize inputs start ------------------------
+      sanitize_email_function_check = sanitize_email_function(ui_host_podcast_email)
+      if sanitize_email_function_check == False:
+        return redirect(url_for('polling_views_admin.admin_hosts_function', url_redirect_code='e6'))
+      # ------------------------ sanitize inputs end ------------------------
+      # ------------------------ check if exists start ------------------------
+      db_obj = HostMarketingObj.query.filter_by(host_email=ui_host_podcast_email).first()
+      if db_obj == None or db_obj == []:
+        # ------------------------ add to db start ------------------------
+        try:
+          new_row = HostMarketingObj(
+            id = create_uuid_function('host_'),
+            created_timestamp = create_timestamp_function(),
+            podcast_name = ui_host_podcast_name,
+            host_email = ui_host_podcast_email,
+            greeting_name = ui_host_podcast_greeting,
+            unsubscribed = False
+          )
+          db.session.add(new_row)
+          db.session.commit()
+          return redirect(url_for('polling_views_admin.admin_hosts_function', url_redirect_code='s10'))
+        except:
+          pass
+        # ------------------------ add to db end ------------------------
+      # ------------------------ check if exists end ------------------------
+    except:
+      pass
+    # ------------------------ add host email end ------------------------
   localhost_print_function(' ------------- 100-admin start ------------- ')
   page_dict = dict(sorted(page_dict.items(),key=lambda x:x[0]))
   for k,v in page_dict.items():
