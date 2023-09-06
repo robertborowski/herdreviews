@@ -99,3 +99,44 @@ def admin_function(url_redirect_code=None):
   localhost_print_function(' ------------- 100-admin end ------------- ')
   return render_template('polling/admin_templates/dashboard/index.html', page_dict_to_html=page_dict)
 # ------------------------ individual route end ------------------------
+
+# ------------------------ individual route start ------------------------
+@polling_views_admin.route('/admin/hosts', methods=['GET', 'POST'])
+@polling_views_admin.route('/admin/hosts/', methods=['GET', 'POST'])
+@polling_views_admin.route('/admin/hosts/<url_redirect_code>', methods=['GET', 'POST'])
+@login_required
+def admin_hosts_function(url_redirect_code=None):
+  # ------------------------ check admin status start ------------------------
+  if current_user.email != os.environ.get('RUN_TEST_EMAIL'):
+    return redirect(url_for('polling_views_interior.polling_dashboard_function'))
+  # ------------------------ check admin status end ------------------------
+  # ------------------------ page dict start ------------------------
+  if url_redirect_code == None:
+    try:
+      url_redirect_code = request.args.get('url_redirect_code')
+    except:
+      pass
+  alert_message_dict = alert_message_default_function_v2(url_redirect_code)
+  page_dict = {}
+  page_dict['alert_message_dict'] = alert_message_dict
+  # ------------------------ page dict end ------------------------
+  # ------------------------ submission start ------------------------
+  if request.method == 'POST':
+    # ------------------------ get ui start ------------------------
+    ui_host_podcast_name = request.form.get('ui_host_podcast_name')
+    ui_host_podcast_email = request.form.get('ui_host_podcast_email')
+    ui_host_podcast_greeting = request.form.get('ui_host_podcast_greeting')
+    # ------------------------ get ui end ------------------------
+    print(' ------------- 0 ------------- ')
+    print(f"ui_host_podcast_name | type: {type(ui_host_podcast_name)} | {ui_host_podcast_name}")
+    print(f"ui_host_podcast_email | type: {type(ui_host_podcast_email)} | {ui_host_podcast_email}")
+    print(f"ui_host_podcast_greeting | type: {type(ui_host_podcast_greeting)} | {ui_host_podcast_greeting}")
+    print(' ------------- 0 ------------- ')
+  localhost_print_function(' ------------- 100-admin start ------------- ')
+  page_dict = dict(sorted(page_dict.items(),key=lambda x:x[0]))
+  for k,v in page_dict.items():
+    localhost_print_function(f"k: {k} | v: {v}")
+    pass
+  localhost_print_function(' ------------- 100-admin end ------------- ')
+  return render_template('polling/admin_templates/hosts/index.html', page_dict_to_html=page_dict)
+# ------------------------ individual route end ------------------------

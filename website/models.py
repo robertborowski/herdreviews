@@ -264,3 +264,12 @@ class RedditMappingObj(db.Model):
   fk_poll_id = db.Column(db.String(150))
   fk_reddit_post_id = db.Column(db.String(150))
 # ------------------------ individual model end ------------------------
+
+# ------------------------ individual model start ------------------------
+class HostMarketingObj(db.Model):
+  id = db.Column(db.String(150), primary_key=True)
+  created_timestamp = db.Column(db.DateTime(timezone=True))
+  podcast_name = db.Column(db.String(150))
+  host_email = db.Column(db.String(150))
+  greeting_name = db.Column(db.String(150))
+# ------------------------ individual model end ------------------------

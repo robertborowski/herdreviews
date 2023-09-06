@@ -1,0 +1,37 @@
+{% extends "polling/aaa_base/base2_interior.html" %}
+<!-- head tag block content -->
+{% block title %}
+  <title>Admin - HerdReviews</title>
+{% endblock %}
+{% block contentBodyExceptNavbarAndFooter %}
+<!-- ----------------------------------- start ----------------------------------- -->
+{% if page_dict_to_html['alert_message_dict']['message'] != '' %}
+<div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container custom-mt-25 custom-width-800" role="alert">
+  {{ page_dict_to_html['alert_message_dict']['message'] }}
+</div>
+{% endif %}
+<!-- ----------------------------------- end ----------------------------------- -->
+<!-- ------------------------------------- section start ------------------------------------- -->
+<div class="container custom-width-600 mx-auto custom-mt-50">
+  <h1>Add host emails</h1>
+  <!-- ------------------------------------- mapping start ------------------------------------- -->
+  <form method="POST" enctype="multipart/form-data" class="custom-border-black-opacity-25 custom-br-10 custom-p-25 shadow-sm" onsubmit="return clickSubmitButtonOnce()">
+    <div class="custom-width-400 mx-auto">
+      <label for="id-host_podcast_name" class="form-label">Podcast name</label>
+      <input type="text" class="form-control" id="id-host_podcast_name" name="ui_host_podcast_name" value="" required>
+      <label for="id-host_podcast_email" class="form-label custom-mt-10">Email</label>
+      <input type="text" class="form-control" id="id-host_podcast_email" name="ui_host_podcast_email" value="" required>
+      <label for="id-host_podcast_greeting" class="form-label custom-mt-10">Hi (name),</label>
+      <input type="text" class="form-control" id="id-host_podcast_greeting" name="ui_host_podcast_greeting" value="" required>
+      <button type="submit" class="btn btn-lg btn-success custom-width-100 custom-mt-25">Add <i class="fa-solid fa-plus"></i></button>
+    </div>
+  </form>
+  <!-- ------------------------------------- mapping end ------------------------------------- -->
+  <!-- ------------------------------------- back start ------------------------------------- -->
+  <div class="custom-mt-25">
+    <a href="/admin" class="btn btn-outline-secondary btn-lg custom-width-100"><i class="fa-solid fa-chevron-left"></i> Back</a>
+  </div>
+  <!-- ------------------------------------- back end ------------------------------------- -->
+</div>
+<!-- ------------------------------------- section end ------------------------------------- -->
+{% endblock %}
