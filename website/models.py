@@ -272,4 +272,5 @@ class HostMarketingObj(db.Model):
   podcast_name = db.Column(db.String(150))
   host_email = db.Column(db.String(150))
   greeting_name = db.Column(db.String(150))
+  unsubscribed = db.Column(db.Boolean, default=False)
 # ------------------------ individual model end ------------------------
