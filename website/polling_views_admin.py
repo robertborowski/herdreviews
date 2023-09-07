@@ -18,9 +18,11 @@ from website import db
 from website.backend.candidates.user_inputs import alert_message_default_function_v2
 import os
 from website.backend.selenium_script import reddit_scrape_function
-from website.models import RedditPostsObj, PollsObj, RedditMappingObj, HostMarketingObj
+from website.models import RedditPostsObj, PollsObj, RedditMappingObj, HostMarketingObj, EmailSentObj
 from website.backend.reddit_api import reddit_api_posts_and_comments_function, reddit_api_send_messages_function
 from website.backend.candidates.user_inputs import sanitize_email_function
+from datetime import datetime
+from website.backend.candidates.send_emails import send_email_template_function
 # ------------------------ imports end ------------------------
 
 # ------------------------ function start ------------------------
@@ -162,7 +164,56 @@ def admin_hosts_function(url_redirect_code=None):
     try:
       ui_send_emails = request.form.get('ui_send_emails')
       if ui_send_emails == 'on':
-        pass
+        db_host_objs = HostMarketingObj.query.filter_by(unsubscribed=False).order_by(HostMarketingObj.created_timestamp.desc()).all()
+        for i_obj in db_host_objs:
+          # ------------------------ testing start ------------------------
+          # if i_obj.host_email != os.environ.get('PERSONAL_EMAIL'):
+          #   continue
+          # ------------------------ testing end ------------------------
+          # ------------------------ set variables start ------------------------
+          i_send = False
+          i_subject = 'Audience Insights and Sentiment'
+          i_day_spacing_limit = 3
+          current_date = datetime.now().date()
+          # ------------------------ set variables end ------------------------
+          # ------------------------ spam check #1 start ------------------------
+          db_email_obj = EmailSentObj.query.filter_by(to_email=i_obj.host_email,subject=i_subject).order_by(EmailSentObj.created_timestamp.desc()).first()
+          if db_email_obj == None or db_email_obj == []:
+            i_send = True
+          else:
+            date_diff = (current_date - db_email_obj.created_timestamp.date()).days
+            if date_diff >= i_day_spacing_limit:
+              i_send = True
+          # ------------------------ spam check #1 end ------------------------
+          # ------------------------ good to send start ------------------------
+          if i_send == True:
+            # ------------------------ send email start ------------------------
+            try:
+              output_body = f"<p>Hi {i_obj.greeting_name},</p>\
+                              <p>We appreciate the exceptional content that you create. We aggregate audience data from X (Twitter), Reddit, and YouTube, to provide you with a comprehensive hub for analyzing your podcasts' audience trends & feedback. Explore <a href='https://herdreviews.com/'>HerdReviews</a> to gain valuable insights about your audience data.</p>\
+                              <p style='margin:0px;'>Best,</p>\
+                              <p style='margin:0px;'>HerdReviews Support Team</p>"
+              send_email_template_function(i_obj.host_email, i_subject, output_body)
+            except:
+              pass
+            # ------------------------ send email end ------------------------
+            # ------------------------ insert email to db start ------------------------
+            try:
+              new_row_email = EmailSentObj(
+                id = create_uuid_function('email_'),
+                created_timestamp = create_timestamp_function(),
+                from_user_id_fk = current_user.id,
+                to_email = i_obj.host_email,
+                subject = i_subject,
+                body = output_body
+              )
+              db.session.add(new_row_email)
+              db.session.commit()
+            except:
+              pass
+            # ------------------------ insert email to db end ------------------------
+          # ------------------------ good to send end ------------------------
+      return redirect(url_for('polling_views_admin.admin_hosts_function', url_redirect_code='s10'))
     except:
       pass
     # ------------------------ send emails function end ------------------------
