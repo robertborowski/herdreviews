@@ -192,7 +192,8 @@ def admin_hosts_function(url_redirect_code=None):
               output_body = f"<p>Hi {i_obj.greeting_name},</p>\
                               <p>We appreciate the exceptional content that you create. We aggregate audience data from X (Twitter), Reddit, and YouTube, to provide you with a comprehensive hub for analyzing your podcasts' audience trends & feedback. Explore <a href='https://herdreviews.com/'>HerdReviews</a> to gain valuable insights about your audience data.</p>\
                               <p style='margin:0px;'>Best,</p>\
-                              <p style='margin:0px;'>HerdReviews Support Team</p>"
+                              <p style='margin:0px;'>HerdReviews Support Team</p>\
+                              <p style='margin:0px;font-size:10px'>Reply 'stop' to unsubscribe</p>"
               send_email_template_function(i_obj.host_email, i_subject, output_body)
             except:
               pass
