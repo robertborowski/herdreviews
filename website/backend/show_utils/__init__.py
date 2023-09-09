@@ -34,7 +34,7 @@ def follow_user_polls_show_function(current_user):
     new_row = ShowsFollowingObj(
       id=create_uuid_function('following_'),
       created_timestamp=create_timestamp_function(),
-      fk_platform_id = 'platform001',
+      fk_platform_id = 'podcast',
       fk_show_id = 'show_user_attributes',
       fk_user_id = current_user.id
     )
@@ -54,7 +54,7 @@ def follow_show_function(current_user, show_id):
     new_row = ShowsFollowingObj(
       id=create_uuid_function('following_'),
       created_timestamp=create_timestamp_function(),
-      fk_platform_id = 'platform001',
+      fk_platform_id = 'podcast',
       fk_show_id = show_id,
       fk_user_id = current_user.id
     )

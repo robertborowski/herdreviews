@@ -67,7 +67,7 @@ def polling_landing_details_function(url_reference_id=None):
     # ------------------------ sanitize ui start ------------------------
     ui_search_show_name_check = sanitize_letters_numbers_spaces_specials_only_function(ui_search_show_name)
     if ui_search_show_name_check != False:
-      return redirect(url_for('polling_views_interior.polling_add_show_function', url_step_code='2', url_platform_id='platform001', searchvalue=ui_search_show_name))
+      return redirect(url_for('polling_views_interior.polling_add_show_function', url_step_code='2', url_platform_id='podcast', searchvalue=ui_search_show_name))
     # ------------------------ sanitize ui end ------------------------
   return render_template('polling/exterior/landing/index.html', page_dict_to_html=page_dict)
 # ------------------------ individual route end ------------------------

@@ -611,7 +611,7 @@ def polling_add_show_function(url_redirect_code=None, url_step_code='1', url_pla
     page_dict['current_user_is_anonymous'] = True
   # ------------------------ redirect steps check start ------------------------
   if url_step_code == '1':
-    return redirect(url_for('polling_views_interior.polling_add_show_function', url_step_code='2',url_platform_id='platform001', searchvalue=pulled_search_value))
+    return redirect(url_for('polling_views_interior.polling_add_show_function', url_step_code='2',url_platform_id='podcast', searchvalue=pulled_search_value))
   if url_step_code == '2' and (url_platform_id == None or url_redis_key != None):
     return redirect(url_for('polling_views_interior.polling_add_show_function', url_step_code=page_dict['url_previous_step_code'], url_redirect_code='e6', searchvalue=pulled_search_value))
   if url_step_code == '3' and (url_platform_id == None or url_redis_key == None):
@@ -1021,7 +1021,7 @@ def polling_show_function(url_redirect_code=None, url_show_id=None, url_poll_id=
         new_row = ShowsFollowingObj(
           id=create_uuid_function('following_'),
           created_timestamp=create_timestamp_function(),
-          fk_platform_id='platform001',
+          fk_platform_id='podcast',
           fk_show_id=url_show_id,
           fk_user_id=current_user.id
         )
