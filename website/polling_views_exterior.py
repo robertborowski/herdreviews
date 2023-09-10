@@ -155,6 +155,7 @@ def polling_reset_forgot_password_function(token, url_redirect_code=None):
   return render_template('polling/exterior/forgot_password/reset_forgot_password/index.html', page_dict_to_html=page_dict)
 # ------------------------ individual route end ------------------------
 
+"""
 # ------------------------ individual route start ------------------------
 @polling_views_exterior.route('/blog')
 @polling_views_exterior.route('/blog/')
@@ -200,6 +201,7 @@ def polling_i_blog_page_function(i_blog_post_title=None):
   current_blog_post_num_full_string = f'polling/exterior/blog/blogs_by_id/{blog_obj.id}.html'
   return render_template(current_blog_post_num_full_string, page_dict_to_html=page_dict)
 # ------------------------ individual route end ------------------------
+"""
 
 # ------------------------ individual route start ------------------------
 @polling_views_exterior.route('/privacy')
