@@ -357,7 +357,7 @@
                     // elementToChangeHeight.style.height = jquery_chart_size_to_change.toString() + 'px';
                     // ----------------------------- adjust chart height based on id end -----------------------------
                   </script>
-                  <div class="custom-display-flex custom-jc-around custom-mb-100">
+                  <div class="custom-display-flex custom-jc-around">
                     <!-- ------------------------------------- start ------------------------------------- -->
                     <div class="custom-br-10 custom-p-10 custom-border-white-opacity-50 custom-m-25 custom-width-100-px text-center">
                       <p class="custom-m-0 custom-mb-10 custom-header-12 custom-color-white">Poll on/off</p>
@@ -396,14 +396,19 @@
                   </div>
                 </div>
                 <!-- ------------------------------------- start ------------------------------------- -->
-                {% if k == 'feedback' %}
-                  {% if page_dict_to_html['current_user_is_anonymous'] == true %}
-                    <div class="custom-mb-25 text-center">
-                      <a href="/signup" class="btn btn-sm btn-outline-light custom-width-100 custom-opacity-75-hover custom-mb-10">Create account</a>
-                      <a href="/login" class="custom-a-white custom-opacity-75-hover custom-header-12 fw-bold">Login</a>
-                    </div>
+                <div class="custom-mb-100">
+                  <a href="/show/{{ page_dict_to_html['url_show_id'] }}/{{ page_dict_to_html['url_poll_id_random_next'] }}" class="btn btn-success btn-lg custom-width-100">Next poll <i class="fa-solid fa-angle-right"></i></a>
+                  <!-- ------------------------------------- start ------------------------------------- -->
+                  {% if k == 'feedback' %}
+                    {% if page_dict_to_html['current_user_is_anonymous'] == true %}
+                      <div class="custom-mb-25 text-center custom-mt-25">
+                        <a href="/signup" class="btn btn-sm btn-outline-light custom-width-100 custom-opacity-75-hover custom-mb-10">Create account</a>
+                        <a href="/login" class="custom-a-white custom-opacity-75-hover custom-header-12 fw-bold">Login</a>
+                      </div>
+                    {% endif %}
                   {% endif %}
-                {% endif %}
+                  <!-- ------------------------------------- end ------------------------------------- -->
+                </div>
                 <!-- ------------------------------------- end ------------------------------------- -->
               {% endif %}
             {% else %}
