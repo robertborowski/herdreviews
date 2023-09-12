@@ -190,7 +190,7 @@ def admin_hosts_function(url_redirect_code=None):
             # ------------------------ send email start ------------------------
             try:
               output_body = f"<p>Hi {i_obj.greeting_name},</p>\
-                              <p>I appreciate the exceptional content that you create. I aggregate audience data from X (Twitter), Reddit, and YouTube, to provide you with a comprehensive hub for analyzing your podcasts' audience trends & feedback. Explore <a href='https://herdreviews.com/'>HerdReviews</a> to gain valuable insights about your audience data.</p>\
+                              <p>I appreciate the exceptional content that you create. I aggregate audience data from X (Twitter), Reddit, and YouTube, to provide you with a comprehensive hub for analyzing your podcasts' audience trends & feedback. Explore <a href='https://herdreviews.com/'>HerdReviews</a>, the podcast polling platform, to gain valuable insights about your audience personality trends.</p>\
                               <p style='margin:0px;'>Best,</p>\
                               <p style='margin:0px;'>HerdReviews Support Team</p>\
                               <p style='margin:0px;font-size:10px'>Reply 'stop' to unsubscribe</p>"
