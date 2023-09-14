@@ -48,7 +48,7 @@ def get_marketing_list_function():
     'Colleague shared team link',
     'LinkedIn',
     'TikTok',
-    'Twitter',
+    'X (Twitter)',
     'Facebook',
     'Instagram',
     'Word of mouth'
@@ -64,7 +64,7 @@ def get_marketing_list_v2_function():
     'Word of mouth',
     'Podcast',
     'YouTube',
-    'Twitter',
+    'X (Twitter)',
     'Reddit',
     'TikTok',
     'LinkedIn',
