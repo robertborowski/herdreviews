@@ -28,7 +28,7 @@ from website.backend.candidates.lists import get_month_days_years_function, get_
 from website.backend.dates import get_years_from_date_function, return_ints_from_str_function
 from website.backend.get_create_obj import get_all_shows_following_function, get_all_platforms_function, get_platform_based_on_name_function, get_show_based_on_name_function, get_show_based_on_id_and_platform_id_function, check_if_currently_following_show_function, get_show_based_on_id_function, get_poll_based_on_id_function, get_show_percent_of_all_polls_answered_function, get_all_polls_based_on_show_id_function, check_at_least_one_poll_answer_submitted_function, get_total_polls_created_today_by_user_for_one_show_function, get_age_demographics_function
 from website.backend.spotify import spotify_search_show_function
-from website.backend.user_inputs import sanitize_letters_numbers_spaces_specials_only_function, sanitize_text_v1_function, sanitize_text_v2_function
+from website.backend.user_inputs import sanitize_letters_numbers_spaces_specials_only_function, sanitize_text_v1_function, sanitize_text_v2_function, sanitize_x_handle_function
 from website.backend.dict_manipulation import arr_of_dict_all_columns_single_item_function, prep_poll_dict_function
 from website.backend.show_utils import shows_following_arr_of_dict_function, follow_user_polls_show_function, follow_show_function
 from website.backend.sql_statements.select import select_general_function
@@ -75,6 +75,8 @@ def polling_dashboard_function(url_redirect_code=None, url_show_id=None):
   if onbaording_status == 'verify':
     page_dict['verified_email_status'] = False
   if onbaording_status == 'attribute_marketing':
+    return redirect(url_for('polling_views_interior.polling_feedback_function', url_feedback_code=onbaording_status))
+  if onbaording_status == 'x_twitter_handle':
     return redirect(url_for('polling_views_interior.polling_feedback_function', url_feedback_code=onbaording_status))
   # ------------------------ onboarding checks end ------------------------
   # ------------------------ navbar variable start ------------------------
@@ -342,7 +344,7 @@ def polling_feedback_function(url_redirect_code=None, url_feedback_code=None):
   page_dict['alert_message_dict'] = alert_message_dict
   # ------------------------ page dict end ------------------------
   # ------------------------ double check redirect start ------------------------
-  if url_feedback_code != 'attribute_marketing' and url_feedback_code != 'attribute_birthday':
+  if url_feedback_code != 'attribute_marketing' and url_feedback_code != 'attribute_birthday' and url_feedback_code != 'x_twitter_handle':
     return redirect(url_for('polling_views_interior.polling_dashboard_function'))
   db_user_attribute_obj = UserAttributesObj.query.filter_by(attribute_code=url_feedback_code,fk_user_id=current_user.id).first()
   if db_user_attribute_obj != None:
@@ -356,6 +358,9 @@ def polling_feedback_function(url_redirect_code=None, url_feedback_code=None):
     page_dict['feedback_step'] = '2'
     page_dict['feedback_request'] = url_feedback_code
   if url_feedback_code == 'attribute_marketing':
+    page_dict['feedback_step'] = '2'
+    page_dict['feedback_request'] = url_feedback_code
+  if url_feedback_code == 'x_twitter_handle':
     page_dict['feedback_step'] = '3'
     page_dict['feedback_request'] = url_feedback_code
   # ------------------------ set loading bar variables end ------------------------
@@ -503,7 +508,29 @@ def polling_feedback_function(url_redirect_code=None, url_feedback_code=None):
       db.session.commit()
       # ------------------------ insert to db end ------------------------
       return redirect(url_for('polling_views_interior.polling_dashboard_function'))
-    # ------------------------ post feedback marketing end ------------------------
+    # ------------------------ post feedback marketing end ------------------------ 
+    # ------------------------ post feedback twitter start ------------------------
+    if url_feedback_code == 'x_twitter_handle':
+      ui_twitter_username = request.form.get('ui_twitter_username')
+      # ------------------------ x sanitize start ------------------------
+      ui_twitter_username_check = sanitize_x_handle_function(ui_twitter_username)
+      if ui_twitter_username_check == False:
+        return redirect(url_for('polling_views_interior.polling_feedback_function', url_redirect_code='e6', url_feedback_code=url_feedback_code))
+      # ------------------------ x sanitize end ------------------------
+      # ------------------------ insert to db start ------------------------
+      new_row = UserAttributesObj(
+        id=create_uuid_function('attribute_'),
+        created_timestamp=create_timestamp_function(),
+        fk_user_id=current_user.id,
+        product='polling',
+        attribute_code=url_feedback_code,
+        attribute_response=ui_twitter_username
+      )
+      db.session.add(new_row)
+      db.session.commit()
+      # # ------------------------ insert to db end ------------------------
+      return redirect(url_for('polling_views_interior.polling_dashboard_function'))
+    # ------------------------ post feedback twitter end ------------------------
   # ------------------------ submission end ------------------------
   # ------------------------ set cookie on first feedback step start ------------------------
   if url_feedback_code == 'attribute_tos':
@@ -522,6 +549,39 @@ def polling_feedback_function(url_redirect_code=None, url_feedback_code=None):
   # ------------------------ set cookie on first feedback step end ------------------------
   else:
     return render_template('polling/interior/feedback/index.html', page_dict_to_html=page_dict)
+# ------------------------ individual route end ------------------------
+
+# ------------------------ individual route start ------------------------
+@polling_views_interior.route('/skip/<url_skip_code>', methods=['GET', 'POST'])
+@polling_views_interior.route('/skip/<url_skip_code>/', methods=['GET', 'POST'])
+@polling_views_interior.route('/skip/<url_skip_code>/<url_redirect_code>', methods=['GET', 'POST'])
+@login_required
+def polling_skip_function(url_redirect_code=None, url_skip_code=None):
+  # ------------------------ page dict start ------------------------
+  alert_message_dict = alert_message_default_function_v2(url_redirect_code)
+  page_dict = {}
+  page_dict['alert_message_dict'] = alert_message_dict
+  # ------------------------ page dict end ------------------------
+  # ------------------------ double check redirect start ------------------------
+  if url_skip_code != 'x_twitter_handle':
+    return redirect(url_for('polling_views_interior.polling_dashboard_function'))
+  db_user_attribute_obj = UserAttributesObj.query.filter_by(attribute_code=url_skip_code,fk_user_id=current_user.id).first()
+  if db_user_attribute_obj != None:
+    return redirect(url_for('polling_views_interior.polling_dashboard_function', url_redirect_code='s20'))
+  # ------------------------ double check redirect end ------------------------
+  # ------------------------ insert to db start ------------------------
+  new_row = UserAttributesObj(
+    id=create_uuid_function('attribute_'),
+    created_timestamp=create_timestamp_function(),
+    fk_user_id=current_user.id,
+    product='polling',
+    attribute_code=url_skip_code,
+    attribute_response='~skipped'
+  )
+  db.session.add(new_row)
+  db.session.commit()
+  # # ------------------------ insert to db end ------------------------
+  return redirect(url_for('polling_views_interior.polling_dashboard_function'))
 # ------------------------ individual route end ------------------------
 
 # ------------------------ individual route start ------------------------

@@ -28,6 +28,22 @@ def sanitize_letters_numbers_spaces_specials_only_function(user_input):
   return False
 # ------------------------ individual function end ------------------------
 
+# ------------------------ individual function start ------------------------
+def sanitize_x_handle_function(user_input):
+  try:
+    if len(user_input) == 0 or len(user_input) > 30:
+      return False
+  except:
+    return False
+  try:
+    desired_regex_pattern = r'^[a-zA-Z0-9_]{1,15}$'
+    if(re.fullmatch(desired_regex_pattern, user_input)):
+      return user_input
+  except:
+    return False
+  return False
+# ------------------------ individual function end ------------------------
+
 # ------------------------ individual arr start ------------------------
 replace_from_str_arr_v1 = ['select','update','delete','insert','drop','<','>','{','}','[',']','~','`','_']
 replace_from_str_arr_v2 = ['<','>','{','}','[',']','~','`','_','^','%']
