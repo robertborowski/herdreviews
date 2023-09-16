@@ -60,12 +60,14 @@ def create_app_function():
   from .polling_views_admin import polling_views_admin
   from .polling_views_exterior import polling_views_exterior
   from .polling_views_interior import polling_views_interior
+  from .reviews_interior import reviews_interior
   # ------------------------ views/auths/routes imports end ------------------------
   # ------------------------ views/auths/routes register blueprints start ------------------------
   app.register_blueprint(polling_auth, url_prefix='/')
   app.register_blueprint(polling_views_admin, url_prefix='/')
   app.register_blueprint(polling_views_exterior, url_prefix='/')
   app.register_blueprint(polling_views_interior, url_prefix='/')
+  app.register_blueprint(reviews_interior, url_prefix='/')
   # ------------------------ views/auths/routes register blueprints end ------------------------
   # ------------------------ import models before creating db for first time start ------------------------
   from .models import UserObj

@@ -1,0 +1,48 @@
+{% extends "polling/aaa_base/base.html" %}
+
+<!-- head tag block content -->
+{% block title %}
+  <title>base2_exterior.html</title>
+{% endblock %}
+
+{% block contentBody %}
+<body class="custom-google-font-1 custom-bg-grey-3">
+  <!-- ------------------------------------- navbar start ------------------------------------- -->
+  <div class="container-fluid fixed-top shadow-sm custom-bg-white">
+    <nav class="container navbar navbar-expand-md navbar-light">
+      <div class="custom-display-flex">
+        <a href="/dashboard"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v2_black.png" alt="HerdReviews logo, Vecteezy.com" class="custom-img-size-50 custom-mr-1"></a>
+        <div>
+          <p class="fw-bold custom-header-25 custom-m-0"><a href="/dashboard" class="custom-a-black-none">HerdReviews</a></p>
+          <p class="fw-bold custom-header-10 custom-m-0 custom-mt-negative-5 custom-no-wrap"><a href="/dashboard" class="custom-a-black-none">Audience Polling Platform</a></p>
+        </div>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toggleMobileMenu" aria-controls="toggleMobileMenu" aria-expanded="false" aria-lable="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="toggleMobileMenu">
+        <ul class="navbar-nav ms-auto text-center">
+          <li><a href="/dashboard" class="nav-link mx-2 custom-mtb-20-mobile">{{ page_dict_to_html['current_user_email'] }}</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="custom-filler-4"></div>
+  <!-- ------------------------------------- navbar end ------------------------------------- -->
+  <div class="container-fluid custom-bg-grey-3 custom-pb-100">
+  {% block contentBodyExceptNavbarAndFooter %}
+  {% endblock %}
+  </div>
+  <!-- ------------------------------------- footer start ------------------------------------- -->
+  <div class="custom-width-180-px custom-mb-100 mx-auto">
+    <div class="custom-display-flex">
+      <a href="/dashboard"><img src="https://herdreviewspublicobjects.s3.us-east-2.amazonaws.com/herdreviewslogo_v2_black.png" alt="HerdReviews logo, Vecteezy.com" class="custom-img-size-50 custom-mr-1"></a>
+      <div>
+        <p class="fw-bold custom-header-25 custom-m-0"><a href="/dashboard" class="custom-a-black-none">HerdReviews</a></p>
+        <p class="fw-bold custom-header-10 custom-m-0 custom-mt-negative-5 custom-no-wrap"><a href="/dashboard" class="custom-a-black-none">Audience Polling Platform</a></p>
+      </div>
+    </div>
+  </div>
+  <!-- ------------------------------------- footer end ------------------------------------- -->
+</body>
+{% endblock %}
