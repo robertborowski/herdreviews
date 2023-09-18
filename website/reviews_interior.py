@@ -32,7 +32,7 @@ redis_connection = redis_connect_to_database_function()
 @reviews_interior.route('/account/', methods=['GET', 'POST'])
 @reviews_interior.route('/account/<url_redirect_code>', methods=['GET', 'POST'])
 @login_required
-def profile_function(url_redirect_code=None):
+def account_function(url_redirect_code=None):
   # ------------------------ page dict start ------------------------
   if url_redirect_code == None:
     try:
