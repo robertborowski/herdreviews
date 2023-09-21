@@ -1,0 +1,182 @@
+{% extends "polling/aaa_base/base2_black.html" %}
+
+<!-- head tag block content -->
+{% block title %}
+  <title>Feedback - HerdReviews</title>
+{% endblock %}
+
+{% block contentBodyExceptNavbarAndFooter %}
+<div class="custom-bg-black">
+  <!-- ------------------------------------- progress bar start ------------------------------------- -->
+  {% if page_dict_to_html['feedback_step'] == '0' %}
+    <div class="progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 50%"></div>
+    </div>
+    {% elif page_dict_to_html['feedback_step'] == '2' %}
+    <div class="progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 50%"></div>
+    </div>
+    {% elif page_dict_to_html['feedback_step'] == '3' %}
+    <div class="progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 99%"></div>
+    </div>
+  {% endif %}
+  <!-- ------------------------------------- progress bar end ------------------------------------- -->
+  <!-- ----------------------------------- start ----------------------------------- -->
+  {% if page_dict_to_html['alert_message_dict']['message'] != '' %}
+  <div class="alert alert-{{ page_dict_to_html['alert_message_dict']['type'] }} mx-auto text-center container-fluid custom-width-6 custom-m-0" role="alert">
+    {{ page_dict_to_html['alert_message_dict']['message'] }}
+  </div>
+  {% endif %}
+  <!-- ----------------------------------- end ----------------------------------- -->
+  <!-- ------------------------------------- entire page start ------------------------------------- -->
+  <div class="container-fluid custom-bg-black custom-pt-100">
+    <!-- ------------------------------------- title start ------------------------------------- -->
+    <div class="container mx-auto custom-pb-50">
+      <div class="text-center">
+        {% if page_dict_to_html['feedback_request'] == 'attribute_tos' %}
+          <h1 class="custom-color-white">Terms of service</h1>
+        {% elif page_dict_to_html['feedback_request'] == 'attribute_birthday' %}
+          <h1 class="custom-color-white">Age demographic</h1>
+        {% elif page_dict_to_html['feedback_request'] == 'attribute_marketing' %}
+          <!-- <h1 class="custom-color-white">How did you hear about HerdReviews?</h1> -->
+        {% endif %}
+      </div>
+    </div>
+    <!-- ------------------------------------- title end ------------------------------------- -->
+
+    {% if page_dict_to_html['feedback_request'] == 'name' %}
+      <!-- ------------------------------------- section - name start ------------------------------------- -->
+      <form method="POST" enctype="multipart/form-data" onsubmit="return clickSubmitButtonOnce()">
+        <div class="mx-auto custom-width-400">
+          <!-- ------------------------------------- answer start ------------------------------------- -->
+          <div class="custom-pb-25">
+            <div class="form-floating">
+              <textarea class="form-control" id="ui_name" name="ui_name" placeholder="First name" onkeyup="CountCharsNameAnswer(this);" pattern="{1,20}" required></textarea>
+              <label for="ui_name">First name</label>
+              <p id="id-countCharsNameAnswer" class="custom-size-3 custom-color-light-1 fst-italic custom-mt-2 custom-ml-2"></p>
+            </div>
+            <div class="form-floating">
+              <textarea class="form-control" id="ui_last_name" name="ui_last_name" placeholder="Last name" onkeyup="CountCharsLastNameAnswer(this);" pattern="{1,20}" required></textarea>
+              <label for="ui_last_name">Last name</label>
+              <p id="id-countCharsLastNameAnswer" class="custom-size-3 custom-color-light-1 fst-italic custom-mt-2 custom-ml-2"></p>
+            </div>
+          </div>
+          <!-- ------------------------------------- answer end ------------------------------------- -->
+          <div class="mx-auto custom-width-100">
+            <button type="submit" class="btn btn-lg btn-success custom-mb-6 custom-width-6 custom-ptb-8 custom-br-1" id="submit-button-botttom">Continue <i class="fa-solid fa-angle-right"></i></button>
+          </div>
+        </div>
+      </form>
+      <!-- ------------------------------------- section - name end ------------------------------------- -->
+      {% elif page_dict_to_html['feedback_request'] == 'attribute_tos' %}
+      <!-- ------------------------------------- section - terms of service start ------------------------------------- -->
+      <!-- ------------------------------------- top start ------------------------------------- -->
+      <div class="custom-width-800 mx-auto custom-mb-50 custom-color-white custom-opacity-75">
+        <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary custom-overflow-1 custom-height-300-px custom-border-white-opacity-25 custom-br-1 custom-p-25" tabindex="0">
+          <!-- ------------------------------------- tos content start ------------------------------------- -->
+          <h4 id="scrollspyHeading1">Terms of Service</h4>
+          <p>These Terms of Service ("Terms") govern your use of HerdReviews ("the Service"), provided by HerdReviews ("the Company"). By accessing or using the Service, you agree to be bound by these Terms. If you do not agree with any part of these Terms, you must not use the Service.</p>
+          <h4 id="scrollspyHeading1">1. Use of Service</h4>
+          <p>1.1 Eligibility: You must be at least 18 years old or have the legal capacity to enter into a binding agreement in your jurisdiction to use the Service.</p>
+          <p>1.2 Personal Information: When using the Service, you may be required to provide certain personal information. By using the Service, you consent to the collection, use, and disclosure of your personal information as outlined in our Privacy Policy.</p>
+          <p>1.3 Prohibited Activities: You agree not to engage in any activities that violate these Terms or any applicable laws or regulations. This includes but is not limited to:</p>
+          <ul>
+            <li>Attempting to gain unauthorized access to the Service or its related systems or networks.</li>
+            <li>Interfering with or disrupting the Service or its servers or networks.</li>
+            <li>Collecting or harvesting any information from the Service without prior authorization.</li>
+          </ul>
+          <h4 id="scrollspyHeading1">2. Data Privacy</h4>
+          <p>2.1 Personal Information: HerdReviews is committed to protecting your privacy. We will not share your personal information with any outside third parties unless they have been approved by HerdReviews.</p>
+          <p>2.2 Data Usage: Your personal information collected by HerdReviews is used solely for the purpose of analyzing audience analytics and trends within the Service. We may aggregate and anonymize the data for statistical purposes.</p>
+          <p>2.3 Security: We employ industry-standard security measures to safeguard your personal information. However, please note that no method of transmission over the internet or electronic storage is completely secure, and we cannot guarantee absolute security.</p>
+          <h4 id="scrollspyHeading1">3. Intellectual Property</h4>
+          <p>3.1 Ownership: The Service, including its content, features, and functionality, is owned by the Company and protected by intellectual property laws. You may not reproduce, modify, distribute, or republish any content from the Service without prior written consent from the Company.</p>
+          <h4 id="scrollspyHeading1">4. Limitation of Liability</h4>
+          <p>4.1 Disclaimer: The Service is provided on an "as is" and "as available" basis, without any warranties or representations, express or implied. The Company disclaims all warranties of any kind, including but not limited to merchantability, fitness for a particular purpose, and non-infringement.</p>
+          <p>4.2 Limitation of Liability: The Company shall not be liable for any direct, indirect, incidental, special, or consequential damages arising out of or in connection with your use of the Service, including but not limited to any loss of data, loss of profits, or business interruption.</p>
+          <h4 id="scrollspyHeading1">5. Modification and Termination</h4>
+          <p>5.1 Modification: The Company reserves the right to modify or revise these Terms at any time, without prior notice. By continuing to use the Service after such modifications, you agree to be bound by the revised Terms.</p>
+          <p>5.2 Termination: The Company may terminate your access to the Service at any time, without prior notice, for any reason or no reason, including if you violate these Terms.</p>
+          <h4 id="scrollspyHeading1">6. Governing Law</h4>
+          <p>6.1 Jurisdiction: These Terms shall be governed by and construed in accordance with the laws of New York / New Jersey, without regard to its conflict of law provisions.</p>
+          <!-- ------------------------------------- tos content end ------------------------------------- -->
+        </div>
+      </div>
+      <!-- ------------------------------------- top end ------------------------------------- -->
+      <!-- ------------------------------------- bottom start ------------------------------------- -->
+      <form method="POST" enctype="multipart/form-data" onsubmit="return clickSubmitButtonOnce()">
+        <div class="text-center">
+          <!-- ------------------------------------- checkbox start ------------------------------------- -->
+          <div class="form-check custom-width-400 custom-color-white mx-auto custom-mb-15">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required>
+            <label class="form-check-label" for="flexCheckDefault">I have read and agree to HerdReviews's terms of service.</label>
+          </div>
+          <!-- ------------------------------------- checkbox end ------------------------------------- -->
+          <button type="submit" class="btn btn-lg btn-success">Continue <i class="fa-solid fa-angle-right"></i></button>
+        </div>
+      </form>
+      <!-- ------------------------------------- bottom end ------------------------------------- -->
+      <!-- ------------------------------------- section - terms of service end ------------------------------------- -->
+      {% elif page_dict_to_html['feedback_request'] == 'attribute_birthday' %}
+      <!-- ------------------------------------- section - birthday start ------------------------------------- -->
+      <form method="POST" enctype="multipart/form-data" onsubmit="return clickSubmitButtonOnce()">
+        <div class="custom-width-400 mx-auto">
+          <!-- ------------------------------------- birthday input start ------------------------------------- -->
+          <label for="id-birthday_input" class="form-label custom-color-white">Birthday</label>
+          <input type="text" class="form-control" id="id-birthday_input" name="ui_birthday" placeholder="mm/dd/yyyy" required>
+          <!-- ------------------------------------- birthday input end ------------------------------------- -->
+          <button type="submit" class="btn btn-lg btn-success custom-width-100 custom-mt-25">Continue <i class="fa-solid fa-angle-right"></i></button>
+        </div>
+      </form>
+      <!-- ------------------------------------- section - birthday end ------------------------------------- -->
+      {% elif page_dict_to_html['feedback_request'] == 'attribute_marketing' %}
+      <!-- ------------------------------------- section - marketing start ------------------------------------- -->
+      <form method="POST" enctype="multipart/form-data" onsubmit="return clickSubmitButtonOnce()">
+        <div class="custom-width-400 mx-auto">
+          <!-- ------------------------------------- dropdown start ------------------------------------- -->
+          <div class="dropdown">
+            <label class="custom-color-white custom-mb-25 custom-header-20">How did you hear about HerdReviews?</label>
+            <button class="btn custom-bg-white-always dropdown-toggle custom-tal custom-width-100 custom-ptb-10" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="id-general">Select</button>
+            <ul class="dropdown-menu custom-width-100">
+              {% for i in page_dict_to_html['marketing_list_index'] %}
+                <li>
+                  <input type="radio" class="btn-check" id="uiFeedbackSelection{{ i }}" name="ui_general_selection_radio" autocomplete="off" value="{{ page_dict_to_html['marketing_list'][i] }}" onclick="previewGeneralSelection(this)" required>
+                  <label class="dropdown-item custom-color-black" for="uiFeedbackSelection{{ i }}">{{ page_dict_to_html['marketing_list'][i] }}</label>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <!-- ------------------------------------- dropdown end ------------------------------------- -->
+          <button type="submit" class="btn btn-lg btn-success custom-width-100 custom-mt-25">Continue <i class="fa-solid fa-angle-right"></i></button>
+        </div>
+      </form>
+      <!-- ------------------------------------- section - marketing end ------------------------------------- -->
+      {% elif page_dict_to_html['feedback_request'] == 'x_twitter_handle' %}
+      <!-- ------------------------------------- section - marketing start ------------------------------------- -->
+      <form method="POST" enctype="multipart/form-data" onsubmit="return clickSubmitButtonOnce()">
+        <div class="custom-width-400 mx-auto">
+          <!-- ------------------------------------- dropdown start ------------------------------------- -->
+          <label class="custom-color-white custom-mb-25 custom-header-20">X (Twitter) Handle</label>
+          <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input type="text" class="form-control custom-ptb-10" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="ui_twitter_username">
+          </div>
+          <!-- ------------------------------------- dropdown end ------------------------------------- -->
+          <button type="submit" class="btn btn-lg btn-success custom-width-100 custom-mt-25">Continue <i class="fa-solid fa-angle-right"></i></button>
+          <a href="/skip/x_twitter_handle" class="btn btn-sm btn-outline-secondary custom-width-100 custom-mt-15">Skip</a>
+        </div>
+      </form>
+      <!-- ------------------------------------- section - marketing end ------------------------------------- -->
+    {% endif %}
+  </div>
+  <!-- ------------------------------------- entire page end ------------------------------------- -->
+</div>
+<!-- ----------------------------------- shape divider start ----------------------------------- -->
+<div class="custom-shape-divider-bottom-1672276706 custom-bg-black">
+  <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M1200 0L0 0 598.97 114.72 1200 0z" class="shape-fill"></path>
+  </svg>
+</div>
+<!-- ----------------------------------- shape divider end ----------------------------------- -->
+{% endblock %}
