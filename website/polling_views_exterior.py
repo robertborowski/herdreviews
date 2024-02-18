@@ -52,7 +52,11 @@ def polling_landing_details_function(url_reference_id=None):
   # ------------------------ set variables end ------------------------
   # ------------------------ get random podcast show info start ------------------------
   show_arr_of_dict = select_general_function('select_query_general_7')
-  page_dict['show_dict'] = show_arr_of_dict[0]
+  page_dict['show_dict'] = None
+  try:
+    page_dict['show_dict'] = show_arr_of_dict[0]
+  except:
+    pass
   # ------------------------ get random podcast show info end ------------------------
   # ------------------------ get all podcasts start ------------------------
   page_dict['shows_arr_of_dicts'] = []
